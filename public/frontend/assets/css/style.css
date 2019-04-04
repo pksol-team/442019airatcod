@@ -1,0 +1,1342 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+.header-nav{
+	position: absolute;
+	z-index: 9999;
+}
+body a{
+    color: #4CAF51;
+}
+.form-search {
+
+    margin: 0 65px;
+    width: 100%;
+  
+}
+.search-input {
+    width: 65% !important;
+}
+.nav-links {
+    padding: 24px 0;
+}
+.brand a img {
+    width: 100%;
+}
+.brand i {
+    color: #fff;
+    font-size: 19px;
+}
+.carousel-caption{
+	top: 40% !important;
+    bottom: 50% !important;
+}
+.carousel-item
+{
+	    background-color: #000;
+}
+div#carouselExampleSlidesOnly .carousel-item img {
+    height: 586px;
+    object-fit: cover;
+    object-position: 0 18%;
+    opacity: 0.4;
+}
+.Searching-button a{
+	text-decoration: none;
+}
+.tweets{
+   padding: 0 0;
+}
+.tweets li dd{
+	width: 85%;
+}
+.footer-items {
+        clear: both;
+    padding: 75px 0;
+    background-color: #000;
+    color: #fff;
+}
+.link-pages {
+    margin: 0 40px;
+}
+.reserva-button button{
+	
+	    padding: 10px 45px;
+	    border: 1px solid groove;
+
+}
+.border_bottom{
+		border: 2px solid #fff;
+	    width: 100%;
+	    margin: 10px 0;
+	    max-width: 20%;
+	    float: left;
+	
+}
+.reserva-content p {
+    clear: both;
+}
+.doctoralia-border_bottom {
+    border: 2px solid #0000001f;
+    width: 100%;
+    max-width: 20%;
+    float: left;
+}
+
+.doctoralia-first-col p {
+    clear: both;
+        color: #00000069;
+}
+.doctoralia-first-col {
+    border-right: 2px solid #0000001f;
+        padding: 20px 0 5px 3px;
+}
+
+.doctoralia {
+    padding: 40px 0;
+}
+.doctoralia-sec-col i {
+    vertical-align: middle;
+    float: left;
+    font-size: 65px;
+ 
+    color: #2196f3;
+    transform: rotate(270deg);
+    padding: 75px 25px;
+}
+
+.doctoralia-sec-col p {
+    float: right;
+    width: 65%;
+    font-weight: 500;
+    margin: 0 0;
+    padding: 80px 0;
+}
+.doctoralia-sec-col {
+    border-right: 2px solid #0000001f;
+}
+.doctoralia-third-col i {
+    vertical-align: middle;
+    float: left;
+    font-size: 65px;
+    width: 34%;
+    color: #2196f3;
+    padding: 75px 25px;
+}
+.doctoralia-third-col p {
+    float: right;
+    width: 65%;
+     font-weight: 500;
+    margin: 0 0;
+     padding: 80px 0;
+}
+.testimonial-upper-div {
+    margin: 60px 0;
+  
+}
+.img-holder img{
+	width: 50%;
+	    border-radius: 50%
+
+}
+.testimonials {
+    margin: 60px 0;
+  
+}
+.testimonial-border_bottom {
+    width: 15%;
+    border: 2px solid #000;
+}
+.text-holder p {
+    font-weight: 600;
+    font-size: 17px;
+    color:#0000008c;
+}
+
+.text-holder {
+    padding: 25px 0;
+}
+
+.name p {
+    font-size: 15px;
+   
+
+}
+
+.nav-links button {
+    padding: 6px 40px;
+}
+
+.nav-links button a {
+    text-decoration: none;
+}
+
+.search-input{
+	    height: 46px;
+}
+.Searching-button {
+    margin: 0 20px;
+    float: right;
+}
+.tweets li a {
+    text-decoration: none;
+}
+.link-pages li a {
+    text-decoration: none;
+}
+
+.Searching-button button {
+    padding: 10px 50px;
+}
+.Centro-image img {
+    height: 490px;
+}
+/*color*/
+.bg-green{
+	background-color: #3abd3b;
+}
+.bg-blue{
+	background-color: #2793ed;
+}
+.bg-green-dark{
+    background-color: #4ba44a;
+}
+.bg-green-light{
+	background-color: #4CAF51;
+}
+.bg-grey{
+	    background-color: #e9ecef;
+}
+.f-size{
+    font-size: 13px;
+}
+
+
+/*Quotes tab Css*/
+.header {
+    padding: 15px 0;
+}
+.quotes .header-links{
+	padding: 5px 0;
+
+
+}
+.quotes .header-links ul li a{
+   color: #fff;
+   padding: 0 10px;
+   text-decoration: none;
+}
+.page-link-nav{
+	background-color: green;
+
+}
+.page-link-nav ul li a {
+    color: #fff;
+}
+
+.pages-links ul li a {
+text-decoration: none;
+padding: 10px 10px;
+}
+
+.pages-links ul li {
+margin: 11px 0;
+}
+
+.pages-links ul {
+    margin: 0;
+}
+.quotes-sec{
+	background-color: #f0ebebbd;
+}
+.quotes-head h3 {
+    padding: 40px 0;
+    margin: 0;
+}
+.table-sec{
+     	
+       margin: 90px 0;
+}
+.table-sec thead th{
+	border: none !important;
+}
+/*login css*/
+.login-header{
+	padding: 15px 0;
+}
+.login-header-links{
+	padding: 5px 0;
+
+
+}
+.login-sec{
+	margin: 33px 0;
+}
+.login-header-items {
+    margin: 22px 0;
+}
+.login-footer-items{
+	    margin: 25px 0;
+}
+.login-footer{
+	padding: 15px 0;
+}
+.login-footer-links{
+	    padding: 5px 0;
+}
+.login-footer-links ul li a{
+   color: #fff;
+   padding: 0 10px;
+   text-decoration: none;
+}
+.login-main-head{
+	color:#00000061;
+}
+.login-header-links ul li a{
+   color: #fff;
+   padding: 0 10px;
+   text-decoration: none;
+}
+.login-main-head .border-bottom {
+    border-bottom: 2px solid #dee2e6!important;
+    padding: 8px 0;
+}
+.login-points ul li i {
+    color: limegreen;
+        padding-right: 5px;
+}
+
+.login_form {
+    float: right;
+    width: 74%;
+   
+}
+.login_input-sec input {
+    width: 100%;
+   
+}
+.login_input-sec-pass input{
+	width:50%;
+}
+.password-sec{
+	margin:20px 0;
+}
+.checkbox{
+	float: left;
+    width: 30%;
+}
+.checkbox label input {
+    width: 20%;
+}
+.checkbox input {
+    width: 10%;
+}
+
+.radio-sec {
+	margin: 5px 0;
+    clear: both;
+    float: left;
+    width: 100%;
+}
+.logIn-button {
+    clear: both;
+    float: left;
+}
+
+.logIn-button a {
+    color: #fff;
+    text-decoration: none;
+}
+.logIn-button button {
+    padding: 4px 30px;
+}
+.forget-pas {
+    clear: both;
+    float: left;
+    margin: 16px 0;
+}
+.support {
+    margin: 15px 0;
+    padding: 12px 6px;
+    background-color: #faebd742;
+    border: 1px solid #00000042;
+}
+
+.support p {
+    margin-bottom: 0;
+}
+
+.support a {
+    color: lawngreen;
+}
+.footer-sec {
+    /*position: absolute;*/
+    bottom: 0;
+    width: 100%;
+}
+/*Mydata Css*/
+.data .header-items {
+    padding: 20px 0;
+    margin: 8px 0;
+}
+
+.data .header-items .header-links ul li a {
+    color: #fff;
+    padding: 0 5px;
+}
+.my-data {
+    margin: 39px 0;
+}
+.checkbox-my-data {
+    margin: 15px 0;
+}
+.my-data .submit-button {
+    padding: 32px 18px;
+}
+.row{
+	margin: 0 0;
+}
+.dropdown-toggle::after{
+        float: right ;
+    margin: 10px 0;
+}
+
+
+
+/*profession css*/
+.breadcrumb-items{
+margin: 0;
+}
+.breadcrumb-links {
+    float: left;
+}
+.social-links ol {
+    list-style: none;
+    margin: 0 0;
+}
+
+.social-links ol li {
+    padding: 5px 5px;
+    display: inline-block;
+}
+
+.social-links ol li a {
+   color: #00000033;
+    font-size: 23px;
+}
+.prof-subtitle{
+	    padding: 20px 0;
+    margin: 0;
+}
+.professional-content {
+    padding: 15px 10px;
+}
+.drop-down-list p {
+    margin: 0;
+}
+.dropdown-list{
+    padding: 15px 10px;
+}
+.profession .header-items {
+    padding: 20px 0;
+}
+
+.profession .header-items .header-links ul li a {
+    padding: 0px 10px;
+    color: #fff;
+}
+
+
+.appointments-list {
+    padding: 46px 15px;
+    }
+.appointments-list table thead {
+    
+    color: #fff;
+}
+.appointments-list table thead th {
+    vertical-align: middle;
+}
+.star-color{
+	color: #ffc107;
+}
+.appointments-list p {
+    margin: 0;
+}
+.breadcrumb-item+.breadcrumb-item::before{
+	content:">";
+}
+.form-search button {
+    margin: 0 10px;
+    padding: 11px 50px;
+}
+
+.reserva-content {
+    padding-left: 100px;
+    padding-right: 100px;
+}
+/*favorites css*/
+.favorites .header-items{
+	padding: 15px 0;
+}
+.favorites .header-links ul li a {
+    color: #fff;
+}
+
+/*Registration css*/
+
+
+.reg .login_form{
+	width:100%;
+
+}    
+
+.reg .login-points .point-1 {
+    border: 1px solid #fff;
+    border-radius: 50px;
+    color: #fff;
+    margin-right: 4px;
+    text-align: center;
+    background: #4bae51;
+    padding: 5px 12px;
+}
+.reg .login-points .point-1-head h4{
+     display: inline-block;
+}
+.reg .login-points ul .sub-valid i {
+    color: unset;
+}
+.reg .login-points .sub-valid {
+    margin-left: 43px;
+}
+.reg .login_input-sec p {
+
+    text-align: left;
+}
+.reg .login_input-sec input {
+    width: 50%;
+}
+.reg .login_input_email-sec input{
+	width: 100%;
+}
+.reg .dropdown-list button {
+    border: 1px solid #ced4da;
+}
+.reg .dropdown-list {
+    text-align: left;
+    padding-left: 0;
+}
+.reg-instruction p {
+    margin-bottom: 0;
+}
+.reg .acceptance {
+   margin: 8px 35px;
+}
+.instruction-head.text-center {
+    margin: 15px 0;
+}
+/*reg-prof css*/
+.points-of-validation-acc ul li i {
+    color: greenyellow;
+    padding-right: 7px;
+}
+
+.points-of-validation-acc {
+    float: right;
+    width: 90%;
+}
+.reg-pro-sub-valid{
+    float: right;
+    width: 93%;
+    background: #ffefd582;
+    padding: 6px 10px;
+    border: 1px solid #00000029;
+    margin: 12px 0;
+}
+.reg-pro-sub-valid .info{
+    color: #00b8ff !important;
+}
+
+/*doc-profile*/
+.doc-pro-info {
+    margin: 35px 0;
+}
+.doc-exp-disease .doc-exp-disease-desc {
+   margin-top:20px;
+  margin-bottom:110px
+}
+.visitors-list-table {
+    margin: 20px 0;
+}
+.doc-services-rates-subtitle p {
+    margin: 15px 0;
+}
+.about-you .about-you-head {
+    margin: 36px 0;
+}
+.languages {
+    margin-top: 20px;
+}
+.training {
+    margin: 30px 0;
+   
+}
+.photos {
+    margin: 45px 0;
+}
+.videos {
+    margin: 57px 0;
+}
+.web-set-fields {
+    margin: 23px 0;
+}
+.social-network {
+    margin: 60px 0;
+}
+.valuations-module {
+    border: 1px solid #dee2e6;
+   
+}
+
+.valuation-module-head {
+    text-align: center;
+    
+    padding: 4px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+.valuation-module-head h5 {
+    padding: 4px 0;
+    margin-bottom: 0;
+}
+.valuation-module-desc-area {
+    padding: 16px 15px;
+}
+.valuation-module-review {
+        margin: 35px 0;
+}
+.review-area h6 {
+    text-align: center;
+    color: #fff;
+}
+.review-area.bg-green {
+    padding: 2px 0px
+}
+.review-area .review-star {
+    background: white;
+    border-radius: 22px;
+    margin: 0 auto;
+    max-width: 90%;
+    width: 100%;
+    text-align: center;
+}
+.review-star p {
+    margin-bottom: 0;
+}
+.total-review p {
+    text-align: center;
+    color: #fff;
+}
+.doc-icon-for-your-website {
+    border: 1px solid #dee2e6;
+   
+}
+.doc-icon-for-your-web-head {
+    text-align: center;
+    
+    padding: 4px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+.doc-icon-for-your-web-head h5 {
+    padding: 4px 0;
+    margin-bottom: 0;
+}
+.vdoc-icon-for-your-website-desc-area {
+    padding: 16px 15px;
+}
+.doc-icon-for-your-website-icons {
+        margin: 35px 0;
+}
+.doc-icon-for-your-website-desc-div {
+    padding: 16px 0;
+}
+.doc-social-icon-area a i {
+    color: #0000008c;
+    font-size: 25px;
+}
+.profile-on-the-internet-sec {
+    margin: 54px 0;
+}
+.doctoralia-social-network-head h5 {
+    padding: 10px 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid #dee2e6;
+}
+.doctoralia-social-network-head h5 {
+    padding: 10px 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.doctoralia-social-icon-list ul li {
+    width: 19%;
+    margin: 4px 9px 4px 0;
+    height: 35px;
+    padding: 4px 0;
+    border-radius: 5px;
+}
+.doctoralia-social-icon-list ul li.li-facebook {
+    background-color: #2f6fac;
+}
+.doctoralia-social-icon-list ul li.li-linkedin {
+    background-color: #0075ae;
+}
+.doctoralia-social-icon-list ul li.li-twitter {
+    background-color: #00bbff;
+}
+.doctoralia-social-icon-list ul li.li-pinterest {
+    background-color: #bd081c;
+}
+
+.doctoralia-social-icon-list ul li a:hover{
+    text-decoration: none;
+}
+.doctoralia-social-icon-list {
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 90%;
+}
+
+.doctoralia-social-icons {
+    margin: 17px 0;
+}
+/*Sidebar css*/
+
+.doc-premium-pro-sec {
+    padding: 30px 0;
+    color: #fff;
+    background: #0080519e;
+}
+.premium-pro-desc button {
+    color: green;
+}
+.pro-completed {
+    background: yellow;
+    margin: 16px 0;
+}
+.pro-list {
+    padding: 22px 0px;
+    width: 100%;
+    max-width: 70%;
+    margin: 0 auto;
+}
+.simplify-of-your-life-and-that-of-your-patients {
+    background: #f0f7ff;
+}
+.simplify-of-your-life-list-items {
+    width: 100%;
+    padding: 22px 0px;
+    max-width: 70%;
+    margin: 0 auto;
+}
+.simplify-of-your-life-list-items ul li h5 {
+    color: forestgreen;
+}
+.statistics {
+    background: whitesmoke;
+    margin: 13px 0
+}
+
+.statistics-show {
+    width: 100%;
+    max-width: 70%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 35px 0;
+}
+
+.statistics-show h5 {
+    margin-bottom: 0;
+}
+
+.statistics-visit {
+    border: 1px solid #000;
+    width: 100%;
+    max-width: 34%;
+    margin: 0 auto;
+    background: white;
+}
+.statistics-visit ul{
+        padding: 6px 0;
+    margin-bottom: 0;
+}
+.statistics-know-more-button {
+    margin: 23px 0;
+}
+.sidebar-support{
+    background: whitesmoke;
+}
+.sidebar-support-show{
+     width: 100%;
+    max-width: 70%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 35px 0;
+}
+.doc-pro {
+    margin: 15px 0;
+}
+
+.sidebar-doctoralia {
+    margin: 15px 0;
+}
+
+/*registry css*/
+.registry-link a{
+  color: #3abd3b;
+}
+.reg-list-items ul li i {
+    color: #3abd3b;
+}
+.f-22{
+    font-size: 22px;
+}
+.f-18{
+        font-size: 18px;
+}
+.doctoralia-internet {
+    vertical-align: middle;
+    margin: 100px auto;
+}
+/*registry-css*/
+
+/**********************************************************  Media Queries *********************************************/
+
+@media all and (max-width:1200px){
+	.doctoralia-section .container {
+	    max-width: 1135px;
+	}
+}
+@media all and (max-width:1172px){
+	.form-search{
+        margin: 0 63px;
+	}
+}
+
+@media all and (max-width: 1051px){
+	.carousel-caption h3{
+		font-size: 28px;
+	}
+	.form-search{
+        margin: 0 40px;
+	}
+}
+@media all and (max-width:1024px){
+	.doctoralia-sec-col i{
+		font-size: 55px;
+	    vertical-align: middle;
+	    float: left;
+	    font-size: 50px;
+	    width: 35%;
+	    color: #2196f3;
+	    padding: 89px 25px;
+       
+	}
+	.doctoralia-third-col p {
+  
+    width: 65%;
+    font-weight: 500;
+    margin: 0 0;
+    padding: 80px 0;
+}
+.doctoralia-third-col i {
+    vertical-align: middle;
+    float: left;
+    font-size: 50px;
+    width: 35%;
+    color: #2196f3;
+    padding: 89px 25px;
+}
+  .login-header-items {
+    margin: 15px 0;
+	}
+	.login-footer-items {
+	    margin: 15px 0;
+	}
+	.checkbox {
+    
+    width: 37%;
+	}
+    .doc-icon-for-your-web-head h5 {
+    font-size: 16px;
+    padding: 6px 0;
+    }
+}
+@media all and (max-width:1015px){
+	.carousel-caption h3{
+		font-size: 25px;
+	}
+}
+@media all and (max-width:906px){
+	.carousel-caption h3{
+		font-size: 22px;
+	}
+}
+@media all and (max-width:864px){
+	.form-search{
+        margin: 0 26px;
+	}
+}
+@media all and (max-width: 845px){
+	    .doctoralia-sec-col i {
+
+             padding: 89px 20px;
+	    }
+	.doctoralia-third-col i {
+		    padding: 89px 9px;
+	}
+}
+@media all and (max-width:768px){
+	.carousel-caption h3{
+		font-size: 20px;
+	}
+	.form-search{
+        margin: 0 10px;
+	}
+	.doctoralia-sec-col i {
+    vertical-align: middle;
+    
+        font-size: 60px;
+   
+    width: 100%;
+    color: #2196f3;
+    transform: rotate(270deg);
+       padding: 47px 80px;
+}
+	.doctoralia-sec-col p {
+    font-weight: 500;
+    margin: 0 0;
+    width: 90%;
+    padding: 0px 0;
+}
+		.doctoralia-third-col p {
+	  
+	    width: 79%;
+	    font-weight: 500;
+	    margin: 0 0;
+	    padding: 0px 0;
+	}
+	.doctoralia-third-col i {
+	    vertical-align: middle;
+	    float: left;
+	    font-size: 50px;
+	     width: 100%;
+	    color: #2196f3;
+	       padding: 54px 90px;
+	}
+	.nav-links button {
+	    padding: 6px 10px;
+	}
+	.quotes .header-items {
+    padding: 8px 0;
+}
+    .footer-sec{
+    	position: unset;
+    }
+    .checkbox{
+    	width: 33%;
+    }
+    .profession .header-items {
+    padding: 10px 0;
+	}
+    .valuation-module-review {
+    margin: 29px 0;
+    }
+    .doc-social-icon-area {
+    margin: 35px 0;
+    text-align: center;
+    }
+    .training-input-fields{
+        text-align: left !important;
+    }
+}
+@media all and (max-width:725px){
+	.carousel-caption h3{
+		font-size: 18px;
+	}
+}
+@media all and (max-width:690px){
+	.search-input{
+		width:100% !important;
+	}
+	.form-search button {
+           margin: 14px 150px
+    
+	}
+	.reserva-content {
+	    padding-left: 10px;
+	    padding-right: 10px;
+	}
+
+}	
+@media all and (max-width:603px){
+	
+	.form-search button {
+           margin: 14px 130px
+    
+		}
+
+}	
+@media all and (max-width:628px){
+	
+	.form-search button {
+           margin: 14px 130px
+    
+		}
+
+}
+@media all and (max-width:560px){
+	
+	.form-search button {
+          width: 100%;
+    margin: 14px 0;
+    
+		}
+
+}
+@media all and (max-width: 426px){
+
+	.doctoralia-sec-col{
+		border-top: 2px solid #0000001f;
+    	border-bottom: 2px solid #0000001f;
+    	padding-bottom: 64px;
+    	border-right:none;
+	}
+	.doctoralia-first-col{
+		border-right:none;
+	}
+	.doctoralia-sec-col i {
+		padding: 30px 150px;
+	}
+	.doctoralia-sec-col p {
+	    text-align: center;
+        width: 100%;
+	}
+	.doctoralia-third-col i {
+		padding: 54px 150px;
+	}
+	.doctoralia-third-col p{
+    	width: 100%;
+        text-align: center;
+	}
+    .brand{
+        width: 44% !important;
+    }
+    .nav-items{
+    	width: 55% !important;
+    }
+    .nav-links{
+    	    padding: 5px 0;
+   			 
+    }
+    .nav-items .nav-links a , .nav-items .nav-links button{
+    	font-size: 12px;
+    }
+    .nav-items .nav-links button{
+    	padding: 0 0;
+    }
+    .nav-items .nav-links a{
+    	font-size: 12px;
+    	
+    }
+    .nav-links{
+    	margin-left: 20px;
+    }
+    .favorites .brand{
+    	width: 100% !important;
+        
+    }
+    .favorites .header-items{
+    	padding-top: 0 10px;
+    	width: 100% !important;
+    }
+    .favorites .header-links{
+    	padding: 0px 31px;
+   		 width: 100%;
+    	clear: both;
+    	float: left;
+    }
+    .quotes .brand{
+    	width: 90% !important;
+        
+    }
+    .quotes .header-items{
+    	padding: 8px 23px;
+    	clear: both;
+    	width: 100% !important;
+    }
+    .data .brand {
+        width: 100% !important;
+    }
+    .data .header-items {
+        width: 100% !important;
+        float: left !important;
+        padding: 14px 35px;
+	}
+	.login_form {
+    	float: none;
+    	width: 100%;
+	}
+	.login_form .password{
+		text-align: left !important;
+		padding: 0 0;
+	}
+	.checkbox{
+		width: 45%;
+	}
+	.login-footer-items {
+	    width: 100% !important;
+	    margin: 0 0px;
+	}
+
+	.login-footer-links {
+	    padding: 0 20px;
+	}
+	.login .brand{
+		text-align: center;
+		margin: 0 60px;
+		width: 74% !important;
+	}
+	.item-2 .dropdown-list {
+        margin-top: 10px;
+        margin-left: 15px;
+	}
+	.item-3{
+		padding-right: 0;
+	}
+	.item-3 .dropdown-list {
+        margin-top: 10px;
+        margin-left: 15px;
+	}
+	.profession .brand {
+	    width: 90% !important;
+	}
+
+	.profession .header-items {
+	    float: left;
+	    width: 100% !important;
+	}
+
+	.profession .header-items .header-links {
+	    float: left;
+	    width: 100% !important;
+	    padding: 0 50px;
+	  
+	}
+    .point-1-head h4 {
+        font-size: 17px;
+    }
+    .favorites .header-links ul li a {
+        padding: 0 8px;
+    }
+    .doc-icon-for-your-website {
+    margin-top: 10px;
+     }
+    .pages-links ul li{
+        font-size: 12px;
+    }
+    .registry-form{
+        text-align: left !important;
+    }
+    .registry-pass-input input {
+        width: 100% !important;
+    }
+    .registry-confirm-pas-input input {
+        width: 100% !important;
+     }
+
+}
+@media all and (max-width: 376px){
+    .doctoralia-third-col i {
+        padding: 54px 134px;
+    }
+    .favorites .header-links{
+      padding: 0px 4px;
+   }
+    .quotes .header-links ul li a{
+     padding: 0px 4px;
+
+      }
+   .data .header-items{
+   	    padding: 14px 20px;
+   }   
+   .checkbox {
+       width: 55%;
+   } 
+   	 .login-footer-links ul li a{
+   	 	font-size: 12px;
+       
+   	 }
+   	 .profession .header-items .header-links{
+   	 	    padding: 0 26px;
+   	 }
+     .pages-links ul li{
+            font-size: 11px;
+    }
+    .registery-items{
+        width: unset !important;
+    }
+}
+@media all and (max-width: 321px){
+    .doctoralia-sec-col i {
+        padding: 30px 100px;
+    }
+    .doctoralia-third-col i{
+    	padding: 54px 100px;
+    }
+    .nav-items .nav-links a{
+    	font-size: 11px;
+    	
+    }
+  .nav-links{
+    	margin-left: 0px;
+    }
+    
+ .favorites .header-links ul li a{
+		padding: 0 2px;
+	}
+	.quotes .header-items{
+		padding: 8px 0;
+	}
+	.quotes .header-links ul li a{
+             padding: 0px 3px;
+
+
+      }
+    .data .header-items {
+      padding: 14px 0px;
+	} 
+	.data .header-items .header-links ul li a{
+	     padding: 0px 3px;
+	 } 
+	 .checkbox {
+        width: 65%;
+    }
+	 .login-footer-links ul li a{
+	 	font-size: 12px;
+    	padding: 0 5px;
+	 }
+	 .profession .header-items .header-links {
+    	padding: 0 0px;
+	}
+    .pages-links ul li{
+            font-size: 10px;
+    }
+    .registery-items ul li a{
+        padding: 0 0;
+    }
+    .registery-items ul li button{
+        margin: 3px 0;
+    }
+    .registery-items{
+        width: unset !important;
+    }
+}
+
+/************************************************AMIN **********************************************/
+
+.how_did_know {
+    padding: .375rem .75rem;
+    border-radius: .25rem;
+    border: 1px solid #ced4da;
+    cursor: pointer;
+    padding-top: .5rem!important;
+    margin-top: 1.5rem!important;
+}
+.register-doctor {
+    margin-bottom: 50px;
+}
+
+.add_Experience {
+    color: #4CAF51;
+    background-color: transparent;
+    border:none;
+    cursor: pointer;
+}
+.add_Experience:hover {
+    text-decoration: underline;
+}
+
+.remove-exp, .remove-link, .remove-training  {
+    color: #d80000;
+}
+.remove-exp:hover {
+    color: #d80000;
+}
+
+.AddDisease {
+    resize: none;
+}
+li.edit-profile-form {
+    display: none;
+    margin-bottom: 20px;
+}
+
+li.edit-profile-form .dralia-form {
+    background-color: #f5f5f5;
+    padding: 24px;
+    color: #3e4247;
+    line-height: 1.3;
+}
+
+li.edit-profile-form .dralia-form dl {
+    clear: both;
+    margin: 0;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+li.edit-profile-form .dralia-form dl dt {
+    width: 25%;
+    text-align: right;
+    display: inline-block;
+}
+
+li.edit-profile-form .dralia-form dl dd {
+    width: 75%;
+    padding-left: 12px;
+    box-sizing: border-box;
+    display: inline;
+}
+
+li.edit-profile-form .dralia-form dl dd input, li.edit-profile-form .dralia-form dl dd select{
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #b6b6b6;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 2px 5px #e3e3e3 inset;
+    font-size: 16px;
+    padding: 7px;
+    width: 70%;
+    height: 36px;
+}
+.change_profile_button  {
+    border:none;
+    background-color: transparent;
+    color: #4CAF51;
+    font-size: 16px;
+}
+.removeProfilePicture {
+    color: #d80000;
+    border:none;
+    background-color: transparent;
+    font-size: 16px;
+}
+
+.change_profile_button:hover, .removeProfilePicture:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
