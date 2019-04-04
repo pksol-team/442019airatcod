@@ -494,62 +494,17 @@ class IndexController extends Controller
         return $done;
 	}
 
-	public function upload_files() {
+	public function fileStore(Request $request) {
+
+        $image = $request->file('file');
+        $imageName = $image->getClientOriginalName();
+        $image->move(public_path('upload'), $imageName);
         
-			$input = Input::all();
+        $imageUpload = new doctor_profile_full();
+        $imageUpload->filename = $imageName;
+        $imageUpload->save();
+        return response()->json(['success'=>$imageName]);
 			
-			if(Input::hasFile('file')) {
-				
-				$file = Input::file('file');
-				
-				$folder = storage_path('uploads');
-				$filename = $file->getClientOriginalName();
-	
-				$date_append = date("Y-m-d-His-");
-				$upload_success = Input::file('file')->move($folder, $date_append.$filename);
-				
-				if( $upload_success ) {
-	
-					// Get public preferences
-					// config("laraadmin.uploads.default_public")
-					$public = Input::get('public');
-					if(isset($public)) {
-						$public = true;
-					} else {
-						$public = false;
-					}
-	
-					$upload = Upload::create([
-						"name" => $filename,
-						"path" => $folder.DIRECTORY_SEPARATOR.$date_append.$filename,
-						"extension" => pathinfo($filename, PATHINFO_EXTENSION),
-						"caption" => "",
-						"hash" => "",
-						"public" => $public,
-						"user_id" => Auth::user()->id
-					]);
-					// apply unique random hash to file
-					while(true) {
-						$hash = strtolower(str_random(20));
-						if(!Upload::where("hash", $hash)->count()) {
-							$upload->hash = $hash;
-							break;
-						}
-					}
-					$upload->save();
-	
-					return response()->json([
-						"status" => "success",
-						"upload" => $upload
-					], 200);
-				} else {
-					return response()->json([
-						"status" => "error"
-					], 400);
-				}
-			} else {
-				return response()->json('error: upload file not found.', 400);
-			}
     }
 
 	

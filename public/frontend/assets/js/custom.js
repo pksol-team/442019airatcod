@@ -362,20 +362,25 @@ jQuery(document).ready(function($) {
         year: null
     });
    
-    var fm_dropzone_main = null;
-    fm_dropzone_main = new Dropzone("#fm_dropzone_main", {
-        maxFilesize: 2,
-        acceptedFiles: "image/*",
-        init: function() {
-            this.on("complete", function(file) {
-                this.removeFile(file);
-            });
-            this.on("success", function(file) {
-                console.log("addedfile");
-                console.log(file);
-                // loadUploadedFiles();
-            });
+    Dropzone.options.dropzone =
+     {
+        maxFilesize: 5,
+        renameFile: function(file) {
+            var dt = new Date();
+            var time = dt.getTime();
+            return time+file.name;
+        },
+        acceptedFiles: ".jpeg,.jpg,.png",
+        addRemoveLinks: true,
+        timeout: 5000,
+        success: function(file, response) 
+        {
+            console.log(response);
+        },
+        error: function(file, response)
+        {
+           return false;
         }
-    });
+    };
 
 });

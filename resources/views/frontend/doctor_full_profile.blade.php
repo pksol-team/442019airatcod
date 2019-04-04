@@ -443,7 +443,7 @@
                      <h2 class="border-bottom ">Photos</h2>
                      <p>Add 10 Photos.Option only <b>available for Premium</b></p>
                      <div>
-                        <form method="post" action="/upload_files" class="dropzone" id="fm_dropzone_main" enctype="multipart/form-data">
+                        <form method="post" action="/upload_photos" class="dropzone" id="fm_dropzone_main" enctype="multipart/form-data">
                          {{ csrf_field() }}
                           <div class="fallback">
                             <input name="file" type="file" multiple />

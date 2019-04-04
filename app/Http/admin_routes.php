@@ -41,7 +41,8 @@ Route::post('/upload_profile_image', 'Frontend\IndexController@upload_profile_im
 //remove profile Picture
 Route::post('/removeProfilePic', 'Frontend\IndexController@removeProfilePic');
 //Add Photos
-Route::post('/upload_files', 'Frontend\IndexController@upload_files');
+Route::post('upload_photos','Frontend\IndexController@fileStore');
+Route::post('remove_photos','Frontend\IndexController@fileDestroy');
 
 
 
