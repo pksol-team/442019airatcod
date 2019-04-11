@@ -19,8 +19,8 @@
       <div class="pages-links text-gray-dark">
          <ul class="list-unstyled">
             <li class="d-inline-block active"><a href="" class="text-dark">PROFILE</a></li>
-            <li class="d-inline-block"><a href="" class="text-dark">DESCRIPTIONS</a></li>
-            <li class="d-inline-block"><a href="" class="text-dark">Opinions</a></li>
+            <li class="d-inline-block"><a href="/my_data" class="text-dark">My Data</a></li>
+            <!-- <li class="d-inline-block"><a href="" class="text-dark">Opinions</a></li> -->
             <li class="d-inline-block"><a href="" class="text-dark">Premium profiles</a></li>
          </ul>
       </div>
@@ -40,7 +40,7 @@
          <div class="col-lg-8">
             <div class="doc-pro">
                <div class="row">
-                  <div class="col-lg-3 user_image">
+                  <div class="col-lg-3 user_image" id="user_image">
                      <?php if ($EmpTbl->profile_picture == '0'): ?>
                         <img src="/frontend/assets/img/default-doctor_1.png" alt="Doctor Profile Picture" class="img-thumbnail w-100 doctor_profile_picture">
                      <?php else: ?>
@@ -107,6 +107,59 @@
                            </li>
                            <li class="RUT_number_li">
                               <p><small>Rut number: <span class="RUT_number_default"><?= $EmpTbl->RUT_number ?></span></small></p>
+                           </li>
+                           <li class="specialty_li">
+                            <h6>Specialty <button class="f-size add_Experience" data-toggle="modal" data-target="#AddSpecialtyModal">Add</button></h6>
+                            <!-- Modal -->
+                            <div class="modal fade" id="AddSpecialtyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal_specialty modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Add Specialty</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form action="/addSpecialty" method="post" class="updateSpecialtyFormProfile">
+                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                     <input type="hidden" name="specialty" class="specialty_array">
+                                     
+                                      <div class="all_specialties_modal">
+                                        <ul class="list-unstyled row text-center mb-3">
+                                           <?php if ($allSpecialities != NULL): ?>
+                                              <?php foreach ($allSpecialities as $key => $specialty): ?>
+                                                <?php 
+                                                  if (in_array($specialty->id, explode(',', $EmpTbl->specialty))) {
+                                                    continue;
+                                                  }
+                                                ?>
+                                                 <li class="d-inline-block col-lg-6 text-left">
+                                                    <input class="selectspecialty-modal mr-2" type="checkbox" name="selectspecialty" value="{{ $specialty->id }}" /><h6 class="d-inline-block f-size">{{ $specialty->name }}</h6>
+                                                 </li>
+                                              <?php endforeach ?>
+                                           <?php endif ?>
+                                        </ul>  
+                                      </div>
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal" id="speciality_modal_close">Close</button>
+                                      <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                             <ul class="specialty_exists">
+                              <?php 
+                              if ($EmpTbl->specialty != '' || $EmpTbl->specialty != null) {
+                                $allSpecialities = explode(',', $EmpTbl->specialty);
+                                foreach ($allSpecialities as $key => $allSpecialty) {
+                                  $specialitiesTable = DB::table('specialities')->where('id', (int)$allSpecialty)->first();;
+                                  $getRecordSpecialty = $specialitiesTable;
+                                  echo '<li data-speciality_id="'.$specialitiesTable->id.'">'.$specialitiesTable->name.' -- <a href="#" class="remove-speciality"> Remove</a></li>';
+                                }
+                              }
+                              ?>
+                             </ul>
                            </li>
 
                            <li class="edit-profile-form">
@@ -177,7 +230,7 @@
             <div class="row">
                <div class="col-lg-12">
                   <div class="doc-extract">
-                     <div class="doc-extract-head">
+                     <div class="doc-extract-head" id="doc-extract-head">
                         <h2 class="border-bottom ">Exract
                            <a href="#" class="f-size modify_exract">Modify</a>
                         </h2>
@@ -208,7 +261,7 @@
                         <p>&nbsp;</p>
                      </div>
                   </div>
-                  <div class="doc-queries">
+                  <!-- <div class="doc-queries">
                      <div class="doc-queries-head">
                         <h2 class="border-bottom ">Queries
                            <a href="#" class="f-size add_queries">Add</a>
@@ -218,8 +271,8 @@
                         &nbsp;
                         <p>&nbsp;</p>
                      </div>
-                  </div>
-                  <div class="doc-exp-disease">
+                  </div> -->
+                  <div class="doc-exp-disease" id="doc-exp-disease">
                      <div class="doc-exp-disease-head">
                         <h2 class="border-bottom ">Experience in disease or disorders
                         	<button class="f-size add_Experience" data-toggle="modal" data-target="#AddExperienceModal">Add</button>
@@ -257,8 +310,8 @@
                         		if ($array1 != FALSE) {
 	                        		foreach ($array1['Disease'] as $key => $array2) {
 	                        		echo '<li>'.$array2.' <a href="#" class="remove-exp">Remove</a>
-												<input type="hidden" value="'.$array2.'" name="data[Disease][]" />
-		                        		</li>';
+              												<input type="hidden" value="'.$array2.'" name="data[Disease][]" />
+    		                        		</li>';
 	                        		}
                         		}
                         	 ?>
@@ -267,47 +320,64 @@
                      </div>
                   </div>
                   <div class="doc-services-rates">
-                     <h2 class="border-bottom ">
-                        Services and rates
-                        <a href="" class="f-size">Add more services</a>
-                     </h2>
-                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis </p>
-                     <button class="btn btn-primary">Add more services</button>
+                     <h2>Services and rates<button class="f-size change_profile_button" data-toggle="modal" data-target="#addServicesRates">Add more services</button></h2>
+                     <div class="doc-services-rates-subtitle"><p><small>You can add as many services as you want</small></p></div>
+                     <!-- Modal -->
+                      <div class="modal fade" id="addServicesRates" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle">Add Services</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <!-- <p class="f-size">Type the diseases or disorders</p> -->
+                              <form method="post" class="updateServiceForm">
+                                <div>Service</div>
+                                <input type="text" name="data[service][]" id="addService" class="form-control mb-3 addService" required/>
+                                <div>Rate</div>
+                                <input type="number" name="data[rate][]" id="addRate" class="form-control mb-3 addRate"/>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                     <!-- Modal -->
                      <div class="visitors-list-table table-responsive">
+                        <form class="formServices" method="post" >
                         <table class="table">
                            <thead>
-                              <th>First and successive visit</th>
-                              <th class="text-center">Queries</th>
-                              <th class="text-center">Private rate<br>(optional)</th>
+                              <th>Your Services</th>
+                              <th class="text-center">Rates</th>
                               <th>&nbsp;</th>
                            </thead>
-                           <tbody>
-                              <tr>
-                                 <td>First visit Psychology</td>
-                                 <td class="text-center">All</td>
-                                 <td class="text-center">-</td>
-                                 <td><a href="">Modify</a>&nbsp;<a href="" class="text-danger">Delete</a></td>
-                              </tr>
-                              <tr>
-                                 <td>First visit Psychology</td>
-                                 <td class="text-center">All</td>
-                                 <td class="text-center">-</td>
-                                 <td><a href="">Modify</a>&nbsp;<a href="" class="text-danger">Delete</a></td>
-                              </tr>
+                           <tbody class="all_services_tbody">
+                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                               <input type="hidden" name="user_id" value="{{ $EmpTbl->id }}">
+                              <?php 
+                                $arrayServices = unserialize($EmpTbl->services);
+                                if ($arrayServices != FALSE) {
+                                  foreach ($arrayServices['service'] as $key => $arrayService) {
+                                  echo '<tr><td>'.$arrayService.' </td><td class="text-center">€ '.$arrayServices['rate'][$key].'</td><td><a href="#" class="remove-service">Delete</a>
+                                  </td>
+                                  <input type="hidden" value="'.$arrayService.'" name="data[service][]" />
+                                  <input type="hidden" value="'.$arrayServices['rate'][$key].'" name="data[rate][]" />
+                                        </tr>';
+                                  }
+                                }
+                               ?>
                            </tbody>
                         </table>
-                     </div>
-                     <div class="doc-services-rates-services-button">
-                        <button class="btn btn-primary">Add More Services</button>
-                     </div>
-                     <div class="doc-services-rates-subtitle">
-                        <p><small>You can add as many services as you want</small></p>
+                         </form>
                      </div>
                   </div>
-                  <div class="about-you">
+                  <div class="about-you" id="about-you">
                      <div class="about-you-head">
-                        <h2 class="border-bottom ">About You
-                        </h2>
+                        <h2 class="border-bottom ">About You</h2>
                      </div>
                         <?php if ($EmpTbl->about != '' || $EmpTbl->about != NULL): ?>
                            <p class="dralia_para_about"><?= $EmpTbl->about ?></p>
@@ -386,7 +456,7 @@
                      <input type="text" class="w-100 form-control" placeholder="Otros">
                      <small>Add other language separated by comma</small>
                   </div> -->
-                  <div class="training">
+                  <div class="training" id="training">
                      <form action="/updateTraining" method="post" class="updateTrainingForm">
                      <h2 class="border-bottom ">Training</h2>
                      <div class="training-set-fields">
@@ -416,7 +486,7 @@
                         </div>
                         </form>
                         <form class="formTraining">
-                        <ul class="user_links_list">
+                        <ul class="user_training_list">
                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                            <input type="hidden" name="user_id" value="{{ $EmpTbl->id }}">
                            <?php 
@@ -439,23 +509,20 @@
                         </form>
                      </div>
                   </div>
-                  <div class="photos">
-                     <h2 class="border-bottom ">Photos</h2>
-                     <p>Add 10 Photos.Option only <b>available for Premium</b></p>
+                  <div class="photos" id="photos_dropzone_upload">
+                     <h2 class="border-bottom">Photos</h2>
+                     <p>Add Photos. Option only <b>available for Premium</b></p>
                      <div>
-                        <form method="post" action="/upload_photos" class="dropzone" id="fm_dropzone_main" enctype="multipart/form-data">
+                        <form method="post" action="/upload_photos" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
                          {{ csrf_field() }}
-                          <div class="fallback">
-                            <input name="file" type="file" multiple />
-                          </div>
+                        <input class="user_id" type="hidden" name="user_id" value="<?= $EmpTbl->id; ?>">
+                           <div class="dz-message needsclick text-center mt-2">
+                              Drop files here or click to upload
+                           </div>
                         </form>
                      </div>
                   </div>
-                  <div class="videos">
-                     <h2 class="border-bottom ">Videos</h2>
-                     <p>Add 3 Videos.Option only <b>available for Premium</b></p>
-                  </div>
-                  <div class="webs-and-link-of-interest">
+                  <div class="webs-and-link-of-interest" id="webs-and-link-of-interest">
                      <h2 class="border-bottom ">Webs And Link Of Interest</h2>
                      <div class="web-set-fields">
                         <p>You can add up to 3 links to your web pages</p>
@@ -478,7 +545,7 @@
                         <div class="col-lg-8">
                            <input type="text" name="data[webLinks][]" class="w-100 form-control link_url">
                            <p class="link_title_error d-none" style="color:red; font-size: 12px;">Obligatory field</p>
-                           <p><small>Example: "http://www.miblog.com"</small></p>
+                           <p><small>Example: "<b>http://www.miblog.com</b>"</small></p>
                            <button class="btn btn-primary float-right add_user_links">Add</button>
                         </div>
                      </div>
@@ -498,7 +565,7 @@
                                     $webTitle = $arrayLink;
                                     $webLink = $arrayLinks['webLinks'][$key];
 
-                                 echo '<li>'.$webTitle.', '.$webLink.' <a href="#" class="remove-link">Remove</a>
+                                 echo '<li>'.$webTitle.', '.$webLink.' <a target="_blank" href="'.$webLink.'" class="remove-link">Remove</a>
                                     <input type="hidden" value="'.$webTitle.'" name="data[webTitle][]" />
                                     <input type="hidden" value="'.$webLink.'" name="data[webLinks][]" />
                                     </li>';
@@ -509,6 +576,12 @@
                         </form>
                      </div>
                   </div>
+                  <div class="row mb-2">
+                     <h2 class="border-bottom">Counsulting Time</h2>
+                  </div>
+                   <div class="row mb-4">
+                      <a href="/consulting_time"><button class="btn btn-primary">Add Counsulting Time</button></a>
+                   </div><!-- /.row -->
                   <!-- Social-Network -->
                   <!-- <div class="social-network">
                      <h2 class="border-bottom ">Social Network</h2>
@@ -650,28 +723,94 @@
                      <button class="btn  bg-white">Know More</button>
                   </div>
                </div>
+               <?php 
+                  // Profile Completeness % count
+                  $completenessFields = '';
+                  $complete = 0;
+                  if ($EmpTbl->profile_picture != 0 && $EmpTbl->profile_picture != '0') {
+                     $complete = $complete+30;
+                  } else {
+                    // add button of remaining profile section
+                    $completenessFields .= '<li class="py-2">
+                           <a href="#user_image"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
+                           <span class="pl-2">Add Profile Picture 30%</span>  </a>
+                        </li>';
+                  }
+                  if ($UserTbl->confirm_email == null || $UserTbl->confirm_email == 'null' || $UserTbl->confirm_email == '') {
+                     $complete = $complete+30;
+                  }
+                  if ($EmpTbl->about != '' && $EmpTbl->about != null) {
+                     $complete = $complete+10;
+                  } else {
+                    // add button of remaining profile section
+                    $completenessFields .= '<li class="py-2">
+                           <a href="#about-you"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
+                           <span class="pl-2">Add About Yourself 10%</span>  </a>
+                        </li>';
+                  }
+                  if ($EmpTbl->experience != '' && $EmpTbl->experience != null && $EmpTbl->experience != 'N;') {
+                     $complete = $complete+10;
+                  } else {
+                    // add button of remaining profile section
+                    $completenessFields .= '<li class="py-2">
+                           <a href="#doc-exp-disease"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
+                           <span class="pl-2">Add Experience 10%</span>  </a>
+                        </li>';
+                  }
+                  if ($EmpTbl->exract != '' && $EmpTbl->exract != null) {
+                     $complete = $complete+5;
+                  } else {
+                    // add button of remaining profile section
+                    $completenessFields .= '<li class="py-2">
+                           <a href="#doc-extract-head"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
+                           <span class="pl-2">Add Exract 5%</span>  </a>
+                        </li>';
+                  }
+                  if ($EmpTbl->training != '' && $EmpTbl->training != null && $EmpTbl->training != 'N;') {
+                     $complete = $complete+5;
+                  } else {
+                    // add button of remaining profile section
+                    $completenessFields .= '<li class="py-2">
+                           <a href="#training"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
+                           <span class="pl-2">Add Training 5%</span>  </a>
+                        </li>';
+                  }
+                  if ($EmpTbl->web_links != '' && $EmpTbl->web_links != null && $EmpTbl->web_links != 'N;') {
+                     $complete = $complete+5;
+                  } else {
+                    // add button of remaining profile section
+                    $completenessFields .= '<li class="py-2">
+                           <a href="#webs-and-link-of-interest"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
+                           <span class="pl-2">Add Web Links 5%</span>  </a>
+                        </li>';
+                  }
+                  if ($EmpTbl->photos != '' && $EmpTbl->photos != null ) {
+                     $complete = $complete+5;
+                  } else {
+                    // add button of remaining profile section
+                    $completenessFields .= '<li class="py-2">
+                           <a href="#photos_dropzone_upload"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
+                           <span class="pl-2">Add Gallery 5%</span>  </a>
+                        </li>';
+                  }
+               ?>
                <div class="pro-completed">
                   <div class="pro-list">
                      <ul class="list-unstyled">
                         <li class="text-center">
-                           <h5>Profile Completed at 5%</h5>
+                           <h5>Profile Completed at <?= $complete?>%</h5>
                         </li>
-                        <li>&nbsp;</li>
-                        <li class="py-2">
-                           <a href=""><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
-                           <span class="pl-2">lorem</span>	</a>
+                        <li>
+                           <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                            aria-valuemin="0" aria-valuemax="100" style="width:<?= $complete ?>%">
+                              <span class="sr-only"><?= $complete ?>% Complete</span>
+                            </div>
+                           </div>
                         </li>
-                        <li class="py-2">
-                           <a href=""><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
-                           <span class="pl-2">lorem</span>	</a>
-                        </li>
-                        <li class="py-2">
-                           <a href=""><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
-                           <span class="pl-2">lorem</span>	</a>
-                        </li>
-                        <li class="text-center"><span><i class="fa fa-info-circle" aria-hidden="true"></i></span>
-                           <span class="pl-2">complete Your profile More patients will contact you</span> 
-                        </li>
+                     <!-- View Buttons of remaining profile sections -->
+                        <?php echo $completenessFields; ?>
+                     <!-- End View Buttons of remaining profile sections -->
                      </ul>
                   </div>
                </div>
@@ -711,12 +850,12 @@
                         <li>
                            <h5>Statistics</h5>
                         </li>
-                        <li><small>last 30 days</small></li>
+                        <!-- <li><small>last 30 days</small></li> -->
                      </ul>
                      <div class="statistics-visit">
                         <ul class="list-unstyled">
                            <li>
-                              <h5>0</h5>
+                              <h5><?= $EmpTbl->visitor_count ?></h5>
                            </li>
                            <li><small>visits to your Profile</small></li>
                         </ul>
@@ -749,4 +888,80 @@
    </div>
 </section>
 <!-- table-sec -->
+<?php
+  $photoData = '';
+   if ($EmpTbl->photos != '') {
+      $arrayPhotos = explode(",", $EmpTbl->photos);
+      foreach ($arrayPhotos as $key => $arrayPhoto) {
+        $photoData .= '
+          var mockFile = { name: '.$arrayPhoto.'};
+          this.options.addedfile.call(this, mockFile);
+          this.options.thumbnail.call(this, mockFile, "/upload/'.str_replace('"', '', $arrayPhoto).'");
+          mockFile.previewElement.classList.add("dz-complete");
+        ';
+      }
+   }
+?>
+<script src="/frontend/assets/js/dropzone.js"></script>
+<script>
+    Dropzone.options.myAwesomeDropzone = {
+    maxFilesize: 5,
+    maxFiles: 10,
+    dictResponseError: 'Server not Configured',
+    acceptedFiles: ".png,.jpg,.jpeg",
+    init:function(){
+      var self = this;
+      // config
+      self.options.addRemoveLinks = true;
+      self.options.dictRemoveFile = "Delete";
+      //New file added
+      self.on("addedfile", function (file) {
+        // console.log('new file added ', file);
+      });
+      // Send file starts
+      self.on("sending", function (file) {
+        // console.log('upload started', file);
+        $('.meter').show();
+
+      });
+      
+      // File upload Progress
+      self.on("totaluploadprogress", function (progress) {
+        // console.log("progress ", progress);
+        $('.roller').width(progress + '%');
+      });
+
+      self.on("queuecomplete", function (progress) {
+        $('.meter').delay(999).slideUp(999);
+      });
+      
+      // On removing file
+      self.on("removedfile", function (file) {
+        if (file.hasOwnProperty('xhr')) {
+            var fileName = JSON.parse(file.xhr.response).success;
+        } else {
+            var fileName = file.name;
+        }
+            var token = $('.csrf_token_profile').val();
+            var user_id = $('.user_id').val();
+            $.ajax({
+                type: 'POST',
+                url: '/remove_photos',
+                data: {"_token": token, "image": fileName, "user_id": user_id},
+                success: function (data){
+                    console.log("File has been successfully removed!!");
+                },
+                error: function(e) {
+                    console.log(e);
+                }});
+      });
+      self.on("complete", function(file) {
+        });
+        
+        <?= $photoData; ?>
+    }
+
+  };
+</script>
+
 @stop

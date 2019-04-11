@@ -58,6 +58,7 @@ class FacebookController extends Controller
 	    	$employee = [
 	    	    'first_name' => $user->name,
 	    	    'email' => $user->email,
+	    	    'type' => 'patient',
 	    	    'created_at' => $time,
 	    	  ];
 	    	$insertedEmployees = DB::table('employees')->insert($employee);
@@ -67,9 +68,11 @@ class FacebookController extends Controller
 	    		$user = [
 	                'name' => $user->name,
 	                'email' => $user->email,
-		            'password' => bcrypt('facebookuserpassword'),
+		            'password' => bcrypt(''),
 	                'context_id' => $getInsertedId,
 	                'type' => "patient",
+				    'confirm_email' => uniqid(time()).uniqid(),
+				    'status' => 'deactive',
 	    		    'created_at' => $time,
 	            ];
 	    		$insertedUsers = DB::table('users')->insert($user);
@@ -85,7 +88,7 @@ class FacebookController extends Controller
 		}
 		$userGet = DB::table('users')->WHERE('email', $user->email)->first();
     	if ($userGet) {
-			Auth::attempt(['email' => $user->email, 'password' => 'facebookuserpassword']);
+			Auth::attempt(['email' => $user->email, 'password' => '']);
 			return redirect('/');
     	}else {
     		return redirect('/userlogin')->with('error', 'Oops! Something went wrong..');

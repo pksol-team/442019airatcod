@@ -1,6 +1,7 @@
 <?php use Illuminate\Support\Facades\DB; ?>
 <?php use storage\framework\sessions; ?>
 <?php $user = Auth::user(); ?>
+
 <!DOCTYPE html>
 <html>
    <head>
@@ -13,6 +14,9 @@
       <link rel="stylesheet" href="/frontend/assets/css/yearpicker.css">
       <link rel="stylesheet" href="/frontend/assets/css/croppie.css">
       <link rel="stylesheet" href="/frontend/assets/css/dropzone.css">
+      <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"/>
       <link rel="stylesheet" href="/frontend/assets/css/style.css">
    </head>
    <body>
@@ -28,10 +32,10 @@
                     <div class="login-header-links float-right">
                        <ul class="list-unstyled">
                           <?php if (Auth::check() != true): ?>
-                          <li class="d-inline-block float-left text-white"><button class="btn bg-blue"><a href="/register_doctor" class="text-white">Registrarme</a></button></li>
+                          <li class="d-inline-block float-left text-white"><button class="btn bg-blue"><a href="/register_doctor_init" class="text-white">Registrarme</a></button></li>
                           <?php endif ?>
                           <?php if (Auth::check() == true): ?>
-                          <li class="d-inline-block float-left text-white"><a href="/doctor_profile"><?php echo $user->name; ?></a>|</li>
+                          <li class="d-inline-block float-left text-white"><?php echo $user->name; ?> |</li>
                           <li class="d-inline-block float-left text-white"><a href="/">Go to Home Page</a>|</li>
                           <li class="d-inline-block float-left text-white"><a href="/logout" onclick="return confirm('Are you sure want to Logout?')" >Logout</a></li>
                           <?php endif ?>
@@ -84,7 +88,9 @@
       <script src="/frontend/assets/js/bootstrap.min.js"></script>
       <script src="/frontend/assets/js/yearpicker.js"></script>
       <script src="/frontend/assets/js/croppie.js"></script>
-      <script src="/frontend/assets/js/dropzone.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
       <script src="/frontend/assets/js/custom.js"></script>
 
    </body>

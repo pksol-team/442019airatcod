@@ -18,6 +18,7 @@ use Validator;
 use App\User;
 use App\Models\Employee;
 use App\Role;
+use App\Models\ImageUpload;
 use Mail;
 use Log;
 
@@ -50,7 +51,7 @@ class IndexController extends Controller
 		return view('frontend.index', compact('title'));
 	}
 
-	// View Login Page
+	// View Doctor Login Page
 	public function login()
 	{
 		$title = 'Login';
@@ -58,6 +59,24 @@ class IndexController extends Controller
 			return redirect('/');
 		} else {
 			return view('frontend.login', compact('title'));
+		}
+	}
+
+	//logout
+	public function logout() {
+		Auth::logout();
+		session()->flush();
+		return redirect()->back();
+	}
+
+	// View Patient register Page
+	public function patient_register()
+	{
+		$title = 'Patient Login';
+		if (Auth::check()) {
+			return redirect('/');
+		} else {
+			return view('frontend.patient_register', compact('title'));
 		}
 	}
 
@@ -150,45 +169,105 @@ class IndexController extends Controller
 	}
 
 	// Doctor register page
-	public function register_doctor()
+	public function register_doctor_init()
 	{
 		$title = 'Register Doctor';
 		if (Auth::check()) {
 			return redirect('/');
 		} else {
-			return view('frontend.register', compact('title'));
+			return view('frontend.register_init', compact('title'));
+		}
+	}
+
+	// Doctor register page select speciality
+	public function register_doctor_mid(Request $request)
+	{
+		$title = 'Register Doctor';
+		if (Auth::check()) {
+			return redirect('/');
+		} else {
+			$allSpecialities = DB::table('specialities')->get();
+			$inputFields = [
+				'first_name' => $request->first_name,
+				'last_name' => $request->last_name,
+				'gender' => $request->gender
+			];
+			return view('frontend.register_mid', compact('title', 'inputFields', 'allSpecialities'));
+		}
+	}
+	// Doctor register page
+	public function register_doctor(Request $request)
+	{
+		$title = 'Register Doctor';
+		if (Auth::check()) {
+			return redirect('/');
+		} else {
+			$inputFields = [
+				'first_name' => $request->first_name,
+				'last_name' => $request->last_name,
+				'gender' => $request->gender,
+				'specialty' => $request->specialty
+			];
+
+			return view('frontend.register', compact('title', 'inputFields'));
 		}
 	}
 
 	// registration fields check and register
 	public function register_check(Request $request)
 	{
+		$first_name = $request->input('first_name');
+		$last_name = $request->input('last_name');
+		$gender = $request->input('gender');
+		$specialty = $request->input('specialty');
 		$RUT_number = $request->input('RUT_number');
 		$contact = $request->input('contact');
 		$email = $request->input('email');
 		$confirm_password = $request->input('confirm_password');
-		$how_did_know = $request->input('how_did_know');
 		$subscribe_notifications = $request->input('notification');
 
 		$rules = Module::validateRules("Employees", $request);
 
 		$validator = Validator::make($request->all(), $rules);
 		
-		if ($validator->fails()) {
-			return redirect()->back()->withErrors($validator)->withInput();
+		if ($first_name != NULL) {
+			$type = 'doctor';
+			$profile = 'basic';
+			if ($validator->fails()) {
+				return redirect()->back()->withInput()->with('error', 'Oops! Something went wrong..');;
+			}
+		} else {
+			$type = 'patient';
+			$profile = '';
+			if ($email == '' || $confirm_password == '' || $request->input('password') == '' ||$confirm_password != $request->input('password')) {
+				return redirect()->back()->withInput()->with('error', 'Oops! Something went wrong..');;
+			}
+
+			$first_name = 'user';
+			$last_name = '';
+			$gender = '';
+			$RUT_number = '';
+			$contact = '';
+			$subscribe_notifications = 'on';
 		}
 
 		$authenticateResult = $this->register_authenticate($email);
 		if ($authenticateResult === true) {
+		$hashKey = uniqid(time());
 		$employee = [
-		    'first_name' => 'user',
+		    'first_name' => $first_name,
+		    'last_name' => $last_name,
 		    'RUT_number' => $RUT_number,
-		    'how_did_know' => $how_did_know,
 		    'notification' => $subscribe_notifications,
 		    'mobile' => $contact,
+		    'profile' => $profile,
+		    'visitor_count' => 0,
+            'hash_key' => $hashKey,
 		    'mobile2' => "",
+		    'type' => $type,
+		    'specialty' => $specialty,
 		    'email' => $email,
-		    'gender' => '',
+		    'gender' => $gender,
 		    'dept' => "1",
 		    'city' => "",
 		    'address' => "",
@@ -204,17 +283,24 @@ class IndexController extends Controller
        
 		if ($insertedEmployees) {
 			$user = [
-	            'name' => 'user',
+	            'name' => $first_name,
 	            'email' => $email,
 	            'password' => bcrypt($confirm_password),
 	            'context_id' => $getInsertedId,
-	            'type' => "doctor",
-	            'hash_key' => uniqid(time()),
+	            'type' => $type,
+	            'hash_key' => $hashKey,
 			    'created_at' => Carbon::now(),
 			    'status' => 'deactive',
+			    'confirm_email' => uniqid(time()).uniqid(),
+			    
 	        ];
 			$insertedUsers = DB::table('users')->insert($user);
 			if ($insertedUsers) {
+				if ($type == 'doctor') {
+					$role_id = 2;
+				} else {
+					$role_id = 3;
+				}
 				$role = [
 					'role_id' => 2,
 					'user_id' => $getInsertedId,
@@ -231,7 +317,19 @@ class IndexController extends Controller
 
 	}
 
-	//View Confirm email page
+	// email address check if already check
+	public function register_authenticate($email)
+	{
+        $haveUser = DB::table('users')->WHERE('email', $email)->first();
+        if ($haveUser) {
+    		return $messsage = 'Email Address already exists!';
+        }
+        else {
+        	return true;
+        }
+	}
+
+	//view Confirm email page
 	public function confirm_email($hash_key)
 	{
 		$title = 'Confirm Email';
@@ -280,14 +378,15 @@ class IndexController extends Controller
 	}
 
 	// View normal Profile Page
-	public function doctor_profile()
+	public function my_data()
 	{
 		$title = 'Edit Profile';
 		if (Auth::check()) {
+			
 			$userID = Auth::user()->id;
 	        $EmpTbl = DB::table('employees')->where('id', $userID)->first();
 	        $UserTbl = DB::table('users')->where('id', $userID)->first();
-			return view('frontend.doctor_profile', compact('title', 'EmpTbl', 'UserTbl'));
+			return view('frontend.my_data', compact('title', 'EmpTbl', 'UserTbl'));
 		} else {
 			return redirect('/');
 		}
@@ -372,16 +471,18 @@ class IndexController extends Controller
 	        return $uuid;
 	    }
 	}
-
+	// Doctor Full Profile Edit
 	public function doctor_profile_full($uniqid)
 	{
-		$title = 'Doctor Profile';
 		if (Auth::check()) {
 			$userID = Auth::user()->id;
 	        $UserTbl = DB::table('users')->WHERE([['id', $userID], ['hash_key', $uniqid]])->first();
 	        $EmpTbl = DB::table('employees')->WHERE('id', $userID)->first();
+			$allSpecialities = DB::table('specialities')->get();
+			$title = $EmpTbl->first_name;
+			$userID = Auth::user()->id;
 	        if ($UserTbl != NULL) {
-				return view('frontend.doctor_full_profile', compact('title', 'UserTbl', 'EmpTbl'));
+				return view('frontend.doctor_full_profile', compact('title', 'UserTbl', 'EmpTbl', 'allSpecialities'));
 	        } else {
 				return redirect('/');
 	        }
@@ -494,20 +595,383 @@ class IndexController extends Controller
         return $done;
 	}
 
+	// Add Photos with Dropzone with ajax
 	public function fileStore(Request $request) {
 
-        $image = $request->file('file');
-        $imageName = $image->getClientOriginalName();
-        $image->move(public_path('upload'), $imageName);
-        
-        $imageUpload = new doctor_profile_full();
-        $imageUpload->filename = $imageName;
-        $imageUpload->save();
-        return response()->json(['success'=>$imageName]);
+		$userRow = DB::table('employees')->where('id', $request->user_id);
+		$user = $userRow->first();
+		
+		$arrayPhotos = explode(",", $user->photos);
+		if (count($arrayPhotos) < 10) {
+	        
+	        $image = $request->file('file');
+	        $extension = $image->getClientOriginalExtension();
+			$imageName = uniqid(time()).'.'.$extension;
+	        $image->move(public_path('upload'), $imageName);
+
+			$newPhotos = '"'.$imageName.'"';
+			array_push($arrayPhotos, $newPhotos);
+			$filtered_array = array_filter($arrayPhotos);
+			$newPhotosStr = implode(",",$filtered_array);
 			
+			$updatePhotos = [
+		            'photos' => $newPhotosStr
+			    ];
+	        $done = $userRow->update($updatePhotos);	
+	        
+	        return response()->json(['success'=> $imageName]);
+		} else {
+	        return response()->json(['error'=>'error']);
+		}	
     }
 
+	// Remove Photos with Dropzone with ajax
+    public function fileDestroy(Request $request)
+    {
+    	$userRow = DB::table('employees')->where('id', $request->user_id);
+		$user = $userRow->first();
+		
+		$arrayPhotos = explode(",", $user->photos);
+
+        $filename =  $request->image;
+
+		$removedArrayPhotos = array_search($filename, $arrayPhotos);
+
+		unset($arrayPhotos[$removedArrayPhotos]);
+
+		$filtered_array = array_filter($arrayPhotos);
+		
+		$newPhotosStr = implode(",",$filtered_array);
+		
+		$updatePhotos = [
+	            'photos' => $newPhotosStr
+		    ];
+        $done = $userRow->update($updatePhotos);	
+        
+        return response()->json(['success'=> $done]);
+    }
+
+    // View Consulting Time add page
+    public function consulting_time()
+	{
+		$title = 'Consulting Time';
+		if (Auth::check()) {
+			return view('frontend.consulting_time', compact('title'));
+		} else {
+			return redirect('/');
+		}
+	}
+
+	// Add Consulting Time in DB
+	public function consulting_add(Request $request)
+	{
+		if (Auth::check()) {
+			$user_id = Auth::user()->id;
+			$day = $request->day;
+			$status = $request->status;
+			$from_time = $request->from_time;
+			$from_AM_PM = $request->from_AM_PM;
+			$to_time = $request->to_time;
+			$to_AM_PM = $request->to_AM_PM;
+			$location = $request->location;
+			
+			$updateConsulting = [
+	            'doctor_id' => $user_id,
+	            'day' => $day,
+	            'from_time' => $from_time,
+	            'from_AM_PM' => $from_AM_PM,
+	            'to_time' => $to_time,
+	            'to_AM_PM' => $to_AM_PM,
+	            'location' => $location
+		    ];
+
+			if ($status != NULL) {
+		        $done = DB::table('consulting_time')->insert($updateConsulting);
+				return redirect()->back()->with('message', 'Consulting time updated successfully');
+			} else {
+				$updateConsultingOff = [
+		            'doctor_id' => $user_id,
+		            'day' => $day,
+		            'status' => 'off'
+				];
+
+		        $done = DB::table('consulting_time')->insert($updateConsultingOff);
+				return redirect()->back()->with('message', 'Consulting time updated successfully');
+			}
+		} else {
+			return redirect('/');
+		}
+	}
+
+	// View all Doctors
+	public function all_professional()
+	{
+		$title = 'All Professional';
+		$allDoctors = DB::table('employees')->where('type', 'doctor')->orderBy('profile', 'DESC')->orderBy('reviews', 'DESC')->get();
+		return view('frontend.all_professional', compact('title', 'allDoctors'));
+	}
+
+	// View all appointments
+	public function reservations()
+	{
+		if (Auth::check()) {
+			$userID = Auth::user()->id;
+	        $EmpTbl = DB::table('employees')->where('id', $userID)->first();
+	        $UserTbl = DB::table('users')->where('id', $userID)->first();
+	        if ($UserTbl->type == 'patient') {
+				$title = 'All Reservations';
+				$allDoctors = DB::table('employees')->where('type', 'doctor')->get();
+				return view('frontend.quotes', compact('title', 'allDoctors', 'userID', 'EmpTbl', 'UserTbl'));
+	        } else {
+				return redirect('/');
+	        }
+
+		} else {
+			return redirect('/');
+		}
+	}
+
+	// view favourtie doctors of single patient
+	public function favourites()
+	{
+		if (Auth::check()) {
+			$userID = Auth::user()->id;
+	        $EmpTbl = DB::table('employees')->where('id', $userID)->first();
+	        $UserTbl = DB::table('users')->where('id', $userID)->first();
+	        if ($UserTbl->type == 'patient') {
+				$title = 'My Favourites';
+				$favourite = DB::table('favourite_doctors')->where('patient_id', $userID)->first();
+				return view('frontend.favourites', compact('title', 'userID', 'EmpTbl', 'UserTbl', 'favourite'));
+        	} else {
+				return redirect('/');
+	        }
+
+		} else {
+			return redirect('/');
+		}
+	}
 	
+	// View Doctor Full Profile
+
+	public function doctor_profile_view($id, $uniqid)
+	{
+
+        $UserTbl = DB::table('users')->WHERE([['id', $id], ['hash_key', $uniqid]])->first();
+        $EmpTbl = DB::table('employees')->WHERE('id', $id)->first();
+		
+		$title = $EmpTbl->first_name;
+		
+        if ($UserTbl != NULL) {
+			return view('frontend.doctor_view_profile', compact('title', 'UserTbl', 'EmpTbl'));
+        } else {
+			return redirect('/');
+        }
+	}
+
+	public static function getTimingDoctor($day, $id) {
+		$allTimings = DB::table('consulting_time')->WHERE('day', $day)->WHERE('doctor_id', $id)->get();
+		$times = '';
+		if ($allTimings != NULL) {
+			foreach ($allTimings as $key => $allTiming) {
+				if ($allTiming->status == 'off') {
+					continue;
+				} else {
+					$times .= '<p class="mb-1"><a href="">'.$allTiming->from_time.' '.$allTiming->from_AM_PM.'</a></p>';
+				}
+			}
+		}
+		return $times;
+	}
+
+	// Make Doctor Favourite
+	public function make_fav(Request $request)
+	{
+        $doctor_id = $request->doctor_id;
+        $user_id = $request->user_id;
+
+        $favTable = DB::table('favourite_doctors')->WHERE('patient_id', $user_id)->first();
+        if ($favTable != NULL) {
+        	$allDoctorsIDs = explode(',', $favTable->doctors_list);
+        	if (in_array($doctor_id , $allDoctorsIDs)) {
+        		$foundDoctor = array_search($doctor_id, $allDoctorsIDs);
+        		unset($allDoctorsIDs[$foundDoctor]);
+        	} else {
+	        	array_push($allDoctorsIDs, $doctor_id);
+        	}
+        	$doctors = implode(',',$allDoctorsIDs);
+        	$favDoctor = [
+        		'doctors_list' => $doctors
+        	];
+	        $favTable = DB::table('favourite_doctors')->WHERE('patient_id', $user_id)->update($favDoctor);
+        } else {
+        	$favDoctor = [
+        		'patient_id' => $user_id,
+        		'doctors_list' => $doctor_id
+        	];
+	        $favTable = DB::table('favourite_doctors')->insert($favDoctor);
+        }
+	}
+
+	// Review Given Page
+	public function review_doctor($id, $uniqid)
+	{
+        $UserTbl = DB::table('users')->WHERE([['id', $id], ['hash_key', $uniqid]])->first();
+        $EmpTbl = DB::table('employees')->WHERE('id', $id)->first();
+		
+		$title = $EmpTbl->first_name;
+		
+        if ($UserTbl != NULL) {
+			return view('frontend.review_doctor', compact('title', 'UserTbl', 'EmpTbl'));
+        } else {
+			return redirect('/');
+        }
+	}
+
+	// review add in database
+	public function review_add(Request $request)
+	{
+        
+        $doctor_id = $request->doctor_id;
+        $patient_id = $request->user_id;
+        $facilities = $request->facilities;
+        $puntuality = $request->puntuality;
+        $attention = $request->attention;
+        $recommendable = $request->recommendable;
+        $total = $facilities+$puntuality+$attention+$recommendable;
+        $reason = $request->reason;
+        $like = $request->like;
+        $improved = $request->improved;
+        if ($patient_id != NULL) {
+	        if ($request->facilities != NULL && $request->puntuality != NULL && $request->attention != NULL && $request->recommendable != NULL) {
+	        	$review = [
+	        		'doctor_id' => $doctor_id,
+	        		'patient_id' => $patient_id,
+	        		'facilities' => $facilities,
+	        		'puntuality' => $puntuality,
+	        		'attention' => $attention,
+	        		'recommendable' => $recommendable,
+	        		'total' => $total,
+	        		'reason' => $reason,
+	        		'like' => $like,
+	        		'improved' => $improved,
+	        	];
+		        $reviewInserted = DB::table('review_doctors')->insert($review);
+		        // Insert review in doctor profile section
+		        $allReviews = DB::table('review_doctors')->where('doctor_id', $doctor_id);
+		        $allReviewsGet = $allReviews->get();
+
+		        if ($allReviewsGet != NULL) {
+                  $reviewss = 0;
+		          foreach ($allReviewsGet as $key => $reviewCount) {
+		            $reviewss = $reviewss + $reviewCount->total;
+		          }
+		          $frstCalc = $reviewss/$allReviews->count();
+		          $ratings = ($frstCalc/4);
+		        } else {
+		        	$ratings = 0;
+		        }
+		        $updateReview = [
+		        	'reviews' => $ratings
+		        ];
+
+		        $updatedDoctorReview = DB::table('employees')->where('id', $doctor_id)->update($updateReview);
+				return redirect('/thankyou_review/'.$doctor_id);
+	        } else {
+				return redirect()->back();
+	        }
+        } else {
+			return redirect()->back();
+        }
+	}
+
+	// View Thank You page after review
+	public function thankyou_review($hash_key)
+	{
+		$title = 'Thank You! Your opinion was sent';
+		if (Auth::check()) {
+			return view('frontend.thankyou_review', compact('title'));
+		} else {
+			return redirect('/');
+		}
+	}
+
+	// Remove Specialty of Doctor with ajax
+	public function remove_specialty(Request $request){	
+
+		$user = DB::table('employees')->where('id', $request->user_id);
+		$getUserRow = $user->first();
+		$oldSpecialty = explode(',', $getUserRow->specialty);
+
+		if (($key = array_search($request->specialty, $oldSpecialty)) !== false) {
+		    unset($oldSpecialty[$key]);
+		}
+
+
+		$filtered_array = array_filter($oldSpecialty);
+
+		if (count($filtered_array) != 0) {
+		
+			$newSpecialtyStr = implode(",",$filtered_array);
+			
+			$updateSpecialty = [
+		            'specialty' => $newSpecialtyStr
+			    ];
+	        $done = $user->update($updateSpecialty);
+	        return $done;
+		} else {
+			return 0;
+		}
+	}
+
+	// Add Specialty of Doctor with ajax
+	public function addSpecialty(Request $request)
+	{
+		$user = DB::table('employees')->where('id', $request->user_id);
+		$getUserRow = $user->first();
+		$oldSpecialty = explode(',', $getUserRow->specialty);
+		$newSpecialty = explode(',', $request->specialty);
+		$totalSpecialties = array_merge($oldSpecialty, $newSpecialty);
+
+		$allSpecialty = implode(',', $totalSpecialties);
+
+		$updateSpecialty = [
+				'specialty' => $allSpecialty
+			];
+	    $done = $user->update($updateSpecialty);
+	    return $totalSpecialties;
+	}
+
+	// Book Appointment form page
+	public function book_appointment(Request $request)
+	{
+		$title = 'Book Appointment';
+		return view('frontend.book_appointment', compact('title'));
+	}
+
+	// Add & Remove Service
+	public function addService(Request $request)
+	{
+		$updateServices = [
+	            'services' => serialize($request->data),
+		    ];
+        $done = DB::table('employees')->where('id', $request->user_id)->update($updateServices);	
+        return $done;
+	}
+
+	
+
+	
+
+	
+
+
+
+	
+	
+
+	
+	
+
 
 	
 
@@ -537,63 +1001,7 @@ class IndexController extends Controller
 		return view('frontend.index', compact('title', 'haveCourses', 'haveCategories'));
 	}
 
-	public function single_course($id)
-	{
-        $singleCourse = DB::table('all_courses')->WHERE('id', $id)->first();
-	    $title = $singleCourse->name;
-		return view('frontend.single', compact('title', 'singleCourse'));
-	}
-
-	public function buyNow($course_id, $user_id)
-	{
-        $singleCourse = DB::table('all_courses')->WHERE('id', $course_id)->first();
-        if ($singleCourse->purchased_by == '[]') {
-        	$user = '["'.$user_id.'"]';
-        } else {
-        	$user = trim($singleCourse->purchased_by, ']');
-        	$user .= ',"'.$user_id.'"]';
-        }
-    	$UpdatePur = ['purchased_by' => $user];
-        $done = DB::table('all_courses')->where('id', $course_id)->update($UpdatePur);
-        
-        DB::table('payments')->insert([
-			'user_id' => $user_id,
-			'course_id' => $course_id,
-			'amount' => $singleCourse->price,
-			'instructor' => $singleCourse->user_id
-		]);
-        return redirect('/single_course/'.$course_id);
-	}
-
-	public function profile()
-	{
-		$title = 'Profile Ethical Hacking';
-		if (Auth::check()) {
-			return view('frontend.profile', compact('title'));
-		} else {
-			return redirect('/');
-			
-		}
-	}
-
-	public function course_videos($course_id)
-	{
-		$title = 'Course Videos Ethical Hacking';
-		if (Auth::check()) {
-	        $singleCourse = DB::table('all_courses')->WHERE('id', $course_id)->first();
-
-	        $purchased = explode(',', trim($singleCourse->purchased_by, "[]"));
-	        if ($purchased != '') {
-	           if (in_array('"'.Auth::user()->id.'"', $purchased))  {
-					return view('frontend.course_videos', compact('title', 'singleCourse'));
-				}
-				return redirect('/single_course/'.$course_id);
-			}
-		} else {
-			return redirect('/');
-		}
-	}
-
+	
 	public function course_questions($course_id)
 	{		
 
@@ -633,96 +1041,7 @@ class IndexController extends Controller
 		}
 	}
 
-	public function make_fav($course_id, $user_id)
-	{
-        $singleCourse = DB::table('all_courses')->WHERE('id', $course_id)->first();
 
-        $arrayfavourite = explode(',', trim($singleCourse->favourite, "[]"));
-        if (in_array('"'.$user_id.'"', $arrayfavourite)) {
-        	$array_without_Fav = array_diff($arrayfavourite, array('"'.$user_id.'"'));
-        	$newFav = '['.implode(",",$array_without_Fav).']';
-        	$UpdateFav = ['favourite' => $newFav];
-        } else {
-        	if ($singleCourse->favourite == '[]') {
-        		$IDforUpdate = '["'.$user_id.'"]';
-	        	$UpdateFav = ['favourite' => $IDforUpdate];
-        		
-        	} else {
-        	array_push($arrayfavourite, '"'.$user_id.'"');
-        	$newFav = '['.implode(",",$arrayfavourite).']';
-        	$UpdateFav = ['favourite' => $newFav];
-        	}
-        }
-        $done = DB::table('all_courses')->where('id', $course_id)->update($UpdateFav);
-		return redirect()->back();
-	}
-
-	public function studentverify($hash)
-	{
-        $studentGet = DB::table('users')->WHERE('hash_key', $hash)->first();
-        if ($studentGet) {
-	        $Updatehash = ['status' => 'active', 'hash_key' => Null];
-			$done = DB::table('users')->where('hash_key', $hash)->update($Updatehash);
-			return redirect('/frontend/login')->with('message', 'Thank You for Register Please login with your Email & Password');
-        } else {
-			return redirect('/frontend/login')->with('message', 'Token Expire !');
-        }
-	}
-
-	public function student_register()
-	{
-		$title = 'Register Ethical Hacking';
-		if (Auth::check()) {
-			return redirect('/');
-		}else {
-			return view('frontend.register', compact('title'));
-			
-		}
-	}
-
-
-	public function register_authenticate($email)
-	{
-        $haveUser = DB::table('users')->WHERE('email', $email)->first();
-        if ($haveUser) {
-    		return $messsage = 'Email Address already exists!';
-        }
-        else {
-        	return true;
-        }
-	}
-
-	public function logout() {
-		Auth::logout();
-		session()->flush();
-		return redirect()->back();
-	}
-
-
-	public function submit_comment(Request $request){	
-		$UserImage = $request->user_image;
-
-		$current_time = Carbon::now()->toDateTimeString();
-		DB::table('comments')->insert([
-			'course_id' => $request->course_name,
-			'user_id' => $request->user_id,
-			'user_comments' => $request->current_user_comment,
-			'created_at' => $current_time,
-			'instructor' => $request->instructorID
-		]);
-
-		$current_comment = "<div class='post-author' style='margin-top:2%;'>
-                     <div class='alignleft no-shrink rounded-circle'>                        
-                        <img src=".$UserImage." class='rounded-circle' alt='image description'>
-                     </div>
-                     <div class='description-wrap'>
-                        <h2 class='author-heading'><b>". Auth::user()->name."</b>".\Carbon\Carbon::parse($request->currentDate)->diffForHumans()."</h2>
-                        <h3 class='author-heading-subtitle'>". $request->current_user_comment."</h3>
-                     </div>
-                  </div> ";
-
-                  return $current_comment;
-	}
 
 	public function ask_question(Request $request){	
 
@@ -775,12 +1094,6 @@ class IndexController extends Controller
         $updates = DB::table('faq_questions')->where('id', $request->question_id)->update($UpdateCount);
 	}
 
-	public function certificate($course_id){
-	    $title = 'Certificate';
-		return view('frontend.certificate', ['courseID' => $course_id], compact('title')); 
-
-	}
-
 	public function load_questions(Request $request){	
 	    $allQuestions = DB::table('faq_questions')->WHERE('course_id', $request->course_id)->orderBy('id', 'DESC')->offset($request->offset)->limit(10)->get();
 	    $newQuestions = "";
@@ -802,41 +1115,6 @@ class IndexController extends Controller
 	    }
 	    return $newQuestions;
 	}
-	
-	// Payment
 
-	public function createRequest(request $request){
-
-		$ch = curl_init();
-
-		curl_setopt($ch, CURLOPT_URL, 'https://www.instamojo.com/api/1.1/payment-requests/');
-		curl_setopt($ch, CURLOPT_HEADER, FALSE);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_setopt($ch, CURLOPT_HTTPHEADER,
-		            array("X-Api-Key:f020818fc4949ccf9b8e816cd37e281e",
-		                  "X-Auth-Token:4839231580e63cd542b29ae45d3c682e"));
-		$payload = Array(
-		    'purpose' => $request->purpose,
-		    'amount' => $request->amount,
-		    'phone' => null,
-		    'buyer_name' => $request->name,
-		    'redirect_url' => 'https://frankeey.com/frontend/buyNow/'.$request->course_id.'/'.$request->user_id,
-		    'send_email' => false,
-		    'webhook' => 'http://instamojo.dev/webhook/',
-		    'send_sms' => false,
-		    'email' => $request->email,
-		    'allow_repeated_payments' => false
-		);
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload));
-		$response = curl_exec($ch);
-		curl_close($ch); 
-
-		 $data = json_decode($response, true);
-
-		return redirect($data['payment_request']['longurl']);
-
-	}
 
 }

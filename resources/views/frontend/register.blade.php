@@ -9,7 +9,7 @@
             <div class="login-main-head">
                <h2 class="border-bottom">Registro de Professional</h2>
             </div>
-			@if(session()->has('error'))
+			   @if(session()->has('error'))
                 <div class="alert alert-danger">
                     {!! session()->get('error') !!}
                 </div>
@@ -17,7 +17,7 @@
             <div class="login-points">
                <ul class="list-unstyled">
                   <li>
-                     <span class="point-1">2</span>
+                     <span class="point-1">3</span>
                      <span class="point-1-head">
                         <h4>Su cuenta de usuario en Doctoralia</h4>
                      </span>
@@ -27,7 +27,11 @@
             </div>
             <div class="login_form text-center">
                <form method="post" action="/register_check">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                  <input type="hidden" name="first_name" value="<?= $inputFields['first_name'] ?>">
+                  <input type="hidden" name="last_name" value="<?= $inputFields['last_name'] ?>">
+                  <input type="hidden" value="<?= $inputFields['gender'] ?>" name="gender">
+                  <input type="hidden" value="<?= $inputFields['specialty'] ?>" name="specialty">
                   <div class="row">
                      <div class="col-lg-3 col-md-2 col-sm-4 col-3 offset-lg-2 label-sec text-right">
                         <label for="" class="email text-right">Número RUT</label>
@@ -60,7 +64,7 @@
                         <label for="" class="mt-2 pt-2 text-right">Contraseña</label>
                      </div>
                      <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input_email-sec">
-                        <input type="password" class="form-control mt-2 w-50" id="password" name="password" placeholder="Introducir la contraseña" required>
+                        <input type="password" class="form-control mt-2 w-50" id="password" name="password" placeholder="Introducir la contraseña" minlength="6" required>
                         <p class="textHelp f-size text-left">Para iniciar sesión en Doctoralia</p>
                      </div>
                   </div>
@@ -69,25 +73,7 @@
                         <label for="password" class="mt-2 pt-2 text-right">Confirme contraseña</label>
                      </div>
                      <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input_email-sec">
-                        <input type="password" class="form-control mt-2 w-50" id="confirm_password" name="confirm_password" placeholder="Introduzca la contraseña de confirmación" required>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-lg-3 col-md-2 col-sm-4 col-3 offset-lg-2 label-sec text-right">
-                        <label for="password" class="mt-2 pt-2 text-right">¿Cómo nos ha conocido?</label>
-                     </div>
-                     <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input_email-sec">
-	                      <select class="form-control w-100 text-left how_did_know" name="how_did_know" id="dropdownMenuButton" required>
-	                      	<option value="" hidden>--- por favor, seleccionar</option>
-	                      	<option value="1">Por recomendación de un compañero de profesión</option>
-	                      	<option value="2">A través de un conocido o familiar</option>
-	                      	<option value="3">A través de un paciente</option>
-	                      	<option value="4">He leído sobre vosotros en la prensa</option>
-	                      	<option value="5">Os he encontrado buscando en Google o en otros buscadores</option>
-	                      	<option value="6">Os he visto en un anuncio en Internet</option>
-	                      	<option value="7">Os he visto en redes sociales (Facebook, Twitter, LinkedIn, etc.)</option>
-	                      	<option value="8">Tras oír hablar sobre Doctoralia en conferencias o eventos</option>
-	                      </select>
+                        <input type="password" class="form-control mt-2 w-50" id="confirm_password" name="confirm_password" placeholder="Introduzca la contraseña de confirmación" minlength="6" required>
                      </div>
                   </div>
                   <div class="row">

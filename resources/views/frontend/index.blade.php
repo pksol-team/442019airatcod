@@ -16,16 +16,20 @@
          <div class="header-nav w-100">
             <div class="container">
                <div class="brand float-left w-25">
-                  <a href="#"><img src="/frontend/assets/img/Original.png" alt="Logo - Doctaria"></a>
+                  <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - Doctaria"></a>
                </div>
                <div class="nav-items float-right w-75">
                   <div class=" nav-links float-right">
                      <a href="#" class="text-white">¿Es un profesional de la salud?</a>
                      <?php if (Auth::check() != true): ?>
-                     <button class="btn bg-green"><a href="/register_doctor" class="text-white">Registrarme</a></button>
+                     <button class="btn bg-green"><a href="/register_doctor_init" class="text-white">Registrarme</a></button>
                      <button class="btn bg-blue text-white"><a href="/userlogin" class="text-white">Iniciar sesión</a></button>
                      <?php else: ?>
-                     <button class="btn bg-blue text-white"><a href="/doctor_profile" class="text-white"><?php echo $user->name; ?></a></button>
+                        <?php if (Auth::user()->type == 'patient'): ?>
+                           <button class="btn bg-blue text-white"><a href="/my_data" class="text-white"><?php echo $user->name; ?></a></button>
+                        <?php else: ?>
+                           <button class="btn bg-blue text-white"><a href="/doctor_full_profile/<?= $user->hash_key; ?>" class="text-white"><?php echo $user->name; ?></a></button>
+                        <?php endif ?>
                      <?php endif ?>
                   </div>
                </div>

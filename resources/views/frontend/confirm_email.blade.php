@@ -10,7 +10,7 @@
       <div class="row reg login-sec">
          <div class="col-lg-8">
             <div class="login-main-head">
-               <h2 class="border-bottom">Registro de Professional</h2>
+               <h2 class="border-bottom">Registro <?= ($NewUser->type == 'doctor') ? 'de Professional' : NULL; ?></h2>
             </div>
             <div class="login-points">
                <ul class="list-unstyled">
