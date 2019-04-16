@@ -48,8 +48,33 @@ class IndexController extends Controller
 	public function index()
 	{
 		$title = 'Home-Doctaria';
-		return view('frontend.index', compact('title'));
+		$allSpecialitiesBottom = DB::table('specialities')->take(10)->get();
+		$allCities = DB::table('cities')->take(10)->get();
+		$allForecasts = DB::table('forecasts')->take(10)->get();
+		return view('frontend.index', compact('title', 'allSpecialitiesBottom', 'allCities', 'allForecasts'));
 	}
+
+	// View city/specialty/forecast
+	public function viewFullbyTag($tag)
+	{
+		$title = 'All '.$tag;
+		if ($tag == 'Specialty') {
+			$table = 'specialities';
+			$heading = 'Specialists';
+		}
+		if ($tag == 'City') {
+			$table = 'cities';
+			$heading = 'Health professionals Chile';
+		}
+		if ($tag == 'Forecast') {
+			$table = 'forecasts';
+			$heading = 'Forecast';
+		}
+		$allTags = DB::table($table)->get();
+		return view('frontend.viewFullbyTag', compact('title', 'table', 'allTags', 'heading'));
+	}
+
+	
 
 	// View Doctor Login Page
 	public function login()
@@ -175,7 +200,9 @@ class IndexController extends Controller
 		if (Auth::check()) {
 			return redirect('/');
 		} else {
-			return view('frontend.register_init', compact('title'));
+			$allCities = DB::table('cities')->get();
+			$allForecasts = DB::table('forecasts')->get();
+			return view('frontend.register_init', compact('title', 'allCities', 'allForecasts'));
 		}
 	}
 
@@ -190,6 +217,8 @@ class IndexController extends Controller
 			$inputFields = [
 				'first_name' => $request->first_name,
 				'last_name' => $request->last_name,
+				'city' => $request->city,
+				'forecast' => $request->forecast,
 				'gender' => $request->gender
 			];
 			return view('frontend.register_mid', compact('title', 'inputFields', 'allSpecialities'));
@@ -205,8 +234,11 @@ class IndexController extends Controller
 			$inputFields = [
 				'first_name' => $request->first_name,
 				'last_name' => $request->last_name,
+				'city' => $request->city,
+				'forecast' => $request->forecast,
 				'gender' => $request->gender,
-				'specialty' => $request->specialty
+				'specialty' => $request->specialty,
+				'sub_specialty' => $request->specialtyName
 			];
 
 			return view('frontend.register', compact('title', 'inputFields'));
@@ -220,6 +252,7 @@ class IndexController extends Controller
 		$last_name = $request->input('last_name');
 		$gender = $request->input('gender');
 		$specialty = $request->input('specialty');
+		$sub_specialty = $request->input('sub_specialty');
 		$RUT_number = $request->input('RUT_number');
 		$contact = $request->input('contact');
 		$email = $request->input('email');
@@ -233,19 +266,23 @@ class IndexController extends Controller
 		if ($first_name != NULL) {
 			$type = 'doctor';
 			$profile = 'basic';
+			$city = $request->input('city');
+			$forecast = $request->input('forecast');
 			if ($validator->fails()) {
 				return redirect()->back()->withInput()->with('error', 'Oops! Something went wrong..');;
 			}
 		} else {
 			$type = 'patient';
 			$profile = '';
-			if ($email == '' || $confirm_password == '' || $request->input('password') == '' ||$confirm_password != $request->input('password')) {
-				return redirect()->back()->withInput()->with('error', 'Oops! Something went wrong..');;
+			if ($email == '' || $confirm_password == '' || $request->input('password') == '' || $confirm_password != $request->input('password')) {
+				return redirect()->back()->withInput()->with('error', 'Oops! Something went wrong..');
 			}
 
 			$first_name = 'user';
 			$last_name = '';
 			$gender = '';
+			$city = '';
+			$forecast = '';
 			$RUT_number = '';
 			$contact = '';
 			$subscribe_notifications = 'on';
@@ -266,10 +303,12 @@ class IndexController extends Controller
 		    'mobile2' => "",
 		    'type' => $type,
 		    'specialty' => $specialty,
+		    'sub_specialty' => $sub_specialty,
 		    'email' => $email,
 		    'gender' => $gender,
 		    'dept' => "1",
-		    'city' => "",
+		    'city' => $city,
+		    'forecast' => $forecast,
 		    'address' => "",
 		    'about' => "",
 		    'date_birth' => date("Y-m-d"),
@@ -413,10 +452,6 @@ class IndexController extends Controller
 		
 		if (Auth::check()) {
 
-			if ($validatorEmp->fails()) {
-				return redirect()->back()->withInput()->with('error', 'Oops! Something went wrong..');
-			}
-
 			$employee = [
 		    'first_name' => $first_name,
 		    'last_name' => $last_name,
@@ -471,6 +506,25 @@ class IndexController extends Controller
 	        return $uuid;
 	    }
 	}
+	// Premium Profile view
+	public function premium_profile($id, $uniqid) {
+
+		if (Auth::check()) {
+	        $UserTbl = DB::table('users')->WHERE([['id', $id], ['hash_key', $uniqid]])->first();
+	        $EmpTbl = DB::table('employees')->WHERE('id', $id)->first();
+	        $allPremiumDoctors = DB::table('employees')->WHERE([['type', 'doctor'], ['profile', 'premium']])->get();
+			$title = $EmpTbl->first_name;
+	        if ($UserTbl != NULL) {
+				return view('frontend.premium_profile', compact('title','allPremiumDoctors', 'UserTbl', 'EmpTbl'));
+	        } else {
+				return redirect('/');
+	        }
+
+		} else {
+			return redirect('/');
+		}
+	}
+	
 	// Doctor Full Profile Edit
 	public function doctor_profile_full($uniqid)
 	{
@@ -480,7 +534,6 @@ class IndexController extends Controller
 	        $EmpTbl = DB::table('employees')->WHERE('id', $userID)->first();
 			$allSpecialities = DB::table('specialities')->get();
 			$title = $EmpTbl->first_name;
-			$userID = Auth::user()->id;
 	        if ($UserTbl != NULL) {
 				return view('frontend.doctor_full_profile', compact('title', 'UserTbl', 'EmpTbl', 'allSpecialities'));
 	        } else {
@@ -704,32 +757,63 @@ class IndexController extends Controller
 	}
 
 	// View all Doctors
-	public function all_professional()
+	public function all_professional(Request $request)
 	{
 		$title = 'All Professional';
-		$allDoctors = DB::table('employees')->where('type', 'doctor')->orderBy('profile', 'DESC')->orderBy('reviews', 'DESC')->get();
-		return view('frontend.all_professional', compact('title', 'allDoctors'));
-	}
-
-	// View all appointments
-	public function reservations()
-	{
-		if (Auth::check()) {
-			$userID = Auth::user()->id;
-	        $EmpTbl = DB::table('employees')->where('id', $userID)->first();
-	        $UserTbl = DB::table('users')->where('id', $userID)->first();
-	        if ($UserTbl->type == 'patient') {
-				$title = 'All Reservations';
-				$allDoctors = DB::table('employees')->where('type', 'doctor')->get();
-				return view('frontend.quotes', compact('title', 'allDoctors', 'userID', 'EmpTbl', 'UserTbl'));
-	        } else {
-				return redirect('/');
-	        }
-
+		$allDoctorswithFilters = DB::table('employees')->where('type', 'doctor');
+		$specialty = $request->specialty.',';
+		$city = $request->city;
+		$forecast = $request->forecast;
+		$inputKeywords = $request->searchByInput;
+		
+		if ($request->searchByInput != '') {
+			$allDoctorswithFilters->Where('first_name', 'LIKE', "%$inputKeywords%");
+			$allDoctorswithFilters->orWhere('city', 'LIKE', "%$inputKeywords%");
+			$allDoctorswithFilters->orWhere('sub_specialty', 'LIKE', "%$inputKeywords%");
+			$allDoctorswithFilters->orWhere('forecast', 'LIKE', "%$inputKeywords%");
+			$allDoctorswithFilters->orWhere('last_name', 'LIKE', "%$inputKeywords%");
+			
 		} else {
-			return redirect('/');
+
+			if ($specialty != '') {
+				$allDoctorswithFilters->where('specialty', 'LIKE', "%$specialty%");
+			}
+			if ($city != '') {
+				$allDoctorswithFilters->where('city', 'LIKE', "%$city%");
+			}
+			if ($forecast != '') {
+				$allDoctorswithFilters->where('forecast', 'LIKE', "%$forecast%");
+			}
+
 		}
+
+		$allDoctors = $allDoctorswithFilters->orderBy('profile', 'DESC')->orderBy('reviews', 'DESC')->get();
+
+		$allSpecialities = DB::table('specialities')->get();
+		$allCities = DB::table('cities')->get();
+		$allForecasts = DB::table('forecasts')->take(10)->get();
+		return view('frontend.all_professional', compact('title', 'allDoctors', 'allSpecialities', 'allCities', 'allForecasts'));
 	}
+
+	// home page search request
+	public function searchBySpecialty(Request $request)
+	{
+		return redirect('/all_professional/?specialty='.$request->specialty.'&city='.$request->city.'&forecast='.$request->forecast.'&searchByInput='.$request->searchByInput);
+	}
+	// Contact Us page
+	public function contact_us()
+	{
+		$title = 'Contact Us';
+		return view('frontend.contact_us', compact('title'));
+	}
+
+	// Contact Us Email Section
+	public function contact_us_email()
+	{
+		return redirect()->back()->withInput()->with('message', 'Thank you for contacting us');
+	}
+	
+	
 
 	// view favourtie doctors of single patient
 	public function favourites()
@@ -770,13 +854,14 @@ class IndexController extends Controller
 
 	public static function getTimingDoctor($day, $id) {
 		$allTimings = DB::table('consulting_time')->WHERE('day', $day)->WHERE('doctor_id', $id)->get();
+        $EmpTbl = DB::table('employees')->WHERE('id', $id)->first();
 		$times = '';
 		if ($allTimings != NULL) {
 			foreach ($allTimings as $key => $allTiming) {
 				if ($allTiming->status == 'off') {
 					continue;
 				} else {
-					$times .= '<p class="mb-1"><a href="">'.$allTiming->from_time.' '.$allTiming->from_AM_PM.'</a></p>';
+					$times .= '<p class="mb-1"><a href="/book_appointment/'.$EmpTbl->id.'/'.$EmpTbl->hash_key.'/'.$allTiming->id.'">'.$allTiming->from_time.' '.$allTiming->from_AM_PM.'</a></p>';
 				}
 			}
 		}
@@ -826,7 +911,21 @@ class IndexController extends Controller
 			return redirect('/');
         }
 	}
-
+	// Review View Page
+	public function view_reviews_doctor($id, $uniqid)
+	{
+        $UserTbl = DB::table('users')->WHERE([['id', $id], ['hash_key', $uniqid]])->first();
+        $EmpTbl = DB::table('employees')->WHERE('id', $id)->first();
+        $reviews = DB::table('review_doctors')->WHERE('doctor_id', $id)->orderBy('id', 'DESC')->get();
+		
+		$title = $EmpTbl->first_name;
+		
+        if ($UserTbl != NULL) {
+			return view('frontend.view_review', compact('title', 'UserTbl', 'reviews'));
+        } else {
+			return redirect('/');
+        }
+	}
 	// review add in database
 	public function review_add(Request $request)
 	{
@@ -900,21 +999,27 @@ class IndexController extends Controller
 
 		$user = DB::table('employees')->where('id', $request->user_id);
 		$getUserRow = $user->first();
-		$oldSpecialty = explode(',', $getUserRow->specialty);
+		$oldSpecialty = explode(',', substr($getUserRow->specialty, 0, -1));
+		$oldsub_Specialty = explode(',', $getUserRow->sub_specialty);
 
 		if (($key = array_search($request->specialty, $oldSpecialty)) !== false) {
 		    unset($oldSpecialty[$key]);
 		}
-
+		if (($key = array_search($request->sub_specialty, $oldsub_Specialty)) !== false) {
+		    unset($oldsub_Specialty[$key]);
+		}
 
 		$filtered_array = array_filter($oldSpecialty);
+		$filtered_arraySubsp = array_filter($oldsub_Specialty);
 
 		if (count($filtered_array) != 0) {
 		
 			$newSpecialtyStr = implode(",",$filtered_array);
+			$newSubSpecialtyStr = implode(",",$filtered_arraySubsp);
 			
 			$updateSpecialty = [
-		            'specialty' => $newSpecialtyStr
+		            'specialty' => $newSpecialtyStr.',',
+		            'sub_specialty' => $newSubSpecialtyStr
 			    ];
 	        $done = $user->update($updateSpecialty);
 	        return $done;
@@ -928,24 +1033,23 @@ class IndexController extends Controller
 	{
 		$user = DB::table('employees')->where('id', $request->user_id);
 		$getUserRow = $user->first();
-		$oldSpecialty = explode(',', $getUserRow->specialty);
+		$oldSpecialty = explode(',', substr($getUserRow->specialty, 0, -1));
 		$newSpecialty = explode(',', $request->specialty);
 		$totalSpecialties = array_merge($oldSpecialty, $newSpecialty);
 
+		$oldSubSpecialty = explode(',', $getUserRow->sub_specialty);
+		$newSubSpecialty = explode(',', $request->sub_specialty);
+		$totalSubSpecialties = array_merge($oldSubSpecialty, $newSubSpecialty);
+
 		$allSpecialty = implode(',', $totalSpecialties);
+		$newSubSpecialtyStr = implode(",", $totalSubSpecialties);
 
 		$updateSpecialty = [
-				'specialty' => $allSpecialty
+				'specialty' => $allSpecialty.',',
+				'sub_specialty' => $newSubSpecialtyStr
 			];
 	    $done = $user->update($updateSpecialty);
 	    return $totalSpecialties;
-	}
-
-	// Book Appointment form page
-	public function book_appointment(Request $request)
-	{
-		$title = 'Book Appointment';
-		return view('frontend.book_appointment', compact('title'));
 	}
 
 	// Add & Remove Service
@@ -957,6 +1061,123 @@ class IndexController extends Controller
         $done = DB::table('employees')->where('id', $request->user_id)->update($updateServices);	
         return $done;
 	}
+
+	// Book Appointment form page
+	public function book_appointment($userid, $hash_key, $timeid)
+	{
+		if (Auth::check()) {
+			$userID = Auth::user()->id;
+	        $loginUser = DB::table('employees')->where('id', $userID)->first();
+	    } else {
+	    	$loginUser = NULL;
+	    }
+
+		$doctor = DB::table('employees')->where([['id', $userid],['hash_key', $hash_key]])->first();
+		$consultantTime = DB::table('consulting_time')->where([['id', $timeid],['doctor_id', $userid]])->first();
+		if ($doctor) {
+			$title = 'Book Appointment';
+			return view('frontend.book_appointment', compact('title', 'loginUser', 'doctor', 'consultantTime'));
+		} else {
+			return redirect('/');
+		}
+	}
+
+	// Appointment booking form submit action
+	public function booked_appointment(Request $request)
+	{
+		if (Auth::check()) {
+			if ($request->doctor_id != '' && $request->appointment_date != '' && $request->day != '' && $request->from_time && $request->from_AM_PM != '' && $request->patient_id != '' && $request->patient_id != 0 && $request->first_name != '' && $request->last_name != '' && $request->email != '' && $request->mobile != '' && $request->terms != '' && $request->location != '') {
+				$addAppointment = [
+			            'doctor_id' => $request->doctor_id,
+			            'patient_id' => $request->patient_id,
+			            'first_name' => $request->first_name,
+			            'last_name' => $request->last_name,
+			            'email' => $request->email,
+			            'mobile' => $request->mobile,
+			            'day' => $request->day,
+			            'appointment_date' => $request->appointment_date,
+			            'status' => 'pending',
+			            'from_time' => $request->from_time,
+			            'from_AM_PM' => $request->from_AM_PM,
+			            'location' => $request->location,
+			            'comments' => $request->comments,
+				    ];
+			    $done = DB::table('appointments')->insert($addAppointment);
+			    return redirect('/reservations')->with('message', 'Your Appointment is booked');
+			} else {
+				return redirect()->back()->withInput()->with('error', 'Oops! Something went wrong..');
+			}
+		} else {
+			return redirect()->back()->withInput()->with('error', 'Please Login or Register to book your Appointment with Doctor');
+		}
+	}
+
+	// View all appointments
+	public function reservations()
+	{
+		if (Auth::check()) {
+			$userID = Auth::user()->id;
+	        $EmpTbl = DB::table('employees')->where('id', $userID)->first();
+		    $todayDate = Carbon::now()->toDateString();
+		    $upcomingAppointments = DB::table('appointments')->where([['patient_id', $userID], ['appointment_date', '>=', $todayDate]])->orderBy('appointment_date', 'ASC')->get();
+	        if ($EmpTbl->type == 'patient') {
+				$title = 'All Reservations';
+				$allDoctors = DB::table('employees')->where('type', 'doctor')->get();
+				return view('frontend.quotes', compact('title', 'allDoctors', 'userID', 'EmpTbl', 'upcomingAppointments'));
+	        } else {
+				return redirect('/');
+	        }
+
+		} else {
+			return redirect('/');
+		}
+	}
+	
+	// get doctor information on upcoming appointments
+	public static function getDoctorInfo($id) {
+        $EmpTbl = DB::table('employees')->WHERE('id', $id)->first();
+		return $EmpTbl;
+	}
+
+	// Delete appointment
+	public function deleteReservations($timeid)
+	{
+		if (Auth::check()) {
+			$deleted = DB::table('appointments')->where('id', $timeid)->delete();
+		    return redirect('/reservations')->with('message', 'Your appointment is deleted');
+		} else {
+			return redirect('/');
+		}
+	}
+
+	// View All appointments
+	public function doctor_appointments($id, $hash_key)
+	{
+		if (Auth::check()) {
+			$title = 'All Apointments';
+		    $todayDate = Carbon::now()->toDateString();
+			$upcomingAppointments = DB::table('appointments')->where([['doctor_id', $id], ['appointment_date', '>=', $todayDate]])->orderBy('appointment_date', 'ASC')->get();
+	        $EmpTbl = DB::table('employees')->WHERE('id', $id)->first();
+			return view('frontend.all_appointments', compact('title', 'EmpTbl', 'upcomingAppointments'));
+		} else {
+			return redirect('/');
+		}
+	}
+
+	// View All appointments
+	public function frequently(Request $request)
+	{
+		$question = $request->question;
+		$title = 'F.A.Q';
+		return view('frontend.frequently', compact('title'));
+		
+	}
+
+	
+
+	
+
+	
 
 	
 

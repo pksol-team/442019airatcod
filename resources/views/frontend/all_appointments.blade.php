@@ -7,9 +7,22 @@
    <div class="container">
       <div class="pages-links">
          <ul class="list-unstyled">
-            <li class="d-inline-block active"><a href="/reservations">Quotes</a></li>
-            <li class="d-inline-block"><a href="/favourites">Favourites</a></li>
-            <li class="d-inline-block"><a href="/my_data">My Data</a></li>
+            <li class="d-inline-block active"><a href="<?= '/doctor_full_profile/'.$EmpTbl->hash_key ?>">PROFILE</a></li>
+            <li class="d-inline-block"><a href="">BOOKING APPOINTMENT</a></li>
+            <!-- <li class="d-inline-block"><a href="">STATISTICS</a></li> -->
+            <!-- <li class="d-inline-block"><a href="">ACCOUNT</a></li> -->
+         </ul>
+      </div>
+   </div>
+</div>
+<div class="row bg-white">
+   <div class="container">
+      <div class="pages-links text-gray-dark">
+         <ul class="list-unstyled">
+            <li class="d-inline-block active"><a href="" class="text-dark">PROFILE</a></li>
+            <li class="d-inline-block"><a href="/my_data" class="text-dark">My Data</a></li>
+            <!-- <li class="d-inline-block"><a href="" class="text-dark">Opinions</a></li> -->
+            <li class="d-inline-block"><a href="" class="text-dark">Premium profiles</a></li>
          </ul>
       </div>
    </div>
@@ -40,10 +53,8 @@
                      <th class="text-white">Date</th>
                      <th class="text-white">Day</th>
                      <th class="text-white">Time</th>
-                     <th class="text-white">Doctor Name</th>
-                     <th class="text-white">Address</th>
+                     <th class="text-white">Patient Name</th>
                      <th class="text-white">Phone</th>
-                     <th class="text-white">Action</th>
                   </tr>
                </thead>
                <tbody>
@@ -53,23 +64,8 @@
                            <td><?= substr($upcommingAppointment->appointment_date,0,10); ?></td>
                            <td><?= $upcommingAppointment->day ?></td>
                            <td><?= $upcommingAppointment->from_time.' '.$upcommingAppointment->from_AM_PM ?></td>
-                           <td>
-                              <?php 
-                                 $doctor = IndexController::getDoctorInfo($upcommingAppointment->doctor_id);
-                                 echo '<a href="doctor_profile_view/'.$doctor->id.'/'.$doctor->hash_key.'">Dr. '.$doctor->first_name.'</a>';
-                              ?>
-                           </td>
-                           <td><?= $upcommingAppointment->location ?></td>
-                           <td>
-                              <?php 
-                                 $doctor = IndexController::getDoctorInfo($upcommingAppointment->doctor_id);
-                                 echo $doctor->mobile;
-                              ?>
-                           </td>
-                           <td>
-                              <?php $doctor = IndexController::getDoctorInfo($upcommingAppointment->doctor_id); ?>
-                              <a href="<?= '/deleteReservations/'.$upcommingAppointment->id ?>" onclick="return confirm('Are you sure?')"><button class="btn btn-sm btn-danger">Delete</button></a>
-                           </td>
+                           <td><?= $upcommingAppointment->first_name.' '.$upcommingAppointment->last_name; ?></td>
+                           <td><?= $upcommingAppointment->mobile ?></td>
                         </tr>
                      <?php endforeach ?>
                   <?php else: ?>

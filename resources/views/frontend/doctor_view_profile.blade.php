@@ -30,8 +30,13 @@
                      <h1>Dr. <?= $EmpTbl->first_name.' '.$EmpTbl->last_name;  ?></h1>
                   </div>
                   <div id="doctor-speciality" class="col-lg-12">
-                     <p>Immunologist Allergist</p>
-                     <p>Specialist in: Allergies</p>
+                     <p>Specialist in: 
+                      <?php 
+                        $oldSpecialty = explode(',', substr($EmpTbl->specialty, 0, -1));
+                        $specialty = DB::table('specialities')->where('id', $oldSpecialty[0])->first();
+                        echo $specialty->name;
+                      ?>
+                     </p>
                   </div>
                   <div id="doctor-reg-num" class="col-lg-12">
                      <p>RUT: <?= $EmpTbl->RUT_number ?></p>
@@ -39,13 +44,14 @@
                   <div id="book-button" class="row">
                      <div id="button1">
                         <a href="#timingsOfDoctor"><i class="fa fa-calendar mr-2" aria-hidden="true"></i>
-                        Book Appoinment</a>
+                        Book Appointment</a>
                      </div>
                      <!-- <div id="button2">
                         <a href=""><i class="fa fa-envelope mr-2" aria-hidden="true"></i> Send Message</a>
                      </div> -->
                      <div id="button3">
-                        <a href=""><i class="fa fa-phone mr-2" aria-hidden="true"></i> See Phone</a>
+                        <a href="/" class="see_phone_profile"><i class="fa fa-phone mr-2" aria-hidden="true"></i> See Phone</a>
+                        <a class="d-none phone_number_show" href="tel:<?= $EmpTbl->mobile; ?>"><i class="fa fa-phone mr-2"></i> <?= $EmpTbl->mobile; ?></a>
                      </div>
                   </div>
                </div>
@@ -62,7 +68,7 @@
                     </span>
                   </div>
                   <div id="addr" class="col-lg-12 text-center mb-4">
-                     <a href=""><span><?= $allReviews->count(); ?></span> reviews</a>
+                     <a href="/view_reviews_doctor/<?= $EmpTbl->id.'/'.$EmpTbl->hash_key ?>"><span><?= $allReviews->count(); ?></span> reviews</a>
                   </div>
                   <div class="col-lg-12 text-center">
                    <a href="/review_doctor/<?= $EmpTbl->id.'/'.$EmpTbl->hash_key ?>" class="review_view button4 p-2"><i class="fa fa-comment" aria-hidden="true"></i></a><span>Review</span>
@@ -118,14 +124,14 @@
          </div>
          <div id="sep" class="col-lg-12"></div>
          <div id="addre" class="col-lg-12">
-            <div class="row" >
+            <!-- <div class="row" >
                <div class="col-lg-12">
                   <h3>Address of the query</h3>
                </div>
                <div class="col-lg-12">
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe dicta nobis sed molestiae aliquam, cum cumque corporis assumenda esse tempore!</p>
                </div>
-            </div>
+            </div> -->
          </div>
          <div class="row">
             <div class="col-lg-12">
@@ -235,94 +241,48 @@
       </div>
    </div>
 </section>
-<!-- <section class="box services col-lg-12 doctor_view_main_page">
+<section class="box services col-lg-12 doctor_view_main_page">
    <div class="details ">
       <h2>Services</h2>
-      <ul class="heading clearfix">
-         <li>
-            <span class="detail"></span>
-            <div class="tooltip">
-               Rate<i class="icon"></i>
-               <div class="tooltip-info">
-                  <span class="arrow"></span>
-                  <div>Guidance rate for private patients (without forecast).
-                  </div>
-                  <span class="update">Data provided in: March 2019</span>
-               </div>
-            </div>
-         </li>
-      </ul>
       <ul id="servicesList" class="body">
-         <li class=" with-detail" data-service="detail">
-            <span class="name no-service mark" data-name="primera visita alergia e inmunologia">First visit Allergy and Immunology</span>
-            <span class="detail" data-services-detail="">Detail<i class="icon"></i></span>
-            <span class="price">From $ 40,000 <a class="ask" data-ajax="true" data-ajax-method="Get" data-ajax-mode="replace" data-ajax-update="#frmContact" data-country="cl" data-type="contact" href="/entities/contactdisplay?entitytype=2&amp;entitykey=12757974&amp;fullname=Dr.%20Jose%20Manuel%20Martinez%20Martinez&amp;service=Primera%20visita%20Alergia%20e%20Inmunolog%C3%ADa" rel="nofollow" data-ajax-success="$.showContactForm();">Request a rate</a></span>
-            <ul class="inner">
-               <li>
-                  <span class="name">San Martin 870 Edificio Caram, Oficina 405 BIOALERGIA</span>
-                  <span class="price"><b>Desde $ 40.000</b><a class="ask" data-ajax="true" data-ajax-method="Get" data-ajax-mode="replace" data-ajax-update="#frmContact" data-country="cl" data-type="contact" href="/entities/contactdisplay?entitytype=2&amp;entitykey=12757974&amp;fullname=Dr.%20Jose%20Manuel%20Martinez%20Martinez&amp;service=Primera%20visita%20Alergia%20e%20Inmunolog%C3%ADa" rel="nofollow" data-ajax-success="$.showContactForm();">Solicitar tarifa</a></span>
-               </li>
-               <li>
-                  <span class="name">Centro de Diagnóstico San Martin</span>
-                  <span class="price"><b>Desde $ 40.000</b><a class="ask" data-ajax="true" data-ajax-method="Get" data-ajax-mode="replace" data-ajax-update="#frmContact" data-country="cl" data-type="contact" href="/entities/contactdisplay?entitytype=2&amp;entitykey=12757974&amp;fullname=Dr.%20Jose%20Manuel%20Martinez%20Martinez&amp;service=Primera%20visita%20Alergia%20e%20Inmunolog%C3%ADa" rel="nofollow" data-ajax-success="$.showContactForm();">Solicitar tarifa</a></span>
-               </li>
-            </ul>
-         </li>
-         <li class=" with-detail" data-service="detail">
-            <span class="name no-service" data-name="inmunoterapia alergica">Allergic immunotherapy </span>
-            <span class="detail" data-services-detail="">Detail<i class="icon"></i></span>
-            <span class="price">From $ 30,000 <a class="ask" data-ajax="true" data-ajax-method="Get" data-ajax-mode="replace" data-ajax-update="#frmContact" data-country="cl" data-type="contact" href="/entities/contactdisplay?entitytype=2&amp;entitykey=12757974&amp;fullname=Dr.%20Jose%20Manuel%20Martinez%20Martinez&amp;service=Inmunoterapia%20al%C3%A9rgica" rel="nofollow" data-ajax-success="$.showContactForm();">Request a rate</a></span>
-            <ul class="inner">
-               <li>
-                  <span class="name">San Martin 870 Edificio Caram, Oficina 405 BIOALERGIA</span>
-                  <span class="price">Desde $ 30.000<a class="ask" data-ajax="true" data-ajax-method="Get" data-ajax-mode="replace" data-ajax-update="#frmContact" data-country="cl" data-type="contact" href="/entities/contactdisplay?entitytype=2&amp;entitykey=12757974&amp;fullname=Dr.%20Jose%20Manuel%20Martinez%20Martinez&amp;service=Inmunoterapia%20al%C3%A9rgica" rel="nofollow" data-ajax-success="$.showContactForm();">Solicitar tarifa</a></span>
-               </li>
-            </ul>
-         </li>
-         <li class=" with-detail" data-service="detail">
-            <span class="name no-service" data-name="test cutaneo">Skin test </span>
-            <span class="detail" data-services-detail="">Detail<i class="icon"></i></span>
-            <span class="price">From $ 20,000 <a class="ask" data-ajax="true" data-ajax-method="Get" data-ajax-mode="replace" data-ajax-update="#frmContact" data-country="cl" data-type="contact" href="/entities/contactdisplay?entitytype=2&amp;entitykey=12757974&amp;fullname=Dr.%20Jose%20Manuel%20Martinez%20Martinez&amp;service=Test%20cut%C3%A1neo" rel="nofollow" data-ajax-success="$.showContactForm();"></a></span>
-            <ul class="inner">
-               <li>
-                  <span class="name">San Martin 870 Edificio Caram, Oficina 405 BIOALERGIA</span>
-                  <span class="price"><b>Desde $ 20.000</b><a class="ask" data-ajax="true" data-ajax-method="Get" data-ajax-mode="replace" data-ajax-update="#frmContact" data-country="cl" data-type="contact" href="/entities/contactdisplay?entitytype=2&amp;entitykey=12757974&amp;fullname=Dr.%20Jose%20Manuel%20Martinez%20Martinez&amp;service=Test%20cut%C3%A1neo" rel="nofollow" data-ajax-success="$.showContactForm();">Solicitar tarifa</a></span>
-               </li>
-            </ul>
-         </li>
-         <li class=" with-detail" data-service="detail">
-            <span class="name no-service" data-name="test de parche standard y alimentario">Standard and food patch test </span>
-            <span class="detail" data-services-detail=""><font style="vertical-align: inherit;">Detail<i class="icon"></i></span>
-            <span class="price">From $ 40,000 <a class="ask" data-ajax="true" data-ajax-method="Get" data-ajax-mode="replace" data-ajax-update="#frmContact" data-country="cl" data-type="contact" href="/entities/contactdisplay?entitytype=2&amp;entitykey=12757974&amp;fullname=Dr.%20Jose%20Manuel%20Martinez%20Martinez&amp;service=Test%20de%20parche%20standard%20y%20alimentario" rel="nofollow" data-ajax-success="$.showContactForm();">Request a rate</a></span>
-            <ul class="inner">
-               <li>
-                  <span class="name">San Martin 870 Edificio Caram, Oficina 405 BIOALERGIA</span>
-                  <span class="price">Desde $ 40.000<a class="ask" data-ajax="true" data-ajax-method="Get" data-ajax-mode="replace" data-ajax-update="#frmContact" data-country="cl" data-type="contact" href="/entities/contactdisplay?entitytype=2&amp;entitykey=12757974&amp;fullname=Dr.%20Jose%20Manuel%20Martinez%20Martinez&amp;service=Test%20de%20parche%20standard%20y%20alimentario" rel="nofollow" data-ajax-success="$.showContactForm();">Solicitar tarifa</a></span>
-               </li>
-            </ul>
-         </li>
+        <?php 
+           $arrayServices = unserialize($EmpTbl->services);
+           if ($arrayServices != FALSE) {
+              
+              foreach ($arrayServices["service"] as $key => $arrayService) {
+
+                 $rate = $arrayService;
+                 $service = $arrayServices['rate'][$key];
+
+              echo '<li class="with-detail">
+                      <span class="name no-service mark">'.$rate.'</span>
+                      <span class="price text-left">€ '.$service.'</span>
+                   </li>';
+              }
+           } else {
+            echo '<p id="servicesNoResults"><strong>No se encontraron resultados</strong>.</p>';
+           }
+         ?>
       </ul>
-      <p id="servicesNoResults" class="hidden"><strong>No se encontraron resultados</strong>.</p>
    </div>
    <aside>
-      <p>If you want more information or have any questions, contact the professional.</p>
-      <div class="btn btn-secondary contact" data-button=".lnkContact">
-         <a class="lnkContact" data-ajax="true" data-ajax-method="Get" data-ajax-mode="replace" data-ajax-update="#frmContact" data-country="cl" data-ga-action="clicked" data-ga-category="contact-form" data-ga-label="clicked" href="/entities/contactdisplay?entitytype=2&amp;entitykey=12757974&amp;fullname=Dr.%20Jose%20Manuel%20Martinez%20Martinez" rel="nofollow" data-ajax-success="$.showContactForm();">Send Message</a>
-         <i class="icon"></i>
+      <p>Want to book appointment</p>
+      <div class="contact">
+         <a class="btn-book-app-bottom" href="#timingsOfDoctor"><i class="fa fa-calendar mr-2" aria-hidden="true"></i>Book Appointment</a>
       </div>
    </aside>
-</section> -->
+</section>
 <section class="photos col-lg-12 doctor_view_main_page">
    <div class="container">
       <h2 id="photos_section_view">Photos</h2>
       <div id="sep" class="col-lg-12"></div>
       <div class="row">
+        <?php if ($EmpTbl->photos != ''): ?>
          <div class="col-lg-4"></div>
          <div class="col-lg-4">
             <div class="slider1">
                <div id="slider2" class="carousel slide" data-ride="carousel">
                   <div class="carousel-inner">
-                    <?php if ($EmpTbl->photos != ''): ?>
                       <?php $arrayPhotos = explode(",", $EmpTbl->photos); ?>
                       <?php foreach ($arrayPhotos as $key => $arrayPhoto): ?>
                         <?php if ($key == 0) {
@@ -333,10 +293,7 @@
                         <div class="carousel-item <?= $active ?>">
                           <img class="d-block w-100" src="<?= '/upload/'.trim($arrayPhoto, '"'); ?>" alt="<?= $key+1 ?> slide">
                         </div>
-                        
                       <?php endforeach ?>
-                          
-                    <?php endif ?>
                   </div>
                   <a class="carousel-control-prev" href="#slider2" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -350,6 +307,9 @@
             </div>
          </div>
          <div class="col-lg-4"></div>
+          <?php else: ?>
+            <div class="col-12 mt-4">This doctor has not added any Photo</div>
+          <?php endif ?>
       </div>
    </div>
 </section>

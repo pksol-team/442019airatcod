@@ -60,8 +60,11 @@
                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                <input type="hidden" name="first_name" value="<?= $inputFields['first_name'] ?>">
                <input type="hidden" name="last_name" value="<?= $inputFields['last_name'] ?>">
+               <input type="hidden" name="city" value="<?= $inputFields['city'] ?>">
+               <input type="hidden" name="forecast" value="<?= $inputFields['forecast'] ?>">
                <input type="hidden" value="<?= $inputFields['gender'] ?>" name="gender">
                <input type="hidden" name="specialty" class="specialty_array">
+               <input type="hidden" name="specialtyName" class="specialtyName">
 
                <div class="about-patients">
                   <div class="patients-head">
@@ -72,7 +75,7 @@
                      <?php if ($allSpecialities != NULL): ?>
                         <?php foreach ($allSpecialities as $key => $specialty): ?>
                            <li class="d-inline-block col-lg-6 text-left">
-                              <input class="mr-2" type="checkbox" name="selectspecialty" value="{{ $specialty->id }}" /><h6 class="d-inline-block f-size">{{ $specialty->name }}</h6>
+                              <input data-name="{{ $specialty->name }}" class="mr-2" type="checkbox" name="selectspecialty" value="{{ $specialty->id }}" /><h6 class="d-inline-block f-size">{{ $specialty->name }}</h6>
                            </li>
                         <?php endforeach ?>
                      <?php endif ?>
@@ -98,7 +101,7 @@
                         <div class="login-footer-links float-left">
                            <ul class="list-unstyled">
                               <li class="d-inline-block float-left text-white"><a href="#">About US</a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="#">Contact </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/contact_us">Contact </a>|</li>
                               <li class="d-inline-block float-left text-white"><a href="#">Use and Privacy Policy</a></li>
                            </ul>
                         </div>

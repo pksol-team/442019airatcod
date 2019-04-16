@@ -1,6 +1,54 @@
-@extends('frontend.template.layout')
-@section('title') <?= $title; ?> @stop
-@section('content')
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title><?= $title ?> - Doctaria</title>
+      <link rel="stylesheet" href="/frontend/assets/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/frontend/assets/css/font-awesome.min.css">
+      <link rel="stylesheet" href="/frontend/assets/css/croppie.css">
+      <link rel="stylesheet" href="/frontend/assets/css/style.css">
+   </head>
+   <body>
+   <!-- Header Section -->
+   <header>
+      <div class="row head header-sec bg-green">
+         <div class="login-header w-100">
+            <div class="container row">
+               <div class="col-lg-4">
+                 <div class="brand">
+                   <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - Doctaria"></a>
+                 </div>
+               </div>
+               <div class="col-lg-4">
+                  <div class="search-box float-left">
+                     <div class="input-group">
+                        <input class="form-control border-0 py-2" type="search" value="search">
+                        <div class="input-group-append bg-white">
+                           <button class="btn bg-white">
+                           <i class="fa fa-search"></i>
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-4 login-header-items float-right w-75">
+                  <div class="login-header-links registery-items-links float-right">
+                     <ul class="list-unstyled">
+                        <?php if (Auth::check() != true): ?>
+                         <li class="d-inline-block float-left text-white">
+                           <button class="btn bg-blue text-white"><a href="/userlogin" class="text-white">Iniciar sesión</a></button>
+                         </li>
+                        <?php endif ?>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </header>
+   <!-- Header End -->
 <!-- Login-Section -->
 <section>
    <div class="container">
@@ -33,6 +81,8 @@
                         <input type="hidden" name="id" value="{{ $NewUser->id }}">
                         <input type="email" name="email" class="form-control email mb-4" value="{{ old('email') }}" required />
                         <button class="btn btn-info" type="submit">Change Email</button>
+                        &nbsp; OR &nbsp;
+                        <a href="/userlogin"><button class="btn btn-info" type="button">Login</button></a>
                      </form>
                   </li>
                </ul>
@@ -48,4 +98,43 @@
       </div>
    </div>
 </section>
-@stop
+<!-- Main Content -->
+<footer>
+   <div class="footer-sec">
+      <!-- footer-sec-top-start -->
+      <div class="row login header-sec bg-green-dark">
+         <div class="login-footer w-100">
+            <div class="container">
+               <div class="login-footer-items float-left w-75 order-2">
+                  <div class="login-footer-links float-left">
+                     <ul class="list-unstyled">
+                        <li class="d-inline-block float-left text-white"><a href="#">About US</a>|</li>
+                        <li class="d-inline-block float-left text-white"><a href="/contact_us">Contact </a>|</li>
+                        <li class="d-inline-block float-left text-white"><a href="#">Use and Privacy Policy</a></li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="brand float-right w-25 order-1">
+                  <a href="#"><img src="/frontend/assets/img/Original.png" alt=""></a>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- footer-sec-top-end -->
+      <!-- footer-sec-bottom start -->
+      <div class="footer-bottom bg-green">
+         <div class="terms-and-conditions text-center">
+            <p class="text-white m-0 d-inline-block"><i class="fa fa-copyright" aria-hidden="true"></i>2019 Doctrolia Internet,SL</p>
+            <a href="#" class="text-white">About US Contact Us And Privacy Policy</a>
+         </div>
+      </div>
+   </div>
+   <!-- footer-sec-bottom end -->
+</footer>
+<script src="/frontend/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/frontend/assets/js/bootstrap.min.js"></script>
+<script src="/frontend/assets/js/yearpicker.js"></script>
+<script src="/frontend/assets/js/croppie.js"></script>
+<script src="/frontend/assets/js/custom.js"></script>
+</body>
+</html>

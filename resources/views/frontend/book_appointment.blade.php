@@ -8,16 +8,30 @@
    <div class="row">
       <div class="col-lg-12 card bg-lightgrey d-flex align-self-center py-3">
          <h3 class="text-left align-middle">Booking Appointment</h3>
-         <p>You are going to schedule an appointment for <strong>Monday, April 8, 2019 at 10:00</strong></p>
+         <p>You are going to schedule an appointment for <strong><?= $consultantTime->day ?>, 
+            <?php 
+               $date = new DateTime();
+               $date->modify($consultantTime->day);
+               echo $date->format('F d, Y'); ?>
+          at <?= $consultantTime->from_time.' '.$consultantTime->from_AM_PM ?></strong></p>
       </div>
    </div>
    <div class="row main-booking-part bg-white">
       <div class="col-lg-8 py-3">
-         <form action="">
+         <form method="post" action="/booked_appointment">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="doctor_id" value="<?= $doctor->id ?>">
+            <input type="hidden" name="appointment_date" value="<?= $date->format('Y-m-d'); ?>">
+            <input type="hidden" name="day" value="<?= $consultantTime->day ?>">
+            <input type="hidden" name="from_time" value="<?= $consultantTime->from_time ?>">
+            <input type="hidden" name="from_AM_PM" value="<?= $consultantTime->from_AM_PM ?>">
+            <input type="hidden" name="location" value="<?= $consultantTime->location ?>">
+            <input type="hidden" name="patient_id" value="<?= (Auth::user()) ? Auth::user()->id: 0; ?>">
+            <?php echo $date->format('Y-m-d'); ?>
             <div class="row">
                <div class="col-lg-12 express-booking">
                   <ul class="list-unstyled">
-                     <li class="sub-valid"><i class="fa fa-info bgg-green text-white express-acc" aria-hidden="true"></i>Express Booking with your <a href="#" class="pr-2">Doctaria Account</a>or<a href="#" class="pl-2">Facebook</a></li>
+                     <li class="sub-valid"><i class="fa fa-info bgg-green text-white express-acc" aria-hidden="true"></i>Express Booking with your <a href="/userlogin" class="pr-2">Doctaria Account</a>or<a href="{{ route('facebook.login') }}" class="pl-2">Facebook</a></li>
                   </ul>
                </div>
             </div>
@@ -31,7 +45,7 @@
                </div>
             </div> -->
             <!-- display on radio button checked -->
-            <div class="displayonradio-checked" id="ifYes" style="display:none">
+            <!-- <div class="displayonradio-checked" id="ifYes" style="display:none">
                <div class="row my-3">
                   <div class="col-lg-4 text-right">
                      <label for="" class="text-right">Your Name</label>
@@ -48,56 +62,61 @@
                      <input type="text" class="form-control border-dark w-100">
                   </div>
                </div>
-            </div>
+            </div> -->
             <!-- display on radio button checked -->
+            @if(session()->has('error'))
+                <div class="alert alert-danger">
+                    {!! session()->get('error') !!}
+                </div>
+            @endif
             <div class="row my-3">
                <div class="col-lg-4 text-right">
                   <label for="" class="text-right">Is it the first visit?</label>
                </div>
                <div class="col-lg-6">
-                  <input type="radio" > <span class="pr-3">Yes</span>
-                  <input type="radio" class="pl-3"> <span>Do not</span>
+                  <input name="first_visit" type="radio" checked> <span class="pr-3">Yes</span>
+                  <input name="first_visit" type="radio" class="pl-3"> <span>No</span>
                </div>
             </div>
             <div class="row my-3">
                <div class="col-lg-4 text-right">
-                  <label for="" class="text-right">Your Name</label>
+                  <label for="first_name" class="text-right">Your Name *</label>
                </div>
                <div class="col-lg-6">
-                  <input type="text" class="form-control border-dark w-75">
+                  <input name="first_name" value="<?= ($loginUser != NULL) ? $loginUser->first_name : old('first_name'); ?>" type="text" class="form-control border-dark w-75" required>
                </div>
             </div>
             <div class="row my-3">
                <div class="col-lg-4 text-right">
-                  <label for="" class="text-right">Your last name</label>
+                  <label for="last_name" class="text-right">Your last name *</label>
                </div>
                <div class="col-lg-6">
-                  <input type="text" class="form-control border-dark w-100">
+                  <input name="last_name" value="<?= ($loginUser != NULL) ? $loginUser->last_name : old('last_name'); ?>" type="text" class="form-control border-dark w-100" required>
                </div>
             </div>
             <div class="row my-3">
                <div class="col-lg-4 text-right">
-                  <label for="" class="text-right">Your Email</label>
+                  <label for="email" class="text-right">Your Email *</label>
                </div>
                <div class="col-lg-6">
-                  <input type="text" class="form-control border-dark w-75">
+                  <input name="email" type="text" value="<?= ($loginUser != NULL) ? $loginUser->email : old('email'); ?>" class="form-control border-dark w-75" required>
                </div>
             </div>
             <div class="row my-3">
                <div class="col-lg-4 text-right">
-                  <label for="" class="text-right">Your cellphone</label>
+                  <label for="mobile" class="text-right">Your cellphone *</label>
                </div>
                <div class="col-lg-6">
-                  <input type="text" class="form-control border-dark w-50">
+                  <input name="mobile" type="text" value="<?= ($loginUser != NULL) ? $loginUser->mobile : old('mobile'); ?>" class="form-control border-dark w-50" required>
                   <p><small>Check your data to make sure they can contact you.</small></p>
                </div>
             </div>
             <div class="row my-3">
                <div class="col-lg-4">
-                  <label for="" class="text-right">Comments for the professional(optional)</label>
+                  <label for="comments" class="text-right">Comments for the professional(optional)</label>
                </div>
                <div class="col-lg-6">
-                  <textarea name="" id="" cols="42" rows="5" class="border-dark"></textarea>
+                  <textarea name="comments" id="" cols="42" rows="5" class="border-dark"></textarea>
                </div>
             </div>
             <div class="row">
@@ -112,23 +131,21 @@
                      <p><strong>Finalidad</strong> Prestación de los servicios solicitados a través de nuestra plataforma online.</p>
                      <p><strong>Legitimación</strong> La ejecución de un contrato y, en su caso, el consentimiento del interesado.</p>
                      <p><strong>Destinatarios</strong> Directorio de Doctoralia y otros terceros, como se indica en la información adicional.</p>
-                     <p><strong>Derechos</strong> Acceso, rectificación, y supresion de los datos, asi como otros derechos de protección de datos expresados en la <a target="_blank" href="http://www.doctoralia.cl/legal.aspx#privacidadpro">politica de privacidad</a>.</p>
+                     <p><strong>Derechos</strong> Acceso, rectificación, y supresion de los datos, asi como otros derechos de protección de datos expresados en la <a target="_blank" href="#">politica de privacidad</a>.</p>
                   </div>
                </div>
             </div>
             <div class="acceptance">
                <div class="first-terms-cond text-left">
-                  <label><input type="checkbox" value="">
-                  <span>Acepto las <a href="">condiciones de uso</a> la <a href="">política de privacidad</a> y el tratamiento de mis datos
+                  <label>
+                     <input type="checkbox" name="terms" required>
+                  <span>Acepto las <a href="#">condiciones de uso</a> la <a href="#">política de privacidad</a> y el tratamiento de mis datos
                   </span>
                   </label>
                </div>
                <div class="sec-term-cond text-left">
-                  <label>
-                  <input type="checkbox" value="">
-                  <span>
-                  Me gustaría recibir notificaciones sobre nuevas citas, consejos y ofertas
-                  </span>
+                  <label for="notification"><input type="checkbox" name="notification">
+                     <span>Me gustaría recibir notificaciones sobre nuevas citas, consejos y ofertas</span>
                   </label>
                </div>
             </div>
@@ -138,7 +155,7 @@
                </div>
                <div class="col-lg-6">
                   <button class="btn btn-primary px-4"> Submit </button>
-                  <a href=""> Cancel Appointment</a>
+                  <a href="<?= '/doctor_profile_view/'.$doctor->id.'/'.$doctor->hash_key?>"> Cancel Appointment</a>
                </div>
             </div>
          </form>
@@ -146,11 +163,17 @@
       <div class="col-lg-4 booking-app-sidebar py-2">
          <div class=" row sidebar">
             <div class="col-lg-4">
-               <img class="img-fluid" src="/upload/15548078125cac7c0403ecf.png" alt="Doctor Picture">
+               <?php
+               if ($doctor->profile_picture != '0') {
+                 $profilePic = '/upload/'.$doctor->profile_picture;
+               } else {
+                 $profilePic = '/frontend/assets/img/default-doctor_1.png';
+               } ?>
+               <img class="img-fluid" src="<?= $profilePic ?>" alt="Doctor Picture">
             </div>
             <div class="col-lg-8">
                <div class="doc-name">
-                  <p class="mb-0">Aksana Silvankova</p>
+                  <p class="mb-0"><?= $doctor->first_name.' '.$doctor->last_name ?></p>
                   <small class="title-color">Psychologist</small>
                </div>
             </div>
@@ -160,7 +183,9 @@
             <div class="col-lg-12">
                <div class="appointment-date">
                   <p class="mb-0 title-color">APPOINTMENT</p>
-                  <p class="f-12"><span><i class="fa fa-calendar pr-2"></i></span>Monday, April 8, 2019 at 10:00</p>
+                  <p class="f-12"><span><i class="fa fa-calendar pr-2"></i></span><?= $consultantTime->day ?>, 
+                  <?= $date->format('F d, Y'); ?>
+                   at <?= $consultantTime->from_time.' '.$consultantTime->from_AM_PM ?></p>
                </div>
             </div>
          </div>
@@ -169,7 +194,7 @@
             <div class="col-lg-12">
                <div class="appointment-loc">
                   <p class="mb-0 title-color">Location</p>
-                  <p class="f-12"><span><i class="fa fa-map-marker pr-2"></i></span>Monday, April 8, 2019 at 10:00</p>
+                  <p class="f-12"><span><i class="fa fa-map-marker pr-2"></i></span><?= $consultantTime->location ?></p>
                </div>
             </div>
          </div>

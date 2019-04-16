@@ -7,9 +7,9 @@
       <div class="pages-links">
          <ul class="list-unstyled">
             <li class="d-inline-block active"><a href="">PROFILE</a></li>
-            <li class="d-inline-block"><a href="">BOOKING APPOINTMENT</a></li>
-            <li class="d-inline-block"><a href="">STATISTICS</a></li>
-            <li class="d-inline-block"><a href="">ACCOUNT</a></li>
+            <li class="d-inline-block"><a href="<?= '/doctor_appointments/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>">BOOKING APPOINTMENT</a></li>
+            <!-- <li class="d-inline-block"><a href="">STATISTICS</a></li> -->
+            <!-- <li class="d-inline-block"><a href="">ACCOUNT</a></li> -->
          </ul>
       </div>
    </div>
@@ -21,7 +21,7 @@
             <li class="d-inline-block active"><a href="" class="text-dark">PROFILE</a></li>
             <li class="d-inline-block"><a href="/my_data" class="text-dark">My Data</a></li>
             <!-- <li class="d-inline-block"><a href="" class="text-dark">Opinions</a></li> -->
-            <li class="d-inline-block"><a href="" class="text-dark">Premium profiles</a></li>
+            <li class="d-inline-block"><a href="<?= '/premium_profile/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>" class="text-dark">Premium profiles</a></li>
          </ul>
       </div>
    </div>
@@ -124,6 +124,7 @@
                                     <form action="/addSpecialty" method="post" class="updateSpecialtyFormProfile">
                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                      <input type="hidden" name="specialty" class="specialty_array">
+                                     <input type="hidden" name="specialtyName" class="specialtyName">
                                      
                                       <div class="all_specialties_modal">
                                         <ul class="list-unstyled row text-center mb-3">
@@ -135,7 +136,7 @@
                                                   }
                                                 ?>
                                                  <li class="d-inline-block col-lg-6 text-left">
-                                                    <input class="selectspecialty-modal mr-2" type="checkbox" name="selectspecialty" value="{{ $specialty->id }}" /><h6 class="d-inline-block f-size">{{ $specialty->name }}</h6>
+                                                    <input data-name="{{ $specialty->name }}" class="selectspecialty-modal mr-2" type="checkbox" name="selectspecialty" value="{{ $specialty->id }}" /><h6 class="d-inline-block f-size">{{ $specialty->name }}</h6>
                                                  </li>
                                               <?php endforeach ?>
                                            <?php endif ?>
@@ -151,11 +152,10 @@
                              <ul class="specialty_exists">
                               <?php 
                               if ($EmpTbl->specialty != '' || $EmpTbl->specialty != null) {
-                                $allSpecialities = explode(',', $EmpTbl->specialty);
+                                $allSpecialities = explode(',', substr($EmpTbl->specialty, 0, -1));
                                 foreach ($allSpecialities as $key => $allSpecialty) {
-                                  $specialitiesTable = DB::table('specialities')->where('id', (int)$allSpecialty)->first();;
-                                  $getRecordSpecialty = $specialitiesTable;
-                                  echo '<li data-speciality_id="'.$specialitiesTable->id.'">'.$specialitiesTable->name.' -- <a href="#" class="remove-speciality"> Remove</a></li>';
+                                  $specialitiesTable = DB::table('specialities')->where('id', (int)$allSpecialty)->first();
+                                  echo '<li data-name="'.$specialitiesTable->name.'" data-speciality_id="'.$specialitiesTable->id.'">'.$specialitiesTable->name.' -- <a href="#" class="remove-speciality"> Remove</a></li>';
                                 }
                               }
                               ?>
@@ -234,9 +234,11 @@
                         <h2 class="border-bottom ">Exract
                            <a href="#" class="f-size modify_exract">Modify</a>
                         </h2>
-                        <?php if ($EmpTbl->exract != '' || $EmpTbl->exract != NULL): ?>
-	                        <p class="dralia_para_exract"><?= $EmpTbl->exract ?></p>
-                        <?php endif ?>
+                          <p class="dralia_para_exract">
+                            <?php if ($EmpTbl->exract != '' || $EmpTbl->exract != NULL): ?>
+                              <?= $EmpTbl->exract ?>
+                            <?php endif ?>
+                          </p>
                         <form action="/updateExract" method="post" class="dralia-form-exract dralia-ajax-form" style="display: none;">
                            <dl>
                               <dd>
@@ -379,9 +381,11 @@
                      <div class="about-you-head">
                         <h2 class="border-bottom ">About You</h2>
                      </div>
-                        <?php if ($EmpTbl->about != '' || $EmpTbl->about != NULL): ?>
-                           <p class="dralia_para_about"><?= $EmpTbl->about ?></p>
-                        <?php endif ?>
+                           <p class="dralia_para_about">
+                            <?php if ($EmpTbl->about != '' || $EmpTbl->about != NULL): ?>
+                                <?= $EmpTbl->about ?>
+                            <?php endif ?>
+                            </p>
                         <form action="/updateAbout" method="post" class="dralia-form-about dralia-ajax-form" style="display: none;">
                            <dl>
                               <dd>
@@ -829,20 +833,6 @@
                         </li>
                      </ul>
                   </div>
-                  <div class="simplify-of-your-life-list-items">
-                     <ul class="list-unstyled text-center">
-                        <li>
-                           <h5>Simplify of Your life and that of Your Patients</h5>
-                        </li>
-                        <li class="py-2"><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></li>
-                        <li class="py-2"><a href="">Lorem ipsum dolor sit amet,.</a></li>
-                        <li class="py-2"><a href="">Lorem ipsum dolor</a>  </li>
-                        <li class="py-2"><a href="">Lorem ipsum dolor sit amet,</a></li>
-                        <li>
-                           <button class="btn btn-primary py-2 my-2">Know More</button>
-                        </li>
-                     </ul>
-                  </div>
                </div>
                <div class="statistics">
                   <div class="statistics-show">
@@ -877,7 +867,10 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit accusamus modi</p>
                      </div>
                      <div class="sidebar-support-text-area">
-                        <input type="text" class="form-control" placeholder="Write Your Question here" name="text1">
+                      <form action="/frequently" method="get">
+                        <input type="text" class="form-control" placeholder="Write Your Question here" name="question" required>
+                        <button type="submit" class="btn btn-success mt-3">Search</button>
+                      </form>
                      </div>
                   </div>
                </div>

@@ -9,15 +9,18 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <title>@yield('title')- Doctaria</title>
-      <link rel="stylesheet" href="/frontend/assets/css/bootstrap.min.css">
-      <link rel="stylesheet" href="/frontend/assets/css/font-awesome.min.css">
-      <link rel="stylesheet" href="/frontend/assets/css/yearpicker.css">
-      <link rel="stylesheet" href="/frontend/assets/css/croppie.css">
-      <link rel="stylesheet" href="/frontend/assets/css/dropzone.css">
-      <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
-      <link href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="/frontend/assets/css/font-awesome.min.css">
+      <link rel="stylesheet" type="text/css" href="/frontend/assets/css/yearpicker.css">
+      <link rel="stylesheet" type="text/css" href="/frontend/assets/css/croppie.css">
+      <link rel="stylesheet" type="text/css" href="/frontend/assets/css/dropzone.css">
+      <link rel="stylesheet" type="text/css" href="/frontend/assets/css/select2.min.css"/>
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css"/>
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"/>
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
       <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"/>
-      <link rel="stylesheet" href="/frontend/assets/css/style.css">
+      <link rel="stylesheet" type="text/css" href="/frontend/assets/css/style.css">
    </head>
    <body>
       <!-- Header Section -->
@@ -32,7 +35,8 @@
                     <div class="login-header-links float-right">
                        <ul class="list-unstyled">
                           <?php if (Auth::check() != true): ?>
-                          <li class="d-inline-block float-left text-white"><button class="btn bg-blue"><a href="/register_doctor_init" class="text-white">Registrarme</a></button></li>
+                          <li class="d-inline-block float-left text-white mr-4"><button class="btn bg-blue"><a href="/register_doctor_init" class="text-white">Registrarme</a></button></li>
+                          <li class="d-inline-block float-left text-white"><button class="btn bg-blue"><a href="/userlogin" class="text-white">Iniciar sesión</a></button></li>
                           <?php endif ?>
                           <?php if (Auth::check() == true): ?>
                           <li class="d-inline-block float-left text-white"><?php echo $user->name; ?> |</li>
@@ -62,7 +66,7 @@
                         <div class="login-footer-links float-left">
                            <ul class="list-unstyled">
                               <li class="d-inline-block float-left text-white"><a href="#">About US</a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="#">Contact </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/contact_us">Contact </a>|</li>
                               <li class="d-inline-block float-left text-white"><a href="#">Use and Privacy Policy</a></li>
                            </ul>
                         </div>
@@ -88,9 +92,45 @@
       <script src="/frontend/assets/js/bootstrap.min.js"></script>
       <script src="/frontend/assets/js/yearpicker.js"></script>
       <script src="/frontend/assets/js/croppie.js"></script>
+      <script src="/frontend/assets/js/select2.min.js"></script>
       <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js"></script>
       <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
       <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+      <script>
+        $('#responsive').slick({
+          dots: true,
+          infinite: false,
+          speed: 300,
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          responsive: [{
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3,
+                  infinite: true,
+                  dots: true
+                }
+              },
+              {
+              breakpoint: 770,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 1
+                }
+              },
+              {
+              breakpoint: 480,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  dots: false,
+                }
+              }
+            ]
+          });
+      </script>
       <script src="/frontend/assets/js/custom.js"></script>
 
    </body>

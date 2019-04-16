@@ -1,4 +1,3 @@
-<?php $user = Auth::user(); ?>
 <!DOCTYPE html>
 <html>
    <head>
@@ -161,7 +160,8 @@
                      </div>
                      <div class="col-lg-12 pro-head pl-4 professional_register_box">
                         <div class="pro-head">
-                           <!-- <input class="mr-2" type="radio" name="selectprofession" value="professional" checked /> --><h5 class="d-inline-block">Professional</h5>
+                           <!-- <input class="mr-2" type="radio" name="selectprofession" value="professional" checked /> -->
+                           <h5 class="d-inline-block">Professional</h5>
                         </div>
                         <div class="pro-sec-info">
                            <p>For health professionals who visit in one or several private consultations or medical centers.</p>
@@ -177,15 +177,29 @@
                                  <label for="">Surnames</label>
                                  <input type="text" class="form-control" name="last_name" required>
                               </div>
-                              <!-- <div class="doc-speciality-label">
-                                 <label for="select">speciality</label>
-                                 <select class="form-control" id="sel1" name="speciality">
-                                      <option>--please Select</option>
-                                      <option>2</option>
-                                      <option>3</option>
-                                      <option>4</option>
+                              <div class="doc-sname-label">
+                                 <label for="">Región</label>
+                                 <select class="form-control" name="city" required>
+                                   <option value="" hidden></option>
+                                    <?php if ($allCities): ?>
+                                          <?php foreach ($allCities as $key => $city): ?>
+                                               <option value="<?= $city->name; ?>"><?= $city->name; ?></option>
+                                          <?php endforeach ?>
+                                    <?php endif ?>
                                  </select>
-                                 </div> -->
+                              </div>
+                              <div class="doc-sname-label">
+                                 <label for="">Localidad</label>
+                                 <select class="form-control" name="forecast" required>
+                                   <option value="" hidden></option>
+                                    <?php if ($allForecasts): ?>
+                                          <?php foreach ($allForecasts as $key => $forecast): ?>
+                                               <option value="<?= $forecast->name; ?>"><?= $forecast->name; ?></option>
+                                          <?php endforeach ?>
+                                    <?php endif ?>
+                                 </select>
+
+                              </div>
                               <div class="doc-geneder-sec my-2">
                                  <div class="form-check-inline ml-3">
                                     <label class="form-check-label">
@@ -299,7 +313,7 @@
                         <div class="login-footer-links float-left">
                            <ul class="list-unstyled">
                               <li class="d-inline-block float-left text-white"><a href="#">About US</a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="#">Contact </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/contact_us">Contact </a>|</li>
                               <li class="d-inline-block float-left text-white"><a href="#">Use and Privacy Policy</a></li>
                            </ul>
                         </div>

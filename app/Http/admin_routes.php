@@ -3,6 +3,8 @@
 /* ================== Homepage ================== */
 // homepage
 Route::get('/', 'Frontend\IndexController@index');
+// view all city/specialty/forecast
+Route::get('/viewFull/{tag}', 'Frontend\IndexController@viewFullbyTag');
 // login Doctor
 Route::get('/userlogin', 'Frontend\IndexController@login');
 // Register Patient
@@ -53,8 +55,12 @@ Route::post('remove_photos','Frontend\IndexController@fileDestroy');
 Route::get('consulting_time','Frontend\IndexController@consulting_time');
 // Add Consulting Time
 Route::post('consulting_add','Frontend\IndexController@consulting_add');
-// all Doctors
+// all Doctors with filters
 Route::get('all_professional','Frontend\IndexController@all_professional');
+//contact Us Page
+Route::get('contact_us','Frontend\IndexController@contact_us');
+//contact us email
+Route::post('contact_us_email','Frontend\IndexController@contact_us_email');
 // reservation Page for Patient
 Route::get('reservations','Frontend\IndexController@reservations');
 // Favourites Page for Patient
@@ -65,6 +71,8 @@ Route::post('make_fav','Frontend\IndexController@make_fav');
 Route::get('doctor_profile_view/{id}/{uniqid}','Frontend\IndexController@doctor_profile_view');
 // Review Given Page
 Route::get('review_doctor/{id}/{uniqid}','Frontend\IndexController@review_doctor');
+// Review View Page
+Route::get('view_reviews_doctor/{id}/{uniqid}','Frontend\IndexController@view_reviews_doctor');
 //insert Review in DB
 Route::post('review_add','Frontend\IndexController@review_add');
 // thank you page after review
@@ -76,7 +84,25 @@ Route::post('addSpecialty','Frontend\IndexController@addSpecialty');
 // Add Services
 Route::post('addService','Frontend\IndexController@addService');
 // View Appointment Page
-Route::get('book_appointment','Frontend\IndexController@book_appointment');
+Route::get('book_appointment/{userid}/{hash_key}/{timeid}','Frontend\IndexController@book_appointment');
+// Booked appointment by patient
+Route::post('booked_appointment','Frontend\IndexController@booked_appointment');
+// Delete appointment by patient
+Route::get('deleteReservations/{timeid}','Frontend\IndexController@deleteReservations');
+// view appointment of doctor
+Route::get('doctor_appointments/{id}/{hash_key}/','Frontend\IndexController@doctor_appointments');
+// home page search request
+Route::get('searchBySpecialty','Frontend\IndexController@searchBySpecialty');
+// view Premium Profile
+Route::get('premium_profile/{id}/{hash_key}','Frontend\IndexController@premium_profile');
+// view F.A.Q
+Route::get('frequently','Frontend\IndexController@frequently');
+
+
+
+
+
+
 
 
 
@@ -176,4 +202,12 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
 	/* ================== Specialities ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/specialities', 'LA\SpecialitiesController');
 	Route::get(config('laraadmin.adminRoute') . '/speciality_dt_ajax', 'LA\SpecialitiesController@dtajax');
+
+	/* ================== Cities ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/cities', 'LA\CitiesController');
+	Route::get(config('laraadmin.adminRoute') . '/city_dt_ajax', 'LA\CitiesController@dtajax');
+
+	/* ================== Forecasts ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/forecasts', 'LA\ForecastsController');
+	Route::get(config('laraadmin.adminRoute') . '/forecast_dt_ajax', 'LA\ForecastsController@dtajax');
 });

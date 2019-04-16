@@ -1,6 +1,56 @@
-@extends('frontend.template.layout')
-@section('title') <?= $title; ?> @stop
-@section('content')
+<?php $user = Auth::user(); ?>
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title><?= $title ?> - Doctaria</title>
+      <link rel="stylesheet" href="/frontend/assets/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/frontend/assets/css/font-awesome.min.css">
+      <link rel="stylesheet" href="/frontend/assets/css/croppie.css">
+      <link rel="stylesheet" href="/frontend/assets/css/style.css">
+   </head>
+   <body>
+<!-- Header Section -->
+<header>
+   <div class="row head header-sec bg-green">
+      <div class="login-header w-100">
+         <div class="container row">
+            <div class="col-lg-4">
+              <div class="brand">
+                <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - Doctaria"></a>
+              </div>
+            </div>
+            <div class="col-lg-4">
+               <div class="search-box float-left">
+                  <div class="input-group">
+                     <input class="form-control border-0 py-2" type="search" value="search">
+                     <div class="input-group-append bg-white">
+                        <button class="btn bg-white">
+                        <i class="fa fa-search"></i>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4 login-header-items float-right w-75">
+               <div class="login-header-links registery-items-links float-right">
+                  <ul class="list-unstyled">
+                     <?php if (Auth::check() != true): ?>
+                      <li class="d-inline-block float-left text-white">
+                        <button class="btn bg-blue text-white"><a href="/userlogin" class="text-white">Iniciar sesión</a></button>
+                      </li>
+                     <?php endif ?>
+                     
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</header>
+<!-- Header End -->
 <!-- Login-Section -->
 <section class="register-doctor">
    <div class="container">
@@ -30,8 +80,11 @@
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <input type="hidden" name="first_name" value="<?= $inputFields['first_name'] ?>">
                   <input type="hidden" name="last_name" value="<?= $inputFields['last_name'] ?>">
+                  <input type="hidden" name="city" value="<?= $inputFields['city'] ?>">
+                  <input type="hidden" name="forecast" value="<?= $inputFields['forecast'] ?>">
                   <input type="hidden" value="<?= $inputFields['gender'] ?>" name="gender">
-                  <input type="hidden" value="<?= $inputFields['specialty'] ?>" name="specialty">
+                  <input type="hidden" value="<?= $inputFields['specialty'].',' ?>" name="specialty">
+                  <input type="hidden" value="<?= $inputFields['sub_specialty']; ?>" name="sub_specialty">
                   <div class="row">
                      <div class="col-lg-3 col-md-2 col-sm-4 col-3 offset-lg-2 label-sec text-right">
                         <label for="" class="email text-right">Número RUT</label>
@@ -88,7 +141,7 @@
                            <p><strong>Finalidad</strong> Prestación de los servicios solicitados a través de nuestra plataforma online.</p>
                            <p><strong>Legitimación</strong> La ejecución de un contrato y, en su caso, el consentimiento del interesado.</p>
                            <p><strong>Destinatarios</strong> Directorio de Doctoralia y otros terceros, como se indica en la información adicional.</p>
-                           <p><strong>Derechos</strong> Acceso, rectificación, y supresion de los datos, asi como otros derechos de protección de datos expresados en la <a target="_blank" href="http://www.doctoralia.cl/legal.aspx#privacidadpro">politica de privacidad</a>.</p>
+                           <p><strong>Derechos</strong> Acceso, rectificación, y supresion de los datos, asi como otros derechos de protección de datos expresados en la <a target="_blank" href="/">politica de privacidad</a>.</p>
                         </div>
                      </div>
                   </div>
@@ -125,4 +178,43 @@
       </div>
    </div>
 </section>
-@stop
+<!-- Main Content -->
+      <footer>
+         <div class="footer-sec">
+            <!-- footer-sec-top-start -->
+            <div class="row login header-sec bg-green-dark">
+               <div class="login-footer w-100">
+                  <div class="container">
+                     <div class="login-footer-items float-left w-75 order-2">
+                        <div class="login-footer-links float-left">
+                           <ul class="list-unstyled">
+                              <li class="d-inline-block float-left text-white"><a href="#">About US</a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/contact_us">Contact </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Use and Privacy Policy</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="brand float-right w-25 order-1">
+                        <a href="#"><img src="/frontend/assets/img/Original.png" alt=""></a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- footer-sec-top-end -->
+            <!-- footer-sec-bottom start -->
+            <div class="footer-bottom bg-green">
+               <div class="terms-and-conditions text-center">
+                  <p class="text-white m-0 d-inline-block"><i class="fa fa-copyright" aria-hidden="true"></i>2019 Doctrolia Internet,SL</p>
+                  <a href="#" class="text-white">About US Contact Us And Privacy Policy</a>
+               </div>
+            </div>
+         </div>
+         <!-- footer-sec-bottom end -->
+      </footer>
+      <script src="/frontend/assets/js/jquery-3.3.1.min.js"></script>
+      <script src="/frontend/assets/js/bootstrap.min.js"></script>
+      <script src="/frontend/assets/js/yearpicker.js"></script>
+      <script src="/frontend/assets/js/croppie.js"></script>
+      <script src="/frontend/assets/js/custom.js"></script>
+   </body>
+</html>

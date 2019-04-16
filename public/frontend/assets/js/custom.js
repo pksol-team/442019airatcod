@@ -421,14 +421,17 @@ jQuery(document).ready(function($) {
         }
     });
 
-    // specialty checked or not
+    // specialty combined in input
     $('input[name=selectspecialty]').change(function(e) {
         var selectedSpecialty = new Array();
+        var selectedSpecialtyVal = new Array();
         $('input[name="selectspecialty"]:checked').each(function() {
             selectedSpecialty.push(this.value);
+            selectedSpecialtyVal.push($(this).attr('data-name'));
         });
         if (selectedSpecialty.length != 0) {
             $('.specialty_array').val(selectedSpecialty);
+            $('.specialtyName').val(selectedSpecialtyVal);
         } else {
             $('.specialty_array').val('');
         }
@@ -451,13 +454,14 @@ jQuery(document).ready(function($) {
         e.preventDefault();
         var $this = $(this);
         var specialty_id = $this.parent('li').attr('data-speciality_id');
+        var specialty_name = $this.parent('li').attr('data-name');
         var token = $('.csrf_token_profile').val();
         var user_id = $('.user_id').val();
 
         $.ajax({
                 type: 'POST',
                 url:"/remove_specialty",
-                data:{"_token": token, "specialty": specialty_id, "user_id": user_id},
+                data:{"_token": token, "specialty": specialty_id, "sub_specialty":specialty_name, "user_id": user_id},
             })
             .done(function(response) {
                 if (response != 0) {
@@ -471,17 +475,18 @@ jQuery(document).ready(function($) {
             });
     });
 
-    // specialty checked or not on view profile page
+    // Add Specialty on view profile page
     $('.updateSpecialtyFormProfile').on('submit', function(e) {
         e.preventDefault();
         var $this = $(this);
         var specialty = $('input[name=specialty]').val();
+        var sub_specialty = $('input[name=specialtyName]').val();
         var user_id = $('.user_id').val();
         var token = $('.csrf_token_profile').val();
         if(specialty != '') {
                     $.each(specialty.split(','), function(index, val) {
                         var field = $('.all_specialties_modal').find(".selectspecialty-modal[value='"+val+"']").next('h6').html();
-                        var append = '<li data-speciality_id="'+val+'">'+field+' -- <a href="#" class="remove-speciality"> Remove</a></li>';
+                        var append = '<li data-name="'+field+'" data-speciality_id="'+val+'">'+field+' -- <a href="#" class="remove-speciality"> Remove</a></li>';
                         $('ul.specialty_exists').append(append);
                         $('.all_specialties_modal').find(".selectspecialty-modal[value='"+val+"']").parent('li').remove();
 
@@ -489,12 +494,11 @@ jQuery(document).ready(function($) {
             $.ajax({
                     type: 'POST',
                     url:"/addSpecialty",
-                    data:{"_token": token, "specialty": specialty, "user_id": user_id},
+                    data:{"_token": token, "specialty": specialty, "sub_specialty":sub_specialty, "user_id": user_id},
                 })
                 .done(function(response) {
                     $('#speciality_modal_close').trigger('click');
                 });
-
             
         } else {
             alert('Please select any one specialty');
@@ -550,5 +554,36 @@ jQuery(document).ready(function($) {
             UpdateExperienceDisease('remove', '/addService', '.formServices');
         });
     });
+
+    // Show doctor contact Number
+    $('.see_phone_profile').on('click',  function(e) {
+        e.preventDefault();
+        $(this).hide();
+        $('.phone_number_show').removeClass('d-none');
+    });
+
+    // home Page Search form submit empty
+    $('.homePageSearch').on('submit',  function(e) {
+        e.preventDefault();
+        var specialtySelect = $('.searchByInput').val();
+        if (specialtySelect != '') {
+            $(this)[0].submit();
+        }
+    });
+
+    // Doctor page search
+    $('.doctorsPageSearch').on('submit',  function(e) {
+        e.preventDefault();
+        var specialtySelect = $('.searchBySpecialty').val();
+        var citySelect = $('.searchByCity').val();
+        var forecastSelect = $('.searchByForecast').val();
+        if (specialtySelect == '' && citySelect == '' && forecastSelect == '') {
+        } else {
+            $(this)[0].submit();
+        }
+    });
+
+    // select 2
+    $('.js-example-basic-single').select2();
     
 });

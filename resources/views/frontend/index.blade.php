@@ -7,6 +7,7 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <title>@yield('title')</title>
       <link rel="stylesheet" href="/frontend/assets/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/frontend/assets/css/select2.min.css"/>
       <link rel="stylesheet" href="/frontend/assets/css/font-awesome.min.css">
       <link rel="stylesheet" href="/frontend/assets/css/style.css">
    </head>
@@ -45,24 +46,23 @@
                <img class="d-block w-100" src="/frontend/assets/img/slider.jpg" alt="First slide">
                <div class="carousel-caption d-md-block ">
                   <h3>Estás en buenas manos.</h3>
-                  <p>Elige tu médico, consulta las opiniones y reserva tu cita</p>
+                  <p>Elige tu médico  y reserva tu cita</p>
                   <!-- Search form -->
                   <div class="form-search text-center">
                      <div class="form-part">
-                        <form class="form-inline">
-                           <input class="form-control form-control-sm  search-input" type="text" placeholder="Search" aria-label="Search">
-                           <button class="btn bg-blue text-white"><a href="#" class="text-white ">Search</a></button>
+                        <form class="form-inline homePageSearch" action="/searchBySpecialty" method="get">
+                           <input class="searchByInput form-control" type="text" name="searchByInput" />
+                           <button type="submit" class="btn bg-blue text-white">Search</button>
                         </form>
                      </div>
                   </div>
                </div>
             </div>
-            <div class="carousel-item ">
+            <!-- <div class="carousel-item ">
                <img class="d-block w-100" src="/frontend/assets/img/slider.jpg" alt="First slide">
                <div class="carousel-caption d-md-block ">
                   <h3>Estás en buenas manos.</h3>
                   <p>Elige tu médico, consulta las opiniones y reserva tu cita</p>
-                  <!-- Search form -->
                   <div class="form-search text-center">
                      <div class="form-part">
                         <form class="form-inline">
@@ -72,13 +72,12 @@
                      </div>
                   </div>
                </div>
-            </div>
-            <div class="carousel-item">
+            </div> -->
+            <!-- <div class="carousel-item">
                <img class="d-block w-100" src="/frontend/assets/img/slider.jpg" alt="First slide">
                <div class="carousel-caption d-md-block ">
                   <h3>Estás en buenas manos.</h3>
                   <p>Elige tu médico, consulta las opiniones y reserva tu cita</p>
-                  <!-- Search form -->
                   <div class="form-search text-center">
                      <div class="form-part">
                         <form class="form-inline">
@@ -88,7 +87,7 @@
                      </div>
                   </div>
                </div>
-            </div>
+            </div> -->
          </div>
       </div>
       <!-- Carousel-end -->
@@ -219,67 +218,87 @@
          <div class="footer-items clearfix">
             <div class="container">
                <div class="row">
-                  <div class="col-lg-3">
-                     <article>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente doloribus distinctio adipisci repudiandae delectus, illum quos eum eos explicabo dolor voluptate velit nesciunt! Ex quisquam nihil harum in amet eum.</article>
-                  </div>
-                  <div class="col-lg-3">
-                     <ul class="link-pages ">
-                        <li><a href="" class="text-white">Home</a></li>
-                        <li><a href="" class="text-white">Home</a></li>
-                        <li><a href="" class="text-white">Home</a></li>
-                        <li><a href="" class="text-white">Home</a></li>
-                        <li><a href="" class="text-white">Home</a></li>
+                  <div class="col-12 text-white">
+                     <h3><i class="fa fa-bandcamp mr-3" aria-hidden="true"></i>Find your specialist</h3>
+                  </div><!-- /.col-12 -->
+                  <div class="col-lg-4">
+                     <ul class="link-pages list-unstyled">
+                        <li class="p-1"><b>By Specialty</b></li>
+                        <?php if ($allSpecialitiesBottom): ?>
+                           <?php foreach ($allSpecialitiesBottom as $key => $allSpecialy): ?>
+                              <li class="p-1"><a href="/all_professional?specialty=<?= $allSpecialy->id; ?>&city=&forecast=&searchByInput=" class="text-white"><?= $allSpecialy->name; ?></a></li>
+                           <?php endforeach ?>
+                        <?php endif ?>
+                        <li class="p-1"><a href="/viewFull/Specialty"><b>See All</b></a></li>
                      </ul>
                   </div>
-                  <div class="col-lg-3">
-                     <h3>Contact</h3>
-                     <div class="info">
-                        <ul class="list-unstyled">
-                           <li>
-                              <dt class="d-inline-block">Address:</dt>
-                              <dd class="d-inline-block">pksol</dd>
-                           </li>
-                           <li>
-                              <dt class="d-inline-block">Contact</dt>
-                              <dd class="d-inline-block">pksol</dd>
-                           </li>
-                           <li>
-                              <dt class="d-inline-block">Email:</dt>
-                              <dd class="d-inline-block">pksol</dd>
-                           </li>
-                           <li>
-                              <a href="" class="text-white"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-                              <a href="" class="text-white"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
-                              <a href="" class="text-white"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
-                              <a href="" class="text-white"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-                           </li>
-                        </ul>
-                     </div>
+                  <div class="col-lg-4">
+                     <ul class="link-pages list-unstyled">
+                        <li class="p-1"><b>By City</b></li>
+                        <?php if ($allCities): ?>
+                           <?php foreach ($allCities as $key => $allCity): ?>
+                              <li class="p-1"><a href="/all_professional?specialty=&city=<?= $allCity->name; ?>&forecast=&searchByInput=" class="text-white"><?= $allCity->name; ?></a></li>
+                           <?php endforeach ?>
+                        <?php endif ?>
+                        <li class="p-1"><a href="/viewFull/City"><b>See All</b></a></li>
+                     </ul>
                   </div>
-                  <div class="col-lg-3">
-                     <h3>Recent Tweets</h3>
-                     <ul class="tweets">
-                        <li class="list-unstyled d-inline-block">
-                           <i class="fa fa-twitter d-inline-block" aria-hidden="true"></i>
-                           <dd class="float-right"><a href="" class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde iste ipsa eaque nesciunt harum consequatur numquam </a></dd>
-                        </li>
-                        <li class="list-unstyled d-inline-block">
-                           <i class="fa fa-twitter d-inline-block" aria-hidden="true"></i>
-                           <dd class="float-right"><a href="" class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde iste ipsa eaque nesciunt harum consequatur numquam </a></dd>
-                        </li>
+                  <div class="col-lg-4">
+                     <ul class="link-pages list-unstyled">
+                        <li class="p-1"><b>By Forecast</b></li>
+                        <?php if ($allForecasts): ?>
+                           <?php foreach ($allForecasts as $key => $allForecast): ?>
+                              <li class="p-1"><a href="/all_professional?specialty=&city=&forecast=<?= $allForecast->name; ?>&searchByInput=" class="text-white"><?= $allForecast->name; ?></a></li>
+                           <?php endforeach ?>
+                        <?php endif ?>
+                        <li class="p-1"><a href="/viewFull/Forecast"><b>See All</b></a></li>
                      </ul>
                   </div>
                </div>
             </div>
          </div>
-         <div class="footer-bottom bg-green">
-            <div class="terms-and-conditions text-center">
-               <p class="text-white m-0">Copyrights Rights Reserved<i class="fa fa-copyright" aria-hidden="true"></i>2007-2019</p>
+         <div class="footer-sec">
+            <!-- footer-sec-top-start -->
+            <div class="row login header-sec bg-green-dark">
+               <div class="login-footer w-100">
+                  <div class="container">
+                     <div class="login-footer-items float-left w-75 order-2">
+                        <div class="login-footer-links float-left">
+                           <ul class="list-unstyled">
+                              <li class="d-inline-block float-left text-white"><a href="#">About US</a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Contact </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Use and Privacy Policy</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="brand float-right w-25 order-1">
+                        <a href="#"><img src="/frontend/assets/img/Original.png" alt=""></a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- footer-sec-top-end -->
+            <!-- footer-sec-bottom start -->
+            <div class="footer-bottom bg-green">
+               <div class="terms-and-conditions text-center">
+                  <p class="text-white m-0 d-inline-block"><i class="fa fa-copyright" aria-hidden="true"></i>2019 Doctrolia Internet,SL</p>
+                  <a href="#" class="text-white">About US Contact Us And Privacy Policy</a>
+               </div>
             </div>
          </div>
       </footer>
       <!-- Footer Section End -->
-      <script src="/frontend/assets/js/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="/frontend/assets/js/jquery-3.3.1.min.js"></script>
       <script src="/frontend/assets/js/bootstrap.min.js"></script>
+      <script src="/frontend/assets/js/yearpicker.js"></script>
+      <script src="/frontend/assets/js/select2.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+      <script src="/frontend/assets/js/croppie.js"></script>
+      <script src="/frontend/assets/js/custom.js"></script>
+      <script>
+         jQuery(document).ready(function($) {
+             $('.js-example-basic-single').select2();
+         });
+      </script>
    </body>
 </html>
