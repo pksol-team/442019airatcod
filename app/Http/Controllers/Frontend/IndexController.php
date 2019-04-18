@@ -160,7 +160,7 @@ class IndexController extends Controller
             $content = $msg_template;
             $subject = 'Reset Password';
 
-			$data = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $content);
+			$data = array( 'email' => $email, 'subject' => $subject, 'message' => $content);
 			Mail::send([], $data, function ($m) use($data) {
 	           $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
 	    	});
@@ -381,7 +381,7 @@ class IndexController extends Controller
 				</button>
 			</div>
 		';
-		$to = 'aminshoukat4@gmail.com';
+		$to = $email;
 	    $subject = 'Account Register';
 	    $content = $msg_template;
 
@@ -467,7 +467,7 @@ class IndexController extends Controller
 	        		</div>
 	        	';
 
-        		$to = 'aminshoukat4@gmail.com';
+        		$to = $NewEmail;
         	    $subject = 'Account Register';
         	    $content = $msg_template;
 
@@ -1227,17 +1227,16 @@ class IndexController extends Controller
 						</h4>
 					</div>
 	        	';
-        		$to = 'aminshoukat4@gmail.com';
         	    $subject = 'Appointment Booking';
         	    $content = $msg_template;
         	    $contentPatient = $msg_templatePatient;
 
-        		$data = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $content);
+        		$data = array( 'email' => $getDoctor->email, 'subject' => $subject, 'message' => $content);
         		Mail::send([], $data, function ($m) use($data) {
                    $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
             	});
 
-            	$dataPatient = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $contentPatient);
+            	$dataPatient = array( 'email' => $request->email, 'subject' => $subject, 'message' => $contentPatient);
         		Mail::send([], $dataPatient, function ($m) use($dataPatient) {
                    $m->to($dataPatient['email'])->subject($dataPatient['subject'])->setBody($dataPatient['message'], 'text/html');
             	});
@@ -1320,9 +1319,9 @@ class IndexController extends Controller
 
 							$contact = substr($contact, 0, -4) . 'xxxx';
 
-							$specialty = str_repeat("x", strlen($specialty));
+							$specialty = 'xxx';
 
-							$note = 'xxxxxxxxxxxxxxxxxxx';
+							$note = 'xxxxxxx';
 						}
 						
 						//Updating Email content [Metakey]
@@ -1334,7 +1333,7 @@ class IndexController extends Controller
 						$content = str_replace('[contact]', $contact, $content);
 						$content = str_replace('[specialty]', $specialty, $content);
 						$content = str_replace('[note]', $note, $content);
-						$data = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $content);
+						$data = array( 'email' => $findDoctor->email, 'subject' => $subject, 'message' => $content);
 						Mail::send([], $data, function ($m) use($data) {
 				           $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
 				    	});
