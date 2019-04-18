@@ -1540,6 +1540,52 @@ label.col-lg-12 {
 
 /*premium-page-css-end*/
 
+/*chat page*/
+button.close_button {
+    border-radius: 30px;
+}
+hr.chat {
+    margin-top: 32px;
+}
+div#info {
+    margin-top: 20px;
+}
+i.fa.fa-user-circle {
+    font-size: 40px;
+    color: gray;
+    float: left;
+}
+b.chat-admin {
+    padding: 17px 0 0 20px;
+}
+textarea.chat-textarea {
+    overflow: auto;
+    width: 100%;
+    resize: none;
+}
+button.reply-btn {
+    padding: 10px 30px;
+    border-radius: 30px;
+    float: right;
+    margin: 10px 0 0 0;
+    cursor: pointer;
+}
+.reply-sec {
+    height: 415px;
+    overflow-y: scroll;
+    border: 1px solid #ddd;
+}
+.icon-sec.type-reply {
+    padding-left: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-bottom: 1px solid #ddd
+}
+p.chat-chat {
+    padding-left: 60px;
+}
+/*chat page*/
+
 /**********************************************************  Media Queries *********************************************/
 @media all and (max-width:1200px) {
     .doctoralia-section .container {
@@ -3323,4 +3369,19 @@ tbody.all_services_tbody tr {
 .searchByInput {
     width: 70% !important;
     height: 46px;
+}
+.main_faq {
+    text-align: left;
+    width: 100%;
+    max-width: 960px;
+    padding: 28px 30px 28px 32px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: auto auto 40px auto;
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    box-shadow: 0 1px 4px 0 rgba(62, 66, 71, .25);
 }

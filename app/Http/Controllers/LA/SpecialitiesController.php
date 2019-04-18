@@ -235,11 +235,11 @@ class SpecialitiesController extends Controller
 					$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/specialities/'.$data->data[$i][0].'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
 				}
 				
-				if(Module::hasAccess("Specialities", "delete")) {
-					$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.specialities.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
-					$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
-					$output .= Form::close();
-				}
+				// if(Module::hasAccess("Specialities", "delete")) {
+				// 	$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.specialities.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
+				// 	$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
+				// 	$output .= Form::close();
+				// }
 				$data->data[$i][] = (string)$output;
 			}
 		}

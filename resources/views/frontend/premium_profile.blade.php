@@ -392,36 +392,53 @@
                   <div class="card border-0">
                      <div class="card card-header border-right-0 border-left-0 border-bottom-0 faq-panel">
                         <a class="card-link"  data-toggle="collapse" href="#collapseOne">
-                        <span class="pr-2"><i class="fa fa-caret-down" aria-hidden="true"></i></span>Collapsible Group Item #1
+                        <span class="pr-2"><i class="fa fa-caret-down" aria-hidden="true"></i></span>What is the Premium Profile?
                         </a>
                      </div>
                      <div id="collapseOne" class="collapse show" data-parent="#accordion">
                         <div class="card-body border-0">
-                           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                           The Premium Profile is the most complete profile that a doctor can have :
+
+                           Full and professional profile:
+                           • Extend the content of your profile to improve your online reputation. 
+                           • Add your experience in tests and diseases to improve your search results. 
+                           • Photos 
+                           • No third party ads.
+
+                           More visibility in listings:
+                           • Appear above the basic profiles. 
+                           • Get a Premium badge.
+
+                           More options to contact you:
+                           • Accept online appointment reservations: patients can request an appointment 24 hours from your computer or mobile. 
                         </div>
                      </div>
                   </div>
                   <div class="card border-0">
                      <div class="card card-header faq-panel border-right-0 border-left-0 border-bottom-0">
                         <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-                        <span class="pr-2"><i class="fa fa-caret-down" aria-hidden="true"></i></span>Collapsible Group Item #2
+                        <span class="pr-2"><i class="fa fa-caret-down" aria-hidden="true"></i></span>How to activate the subscription to the Premium Profile?
                         </a>
                      </div>
                      <div id="collapseTwo" class="collapse" data-parent="#accordion">
                         <div class="card-body border-0">
-                           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                           To start enjoying all the advantages of the Premium Profile, follow the following steps:
+
+                           1. Go to the top right of the Doctoralia home page and you will find the option "Log in" . 2. Enter your email and password and click on the "Log in" button . In this way, you will enter your private area and you will see the option "Choose Premium plan" in the upper right part of the screen. 3. Look for the option "Subscribe" and choose between monthly or annual payment options. 4. Finally, for monthly or annual payments you must choose between adding your credit card information or direct debit option and clicking on the option "Activate Premium Profile" 
+                           . 
+                           This way, the process will be finished and you will be able to enjoy the benefits of this service.
                         </div>
                      </div>
                   </div>
                   <div class="card border-0">
                      <div class="card card-header  border-right-0 border-left-0 border-bottom-0 faq-panel">
                         <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-                        <span class="pr-2"><i class="fa fa-caret-down" aria-hidden="true"></i></span>Collapsible Group Item #3
+                        <span class="pr-2"><i class="fa fa-caret-down" aria-hidden="true"></i></span>Conditions and permanence of the Premium Profile
                         </a>
                      </div>
                      <div id="collapseThree" class="collapse" data-parent="#accordion">
                         <div class="card-body border-0">
-                           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                           It will depend on the modality that has contracted, annual or monthly. In the monthly mode, a minimum stay of 6 months is applied in order to be able to measure the results obtained more effectively. In the annual mode, you can unsubscribe at any time and it will be effective at the end of the contracted period. The cancellation of the service is done from your private area to which you will have access at all times.
                         </div>
                      </div>
                   </div>

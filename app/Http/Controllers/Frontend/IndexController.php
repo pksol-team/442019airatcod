@@ -19,6 +19,8 @@ use App\User;
 use App\Models\Employee;
 use App\Role;
 use App\Models\ImageUpload;
+use App\Models\Tickets_reply;
+use App\Models\Ticket;
 use Mail;
 use Log;
 
@@ -122,9 +124,7 @@ class IndexController extends Controller
 			}
 		}else {
 			return redirect()->back()->withInput()->with('error', 'This Email address is not registered <a href="/register">Register Here </a>');
-			
 		}
-		
 	}
 
 	// View Forgot password Page
@@ -147,6 +147,25 @@ class IndexController extends Controller
 		if ($userGet) {
 	    	$PasswordKey = ['GUID' => $GUID];
 	        $UserUpd = DB::table('users')->where('email', $email)->update($PasswordKey);
+
+        	$baseUrl = url('/');
+        	$msg_template = '
+        		<div style="text-align: left;padding-left: 20px;padding-top: 50px;padding-bottom: 30px;">
+				<h3>psicologosVibemar.cl restablecimiento de contraseña: </h3>
+				<h4 style="padding: 0 20px 0 0;">Hola! <span style="color: #52a2f5;">'.$email.'</span>, Haga clic en el enlace de abajo para restablecer su contraseña</h4><h4 style="padding: 0 20px 0 0;"> </h4>
+				<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/enter_new_password/'.$GUID'" style="color:#fff;">Reset Password</a></button>
+				</div>';
+        	$to = 'aminshoukat4@gmail.com';
+            $subject = 'Reset Password';
+            $content = $msg_template;
+            $headers = 'From: PSICOLOGOS Vibemar' .' ' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+            $separator = md5(time());
+            $eol = "\r\n";
+            $headers .= 'MIME-Version: 1.0' . $eol;
+            $headers .= 'Content-Type: text/html; charset=UTF-8' . $eol;
+            $headers .= "Content-Transfer-Encoding: 8bit" . $eol;
+            mail($to, $subject, $content, $headers);
 			return redirect()->back()->withInput()->with('message', 'Password Reset link send to your email Kindly check your email');
 		}else {
 			return redirect()->back()->withInput()->with('error', 'This Email address is not registered <a href="/register">Register Here </a>');
@@ -321,6 +340,7 @@ class IndexController extends Controller
 		$getInsertedId = DB::getPdo()->lastInsertId();
        
 		if ($insertedEmployees) {
+			$confirm_email = uniqid(time()).uniqid();
 			$user = [
 	            'name' => $first_name,
 	            'email' => $email,
@@ -330,7 +350,7 @@ class IndexController extends Controller
 	            'hash_key' => $hashKey,
 			    'created_at' => Carbon::now(),
 			    'status' => 'deactive',
-			    'confirm_email' => uniqid(time()).uniqid(),
+			    'confirm_email' => $confirm_email,
 			    
 	        ];
 			$insertedUsers = DB::table('users')->insert($user);
@@ -347,10 +367,46 @@ class IndexController extends Controller
 				DB::table('role_user')->insert($role);
 			}
 		}
+		$baseUrl = url('/');
+		$msg_template = '
+			<div style="text-align: left;padding-left: 20px;padding-top: 50px;padding-bottom: 30px;">
+				<h3>Le damos la bienvenida a registro psicologosVibemar.cl<br></h3>
+				<h4 style="padding: 0 20px 0 0;">
+					<span lang="ES-CL" style="font-size:11.0pt;line-height:107%;font-family:" arial","sans-serif";="" mso-fareast-font-family:calibri;mso-fareast-theme-font:minor-latin;color:#3e4247;="" mso-ansi-language:es-cl;mso-fareast-language:en-us;mso-bidi-language:ar-sa"="">Gracias
+					por registrarse en. En las próximas 48-72 horas&nbsp;</span>
+					<strong>
+					<span lang="ES-CL" style="font-size:11.5pt;line-height:107%;font-family:" arial","sans-serif";="" mso-fareast-font-family:calibri;mso-fareast-theme-font:minor-latin;color:#3e4247;="" border:none="" windowtext="" 1.0pt;mso-border-alt:none="" 0in;padding:0in;="" mso-ansi-language:es-cl;mso-fareast-language:en-us;mso-bidi-language:ar-sa"="">revisaremos
+					los datos de su perfil para asegurarnos de que son válidos.</span>
+					</strong><br>
+				</h4>
+				<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/verify_email/'.$getInsertedId.'/'.$confirm_email.'" style="color:#fff;">Confirm Your Email Here</a>
+				</button>
+			</div>
+		';
+		$to = 'aminshoukat4@gmail.com';
+	    $subject = 'Account Register';
+	    $content = $msg_template;
+	    $headers = 'From: PSICOLOGOS Vibemar' .' ' . "\r\n" .
+	        'X-Mailer: PHP/' . phpversion();
+	    $separator = md5(time());
+	    $eol = "\r\n";
+	    $headers .= 'MIME-Version: 1.0' . $eol;
+	    $headers .= 'Content-Type: text/html; charset=UTF-8' . $eol;
+	    $headers .= "Content-Transfer-Encoding: 8bit" . $eol;
+	    mail($to, $subject, $content, $headers);
 
-			return redirect('/confirm_email/'.$user['hash_key']);
-		}
-		else {
+		return redirect('/confirm_email/'.$user['hash_key']);
+		//Updating Email content [Metakey]
+		// $get_email_content = DB::table('email_templates')->where('options', 'Registration')->whereNull('deleted_at')->first();
+	 //    $content = $get_email_content->email_content;
+	 //    $subject = $get_email_content->subject;
+		
+		// $name_updated = str_replace('[username]', $first_name, $content);
+		// $data = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $name_updated);
+		// Mail::send([], $data, function ($m) use($data) {
+  //          $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+  //   	});
+		} else {
 			return redirect()->back()->withInput()->with('error', $authenticateResult);
 		}
 
@@ -409,11 +465,61 @@ class IndexController extends Controller
 		        
 		        $NewUser = DB::table('users')->WHERE('id', $Userid)->first();
 
+	        	$baseUrl = url('/');
+	        	$msg_template = '
+	        		<div style="text-align: left;padding-left: 20px;padding-top: 50px;padding-bottom: 30px;">
+	        			<h3>Le damos la bienvenida a registro psicologosVibemar.cl<br></h3>
+	        			<h4 style="padding: 0 20px 0 0;">
+	        				<span lang="ES-CL" style="font-size:11.0pt;line-height:107%;font-family:" arial","sans-serif";="" mso-fareast-font-family:calibri;mso-fareast-theme-font:minor-latin;color:#3e4247;="" mso-ansi-language:es-cl;mso-fareast-language:en-us;mso-bidi-language:ar-sa"="">Gracias
+	        				por registrarse en. En las próximas 48-72 horas&nbsp;</span>
+	        				<strong>
+	        				<span lang="ES-CL" style="font-size:11.5pt;line-height:107%;font-family:" arial","sans-serif";="" mso-fareast-font-family:calibri;mso-fareast-theme-font:minor-latin;color:#3e4247;="" border:none="" windowtext="" 1.0pt;mso-border-alt:none="" 0in;padding:0in;="" mso-ansi-language:es-cl;mso-fareast-language:en-us;mso-bidi-language:ar-sa"="">revisaremos
+	        				los datos de su perfil para asegurarnos de que son válidos.</span>
+	        				</strong><br>
+	        			</h4>
+	        			<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/verify_email/'.$Userid.'/'.$$NewUser->confirm_email.'" style="color:#fff;">Confirm Your Email Here</a>
+	        			</button>
+	        		</div>
+	        	';
+	        	$to = 'aminshoukat4@gmail.com';
+	            $subject = 'Account Register';
+	            $content = $msg_template;
+	            $headers = 'From: PSICOLOGOS Vibemar' .' ' . "\r\n" .
+	                'X-Mailer: PHP/' . phpversion();
+	            $separator = md5(time());
+	            $eol = "\r\n";
+	            $headers .= 'MIME-Version: 1.0' . $eol;
+	            $headers .= 'Content-Type: text/html; charset=UTF-8' . $eol;
+	            $headers .= "Content-Transfer-Encoding: 8bit" . $eol;
+	            mail($to, $subject, $content, $headers);
+
 				return redirect('confirm_email/'.$NewUser->hash_key);
 	    	} else {
 				return redirect()->back()->withInput()->with('error', 'Email Address already exists!');
 	    	}
 		}
+	}
+
+	
+
+	// Verify Email through email
+	public function verify_email($id, $hashkey)
+	{
+		$title = 'Email verify';
+        $userFound = DB::table('users')->where([['id', $id], ['confirm_email', $hashkey]])->first();
+        if ($userFound) {
+
+        	$confirm_email = [
+        		'confirm_email' => NULL,
+        	];
+        
+        	DB::table('users')->where([['id', $id], ['confirm_email', $hashkey]])->update($confirm_email);
+        	$message = 'Thank You For Email Confirmation. Please complete your profile';
+
+        } else {
+        	$message = 'Oops! Link Expired or account is already confirmed';
+        }
+		return view('frontend.thankyou_email', compact('title', 'message'));
 	}
 
 	// View normal Profile Page
@@ -1169,9 +1275,111 @@ class IndexController extends Controller
 	{
 		$question = $request->question;
 		$title = 'F.A.Q';
-		return view('frontend.frequently', compact('title'));
-		
+        $faqs = DB::table('questions')->whereNull('deleted_at')->get();
+		return view('frontend.frequently', compact('title', 'question', 'faqs'));
 	}
+
+    // ******************************************* Tickets Start ***************************************** //
+	// View all Tickets Page
+	public function my_tickets()
+	{
+		$title = 'Tickets';
+		if (Auth::check()) {
+			$user_id = Auth::user()->id;
+	        $tickets = DB::table('tickets')->where('user_id', $user_id)->orderBy('id', 'DESC')->get();
+			return view('frontend.support_ticket', compact('title', 'tickets'));
+		} else {
+			return redirect('/userlogin');
+		}
+	}
+
+	// View Ticket Details page with chat
+	public function title_view($id)
+	{
+		if (Auth::check()) {
+			$title = 'Tickets';
+	        $tickets = DB::table('tickets')->where('id', $id)->first(); 
+	        $ticket_replytable = Tickets_reply::with('tickets')->with('users')->where('ticket_id', $id)->get();
+	        $tickets_reply = json_decode($ticket_replytable);
+
+	        return view('frontend.support_ticket_view',['data' => $tickets_reply, 'ticket' => $tickets, 'title' => $title]);
+        } else {
+			return redirect('/userlogin');
+		}
+    }
+    // View add new tickets page
+    public function ticket_add_page()
+    {
+		if (Auth::check()) {
+			$title = 'Tickets';
+        	return view('frontend.add_ticket', compact('title'));
+		} else {
+			return redirect('/userlogin');
+		}     	
+    }
+
+    // Add New Ticket in D.B from Request
+    public function ticket_data_add(Request $request)
+    {
+		if (Auth::check()) {
+	        DB::table('tickets')->insert([
+	            'ticket_title' => $request->ticket_title,
+	            'ticket_description' => $request->ticket_description,
+	            'user_id' => $request->user_id,
+	            'date' => $request->date,
+	            'ticket_status' => 'Open'
+	        ]);
+	        return redirect('/my_tickets');
+        } else {
+			return redirect('/userlogin');
+		}
+    }
+
+    //reply to ticket message
+    public function add_reply(Request $request)
+    {
+		if (Auth::check()) {
+	        DB::table('tickets_replies')->insert([
+	            'ticket_id' => $request->ticket_id,
+	            'reply_date' => $request->reply_date,
+	            'user_id' => $request->user_id,
+	            'message' => $request->message
+	            ]);
+	        if (Auth::user()->type == 'admin') {
+		        return redirect('/admin/title/'.$request->ticket_id);
+	        } else {
+		        return redirect('/tickets/tickets/'.$request->ticket_id);
+	        }
+	    } else {
+			return redirect('/userlogin');
+		}
+    }
+
+    // change ticket Status
+    public function close_ticket($ticet_id, $status)
+    {
+    	if (Auth::check()) {
+	        if($status == 'open'){
+	            DB::table('tickets')->where('id', $ticet_id)->update( [ 'ticket_status' => 'Open']);
+	        } else{
+	            DB::table('tickets')->where('id', $ticet_id)->update( [ 'ticket_status' => 'Close']);    
+	        }
+
+	        if (Auth::user()->type == 'admin') {
+		        return redirect('/admin/tickets');
+	        } else {
+		    	return redirect('/my_tickets');
+	        }
+	    } else {
+			return redirect('/userlogin');
+		}
+    } 
+
+    // ******************************************* Tickets End ***************************************** //
+
+
+
+
 
 	
 

@@ -23,6 +23,10 @@ Route::post('/register_doctor', 'Frontend\IndexController@register_doctor');
 Route::post('/register_check', 'Frontend\IndexController@register_check');
 //register confirmation
 Route::get('/confirm_email/{hash_key}', 'Frontend\IndexController@confirm_email');
+// confirm email with email link
+Route::get('/verify_email/{id}/{hash_key}', 'Frontend\IndexController@verify_email');
+// thank you page after email verify
+Route::get('/thankyou_email','Frontend\IndexController@thankyou_email');
 //register email change (wrong email enter)
 Route::get('/change_register_email/{id}', 'Frontend\IndexController@change_register_email');
 Route::post('/update_email', 'Frontend\IndexController@update_email');
@@ -97,6 +101,25 @@ Route::get('searchBySpecialty','Frontend\IndexController@searchBySpecialty');
 Route::get('premium_profile/{id}/{hash_key}','Frontend\IndexController@premium_profile');
 // view F.A.Q
 Route::get('frequently','Frontend\IndexController@frequently');
+// view Tickets
+Route::get('my_tickets','Frontend\IndexController@my_tickets');
+// view Single Ticket
+Route::get('/tickets/title/{id}','Frontend\IndexController@title_view');
+// close Ticket
+Route::get('/close_ticket/{ticket_id}/{status}', 'Frontend\IndexController@close_ticket');
+
+Route::get('/new_ticket', 'Frontend\IndexController@ticket_add_page');
+// Add New Ticket
+Route::post('/add_ticket_data', 'Frontend\IndexController@ticket_data_add');
+
+Route::post('/add_reply', 'Frontend\IndexController@add_reply');
+
+Route::get('/support', 'Frontend\IndexController@support_view');
+
+
+
+
+
 
 
 
@@ -210,4 +233,20 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
 	/* ================== Forecasts ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/forecasts', 'LA\ForecastsController');
 	Route::get(config('laraadmin.adminRoute') . '/forecast_dt_ajax', 'LA\ForecastsController@dtajax');
+
+	/* ================== Questions ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/questions', 'LA\QuestionsController');
+	Route::get(config('laraadmin.adminRoute') . '/question_dt_ajax', 'LA\QuestionsController@dtajax');
+
+	/* ================== Tickets ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/tickets', 'LA\TicketsController');
+	Route::get(config('laraadmin.adminRoute') . '/ticket_dt_ajax', 'LA\TicketsController@dtajax');
+
+	/* ================== Tickets_replies ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/tickets_replies', 'LA\Tickets_repliesController');
+	Route::get(config('laraadmin.adminRoute') . '/tickets_reply_dt_ajax', 'LA\Tickets_repliesController@dtajax');
+
+	/* ================== Email_Templates ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/email_templates', 'LA\Email_TemplatesController');
+	Route::get(config('laraadmin.adminRoute') . '/email_template_dt_ajax', 'LA\Email_TemplatesController@dtajax');
 });

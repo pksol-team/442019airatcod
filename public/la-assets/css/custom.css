@@ -1,0 +1,76 @@
+section.content .tickets_view_full_admin .container{
+    width: 960px;
+}
+section.content .tickets_view_full_admin {
+    margin-left: 46px;
+    width: 90%;
+}
+
+section.content .tickets_view_full_admin button.close_button {
+    border-radius: 30px;
+}
+section.content .tickets_view_full_admin hr.chat {
+    margin-top: 32px;
+}
+section.content .tickets_view_full_admin div#info {
+    margin-top: 20px;
+}
+section.content .tickets_view_full_admin i.fa.fa-user-circle {
+    font-size: 40px;
+    color: gray;
+    float: left;
+}
+section.content .tickets_view_full_admin b.chat-admin {
+    padding: 17px 0 0 20px;
+}
+section.content .tickets_view_full_admin textarea.chat-textarea {
+    overflow: auto;
+    width: 100%;
+    resize: none;
+}
+section.content .tickets_view_full_admin button.reply-btn {
+    padding: 10px 30px;
+    border-radius: 30px;
+    float: right;
+    margin: 10px 0 0 0;
+    cursor: pointer;
+}
+section.content .tickets_view_full_admin .reply-sec {
+    height: 415px;
+    background: #fff;
+    overflow-y: scroll;
+    border: 1px solid #ddd;
+}
+section.content .tickets_view_full_admin .icon-sec.type-reply {
+    padding-left: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-bottom: 1px solid #ddd
+}
+section.content .tickets_view_full_admin p.chat-chat {
+    padding-left: 60px;
+}
+
+section.content .tickets_view_full_admin .icon {
+	 margin-right: 5px;
+}
+section.content .tickets_view_full_admin .button-div-admin{
+	margin-bottom: 20px;
+}
+
+section.content .tickets_view_full_admin .user_icon{
+    background: #ddd;
+    border-radius: 25px;
+    padding: 10px 13px;
+    font-size: 27px;
+}
+
+section.content .tickets_view_full_admin .icon-sec p.chat-chat{
+    display: inline-block;
+    width: 100%;
+    margin-left: 9px;
+}
+
+section.content .tickets_view_full_admin .icon-sec p.para-1{
+	display: inline-block;
+}
