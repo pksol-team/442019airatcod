@@ -153,19 +153,17 @@ class IndexController extends Controller
         		<div style="text-align: left;padding-left: 20px;padding-top: 50px;padding-bottom: 30px;">
 				<h3>psicologosVibemar.cl restablecimiento de contraseña: </h3>
 				<h4 style="padding: 0 20px 0 0;">Hola! <span style="color: #52a2f5;">'.$email.'</span>, Haga clic en el enlace de abajo para restablecer su contraseña</h4><h4 style="padding: 0 20px 0 0;"> </h4>
-				<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/enter_new_password/'.$GUID'" style="color:#fff;">Reset Password</a></button>
+				<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/enter_new_password/'.$GUID.'" style="color:#fff;">Reset Password</a></button>
 				</div>';
-        	$to = 'aminshoukat4@gmail.com';
-            $subject = 'Reset Password';
+            
+            //Updating Email content [Metakey]
             $content = $msg_template;
-            $headers = 'From: PSICOLOGOS Vibemar' .' ' . "\r\n" .
-                'X-Mailer: PHP/' . phpversion();
-            $separator = md5(time());
-            $eol = "\r\n";
-            $headers .= 'MIME-Version: 1.0' . $eol;
-            $headers .= 'Content-Type: text/html; charset=UTF-8' . $eol;
-            $headers .= "Content-Transfer-Encoding: 8bit" . $eol;
-            mail($to, $subject, $content, $headers);
+            $subject = 'Reset Password';
+
+			$data = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $content);
+			Mail::send([], $data, function ($m) use($data) {
+	           $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+	    	});
 			return redirect()->back()->withInput()->with('message', 'Password Reset link send to your email Kindly check your email');
 		}else {
 			return redirect()->back()->withInput()->with('error', 'This Email address is not registered <a href="/register">Register Here </a>');
@@ -219,8 +217,8 @@ class IndexController extends Controller
 		if (Auth::check()) {
 			return redirect('/');
 		} else {
-			$allCities = DB::table('cities')->get();
-			$allForecasts = DB::table('forecasts')->get();
+			$allCities = DB::table('cities')->whereNull('deleted_at')->get();
+			$allForecasts = DB::table('forecasts')->whereNull('deleted_at')->get();
 			return view('frontend.register_init', compact('title', 'allCities', 'allForecasts'));
 		}
 	}
@@ -372,10 +370,10 @@ class IndexController extends Controller
 			<div style="text-align: left;padding-left: 20px;padding-top: 50px;padding-bottom: 30px;">
 				<h3>Le damos la bienvenida a registro psicologosVibemar.cl<br></h3>
 				<h4 style="padding: 0 20px 0 0;">
-					<span lang="ES-CL" style="font-size:11.0pt;line-height:107%;font-family:" arial","sans-serif";="" mso-fareast-font-family:calibri;mso-fareast-theme-font:minor-latin;color:#3e4247;="" mso-ansi-language:es-cl;mso-fareast-language:en-us;mso-bidi-language:ar-sa"="">Gracias
+					<span lang="ES-CL" style="font-size:11.0pt;line-height:107%;color:#3e4247">Gracias
 					por registrarse en. En las próximas 48-72 horas&nbsp;</span>
 					<strong>
-					<span lang="ES-CL" style="font-size:11.5pt;line-height:107%;font-family:" arial","sans-serif";="" mso-fareast-font-family:calibri;mso-fareast-theme-font:minor-latin;color:#3e4247;="" border:none="" windowtext="" 1.0pt;mso-border-alt:none="" 0in;padding:0in;="" mso-ansi-language:es-cl;mso-fareast-language:en-us;mso-bidi-language:ar-sa"="">revisaremos
+					<span lang="ES-CL" style="font-size:11.5pt;line-height:107%;color:#3e4247; border:none;padding:0">revisaremos
 					los datos de su perfil para asegurarnos de que son válidos.</span>
 					</strong><br>
 				</h4>
@@ -386,26 +384,13 @@ class IndexController extends Controller
 		$to = 'aminshoukat4@gmail.com';
 	    $subject = 'Account Register';
 	    $content = $msg_template;
-	    $headers = 'From: PSICOLOGOS Vibemar' .' ' . "\r\n" .
-	        'X-Mailer: PHP/' . phpversion();
-	    $separator = md5(time());
-	    $eol = "\r\n";
-	    $headers .= 'MIME-Version: 1.0' . $eol;
-	    $headers .= 'Content-Type: text/html; charset=UTF-8' . $eol;
-	    $headers .= "Content-Transfer-Encoding: 8bit" . $eol;
-	    mail($to, $subject, $content, $headers);
+
+		$data = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $content);
+		Mail::send([], $data, function ($m) use($data) {
+           $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+    	});
 
 		return redirect('/confirm_email/'.$user['hash_key']);
-		//Updating Email content [Metakey]
-		// $get_email_content = DB::table('email_templates')->where('options', 'Registration')->whereNull('deleted_at')->first();
-	 //    $content = $get_email_content->email_content;
-	 //    $subject = $get_email_content->subject;
-		
-		// $name_updated = str_replace('[username]', $first_name, $content);
-		// $data = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $name_updated);
-		// Mail::send([], $data, function ($m) use($data) {
-  //          $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
-  //   	});
 		} else {
 			return redirect()->back()->withInput()->with('error', $authenticateResult);
 		}
@@ -470,28 +455,26 @@ class IndexController extends Controller
 	        		<div style="text-align: left;padding-left: 20px;padding-top: 50px;padding-bottom: 30px;">
 	        			<h3>Le damos la bienvenida a registro psicologosVibemar.cl<br></h3>
 	        			<h4 style="padding: 0 20px 0 0;">
-	        				<span lang="ES-CL" style="font-size:11.0pt;line-height:107%;font-family:" arial","sans-serif";="" mso-fareast-font-family:calibri;mso-fareast-theme-font:minor-latin;color:#3e4247;="" mso-ansi-language:es-cl;mso-fareast-language:en-us;mso-bidi-language:ar-sa"="">Gracias
+	        				<span lang="ES-CL" style="font-size:11.0pt;line-height:107%;color:#3e4247">Gracias
 	        				por registrarse en. En las próximas 48-72 horas&nbsp;</span>
 	        				<strong>
-	        				<span lang="ES-CL" style="font-size:11.5pt;line-height:107%;font-family:" arial","sans-serif";="" mso-fareast-font-family:calibri;mso-fareast-theme-font:minor-latin;color:#3e4247;="" border:none="" windowtext="" 1.0pt;mso-border-alt:none="" 0in;padding:0in;="" mso-ansi-language:es-cl;mso-fareast-language:en-us;mso-bidi-language:ar-sa"="">revisaremos
+	        				<span lang="ES-CL" style="font-size:11.5pt;line-height:107%;color:#3e4247; border:none;padding:0">revisaremos
 	        				los datos de su perfil para asegurarnos de que son válidos.</span>
 	        				</strong><br>
 	        			</h4>
-	        			<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/verify_email/'.$Userid.'/'.$$NewUser->confirm_email.'" style="color:#fff;">Confirm Your Email Here</a>
+	        			<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/verify_email/'.$Userid.'/'.$NewUser->confirm_email.'" style="color:#fff;">Confirm Your Email Here</a>
 	        			</button>
 	        		</div>
 	        	';
-	        	$to = 'aminshoukat4@gmail.com';
-	            $subject = 'Account Register';
-	            $content = $msg_template;
-	            $headers = 'From: PSICOLOGOS Vibemar' .' ' . "\r\n" .
-	                'X-Mailer: PHP/' . phpversion();
-	            $separator = md5(time());
-	            $eol = "\r\n";
-	            $headers .= 'MIME-Version: 1.0' . $eol;
-	            $headers .= 'Content-Type: text/html; charset=UTF-8' . $eol;
-	            $headers .= "Content-Transfer-Encoding: 8bit" . $eol;
-	            mail($to, $subject, $content, $headers);
+
+        		$to = 'aminshoukat4@gmail.com';
+        	    $subject = 'Account Register';
+        	    $content = $msg_template;
+
+        		$data = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $content);
+        		Mail::send([], $data, function ($m) use($data) {
+                   $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+            	});
 
 				return redirect('confirm_email/'.$NewUser->hash_key);
 	    	} else {
@@ -499,8 +482,6 @@ class IndexController extends Controller
 	    	}
 		}
 	}
-
-	
 
 	// Verify Email through email
 	public function verify_email($id, $hashkey)
@@ -511,6 +492,7 @@ class IndexController extends Controller
 
         	$confirm_email = [
         		'confirm_email' => NULL,
+        		'status' => 'active',
         	];
         
         	DB::table('users')->where([['id', $id], ['confirm_email', $hashkey]])->update($confirm_email);
@@ -1193,6 +1175,8 @@ class IndexController extends Controller
 	{
 		if (Auth::check()) {
 			if ($request->doctor_id != '' && $request->appointment_date != '' && $request->day != '' && $request->from_time && $request->from_AM_PM != '' && $request->patient_id != '' && $request->patient_id != 0 && $request->first_name != '' && $request->last_name != '' && $request->email != '' && $request->mobile != '' && $request->terms != '' && $request->location != '') {
+
+			    $getDoctor = DB::table('employees')->where('id', $request->doctor_id)->first();
 				$addAppointment = [
 			            'doctor_id' => $request->doctor_id,
 			            'patient_id' => $request->patient_id,
@@ -1209,6 +1193,56 @@ class IndexController extends Controller
 			            'comments' => $request->comments,
 				    ];
 			    $done = DB::table('appointments')->insert($addAppointment);
+
+			    $baseUrl = url('/');
+
+	        	$msg_template = '
+					<div style="text-align: left;padding-left: 20px;padding-top: 50px;padding-bottom: 30px;">
+						<h3>Reserva de cita<br></h3>
+						<h4 style="padding: 0 20px 0 0;">
+							<span lang="ES-CL" style="font-size:11.0pt;line-height:107%;color:#3e4247">'.$request->first_name.' '.$request->last_name.' ha reservado cita este '.$request->day.' a las '.$request->from_time.' '.$request->from_AM_PM.'</span>
+							<br>
+							<span lang="ES-CL" style="font-size:11.0pt;line-height:107%;color:#3e4247">Gracias por usar psicologos vibemar</span>
+						</h4>
+						<h5>A continuación se muestran los detalles.</h5>
+						<ul style="list-style: none">
+							<li>First Name: '.$request->first_name.'</li>
+							<li>Last Name: '.$request->last_name.'</li>
+							<li>Email: '.$request->email.'</li>
+							<li>Contact: '.$request->mobile.'</li>
+							<li>Day: '.$request->day.'</li>
+							<li>Time: '.$request->from_time.' '.$request->from_AM_PM.'</li>
+							<li>Comment: '.$request->comments.'</li>
+						</ul>
+						
+					</div>
+	        	';
+	        	$msg_templatePatient = '
+					<div style="text-align: left;padding-left: 20px;padding-top: 50px;padding-bottom: 30px;">
+						<h3>Reserva de cita<br></h3>
+						<h4 style="padding: 0 20px 0 0;">
+							<span lang="ES-CL" style="font-size:11.0pt;line-height:107%;color:#3e4247">Su cita con el Dr. '.$getDoctor->first_name.' ha sido reservada.</span>
+							<br>
+							<span lang="ES-CL" style="font-size:11.0pt;line-height:107%;color:#3e4247">Gracias por usar psicologos vibemar</span>
+						</h4>
+					</div>
+	        	';
+        		$to = 'aminshoukat4@gmail.com';
+        	    $subject = 'Appointment Booking';
+        	    $content = $msg_template;
+        	    $contentPatient = $msg_templatePatient;
+
+        		$data = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $content);
+        		Mail::send([], $data, function ($m) use($data) {
+                   $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+            	});
+
+            	$dataPatient = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $contentPatient);
+        		Mail::send([], $dataPatient, function ($m) use($dataPatient) {
+                   $m->to($dataPatient['email'])->subject($dataPatient['subject'])->setBody($dataPatient['message'], 'text/html');
+            	});
+
+
 			    return redirect('/reservations')->with('message', 'Your Appointment is booked');
 			} else {
 				return redirect()->back()->withInput()->with('error', 'Oops! Something went wrong..');
@@ -1234,6 +1268,82 @@ class IndexController extends Controller
 				return redirect('/');
 	        }
 
+		} else {
+			return redirect('/');
+		}
+	}
+
+	// Quote Doctor form Page
+	public function quote_doctor()
+	{
+		if (Auth::check() && Auth::user()->type == 'patient') {
+			$title = 'Quote Doctor';
+			$userID = Auth::user()->id;
+	        $EmpTbl = DB::table('employees')->where('id', $userID)->first();
+	        $allCities = DB::table('cities')->whereNull('deleted_at')->get();
+			$allSpecialities = DB::table('specialities')->whereNull('deleted_at')->get();
+			$allForecasts = DB::table('forecasts')->whereNull('deleted_at')->get();
+			return view('frontend.quote_doctor', compact('title', 'userID', 'EmpTbl', 'allCities', 'allSpecialities', 'allForecasts'));
+		} else {
+			return redirect('/');
+		}
+	}
+
+	// Send Emails to Doctors for quote
+	public function send_quote_email(Request $request)
+	{
+		if (Auth::check() && Auth::user()->type == 'patient') {
+			if ($request->name != '' && $request->contact != '' && $request->email != '' && $request->forecast != '' && $request->city != '' && $request->specialty != '' && $request->note != '') {
+
+				$name = $request->name;
+				$contact = $request->contact;
+				$email = $request->email;
+				$specialty = $request->specialty;
+				$city = $request->city;
+				$forecast = $request->forecast;
+				$note = $request->note;
+				$allDoctors = DB::table('employees')->where('type', 'doctor');
+				$allDoctors->where('city', 'LIKE', "%$city%");
+				$allDoctors->where('sub_specialty', 'LIKE', "%$specialty%");
+				$allDoctors->where('forecast', 'LIKE', "%$forecast%");
+				$findDoctors = $allDoctors->get();
+
+				if ($findDoctors) {
+					foreach ($findDoctors as $key => $findDoctor) {
+
+						if ($findDoctor->profile == 'basic') {
+							$explodedEmail = explode('@', $email);
+							$newEmail = substr($explodedEmail[0], 0, -4) . 'xxxx';
+							$explodedEmailDomain = explode('.', $explodedEmail[1]);
+							$domain = str_repeat("x", strlen($explodedEmailDomain[0]));
+							$email = $newEmail.'@'.$domain.'.'.$explodedEmailDomain[1];
+
+							$contact = substr($contact, 0, -4) . 'xxxx';
+
+							$specialty = str_repeat("x", strlen($specialty));
+
+							$note = 'xxxxxxxxxxxxxxxxxxx';
+						}
+						
+						//Updating Email content [Metakey]
+						$get_email_content = DB::table('email_templates')->where('options', 'Quote')->whereNull('deleted_at')->first();
+					    $content = $get_email_content->email_content;
+					    $subject = $get_email_content->subject;
+						
+						$content = str_replace('[email]', $email, $content);
+						$content = str_replace('[contact]', $contact, $content);
+						$content = str_replace('[specialty]', $specialty, $content);
+						$content = str_replace('[note]', $note, $content);
+						$data = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $content);
+						Mail::send([], $data, function ($m) use($data) {
+				           $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+				    	});
+					}
+				}
+				return redirect()->back()->with('message', 'Nota: Explícanos quesituación tienes para que te responda el psicólogo más adecuado.<br> Hemos enviado tu cotización ¡Pronto te contactara el psicólogo más adecuado!');
+			} else {
+				return redirect()->back()->with('error', 'Oops! Something went wrong..');
+			}
 		} else {
 			return redirect('/');
 		}

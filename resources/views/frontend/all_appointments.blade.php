@@ -9,6 +9,8 @@
          <ul class="list-unstyled">
             <li class="d-inline-block active"><a href="<?= '/doctor_full_profile/'.$EmpTbl->hash_key ?>">PROFILE</a></li>
             <li class="d-inline-block"><a href="">BOOKING APPOINTMENT</a></li>
+            <li class="d-inline-block"><a href="/quote_doctor">Quote PSYCHOLOGIST</a></li>
+
             <!-- <li class="d-inline-block"><a href="">STATISTICS</a></li> -->
             <!-- <li class="d-inline-block"><a href="">ACCOUNT</a></li> -->
          </ul>

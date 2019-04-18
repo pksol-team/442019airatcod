@@ -9,6 +9,8 @@
           <?php if ($EmpTbl->type == 'patient'): ?>
             <li class="d-inline-block"><a href="/reservations">Quotes</a></li>
             <li class="d-inline-block"><a href="/favourites">Favourites</a></li>
+            <li class="d-inline-block"><a href="/quote_doctor">Quote PSYCHOLOGIST</a></li>
+
           <?php else: ?>
             <li class="d-inline-block"><a href="/doctor_full_profile/<?= $UserTbl->hash_key ?>">Profile</a></li>
           <?php endif ?>

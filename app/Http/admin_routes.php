@@ -67,6 +67,10 @@ Route::get('contact_us','Frontend\IndexController@contact_us');
 Route::post('contact_us_email','Frontend\IndexController@contact_us_email');
 // reservation Page for Patient
 Route::get('reservations','Frontend\IndexController@reservations');
+// Quote Doctor Form Page
+Route::get('quote_doctor','Frontend\IndexController@quote_doctor');
+// Send Quote Emails with Form
+Route::post('send_quote_email','Frontend\IndexController@send_quote_email');
 // Favourites Page for Patient
 Route::get('favourites','Frontend\IndexController@favourites');
 //Make Favourite

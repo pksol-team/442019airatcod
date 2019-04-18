@@ -8,6 +8,7 @@
          <ul class="list-unstyled">
             <li class="d-inline-block"><a href="/reservations">Quotes</a></li>
             <li class="d-inline-block active"><a href="/favourites">Favourites</a></li>
+            <li class="d-inline-block"><a href="/quote_doctor">Quote PSYCHOLOGIST</a></li>
             <li class="d-inline-block"><a href="/my_data">My Data</a></li>
          </ul>
       </div>
