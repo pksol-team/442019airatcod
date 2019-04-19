@@ -53,7 +53,7 @@ class FacebookController extends Controller
     {
     	$time = Carbon::now();
         $user = Socialite::driver('facebook')->user();
-		$checkUser = DB::table('users')->WHERE('email', $user->email)->get();
+		$checkUser = DB::table('users')->WHERE('email', $user->email)->first();
 		if ($checkUser == NULL) {
 	    	$employee = [
 	    	    'first_name' => $user->name,
@@ -68,7 +68,7 @@ class FacebookController extends Controller
 	    		$user = [
 	                'name' => $user->name,
 	                'email' => $user->email,
-		            'password' => bcrypt(''),
+		            'password' => NULL,
 	                'context_id' => $getInsertedId,
 	                'type' => "patient",
 				    'confirm_email' => uniqid(time()).uniqid(),
@@ -85,15 +85,16 @@ class FacebookController extends Controller
 	    		}
 	    	}
 
+		} else {
+			if ($checkUser->type == 'doctor') {
+		    	return redirect('/userlogin')->with('error', 'Login with facebook is only for Patients');
+			} else {
+				Auth::loginUsingId($user->id);
+				return redirect('/');
+			}
 		}
-		$userGet = DB::table('users')->WHERE('email', $user->email)->first();
-    	if ($userGet) {
-			Auth::attempt(['email' => $user->email, 'password' => '']);
-			return redirect('/');
-    	}else {
-    		return redirect('/userlogin')->with('error', 'Oops! Something went wrong..');
-    	}
-    		return redirect('/userlogin')->with('error', 'Oops! Something went wrong..');
+    		
+    	return redirect('/userlogin')->with('error', 'Oops! Something went wrong..');
     }
 	
 }

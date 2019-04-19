@@ -1,3 +1,4 @@
+<?php use App\Http\Controllers\Frontend\IndexController; ?>
 @extends('frontend.template.layout')
 @section('title') <?= $title; ?> @stop
 @section('content')
@@ -27,7 +28,7 @@
    </div>
 </div>
 <!-- pages-links end -->
-<section>
+<section class="doctor_full_main_page">
    <div class="row quotes-sec">
       <div class="container">
          <div class="quotes-head text-center">
@@ -462,10 +463,11 @@
                   </div> -->
                   <div class="training" id="training">
                      <form action="/updateTraining" method="post" class="updateTrainingForm">
+                      <input class="lim-typ-hidden" type="hidden" data-type="<?= $EmpTbl->type ?>" data-lim="<?= ($EmpTbl->profile == 'premium') ? '10': '3'; ?>" />
                      <h2 class="border-bottom ">Training</h2>
                      <div class="training-set-fields">
                         <p>You can add up to 3 titles or courses (career, specialty, doctorate, certification, rotations ...).</p>
-                        <p>Premium Users can add up to 10 ( <a href="#"> Know more</a> )</p>
+                        <p>Premium Users can add up to 10 ( <a href="<?= '/premium_profile/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>"> Know more</a> )</p>
                      </div>
                      <div class="row training-input">
                         <div class="col-lg-2 offset-lg-4 training-input-fields text-right">
@@ -516,15 +518,17 @@
                   <div class="photos" id="photos_dropzone_upload">
                      <h2 class="border-bottom">Photos</h2>
                      <p>Add Photos. Option only <b>available for Premium</b></p>
-                     <div>
-                        <form method="post" action="/upload_photos" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
-                         {{ csrf_field() }}
-                        <input class="user_id" type="hidden" name="user_id" value="<?= $EmpTbl->id; ?>">
-                           <div class="dz-message needsclick text-center mt-2">
-                              Drop files here or click to upload
-                           </div>
-                        </form>
-                     </div>
+                     <?php if ($EmpTbl->profile == 'premium'): ?>
+                       <div>
+                          <form method="post" action="/upload_photos" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
+                           {{ csrf_field() }}
+                          <input class="user_id" type="hidden" name="user_id" value="<?= $EmpTbl->id; ?>">
+                             <div class="dz-message needsclick text-center mt-2">
+                                Drop files here or click to upload
+                             </div>
+                          </form>
+                       </div>
+                     <?php endif ?>
                   </div>
                   <div class="webs-and-link-of-interest" id="webs-and-link-of-interest">
                      <h2 class="border-bottom ">Webs And Link Of Interest</h2>
@@ -586,6 +590,34 @@
                    <div class="row mb-4">
                       <a href="/consulting_time"><button class="btn btn-primary">Add Counsulting Time</button></a>
                    </div><!-- /.row -->
+                   <div class="row consultantTime">
+                         <div id="table-day" class="col-lg-9">
+                            <table class="table table-bordered">
+                               <thead>
+                                  <tr>
+                                     <th>Monday</th>
+                                     <th>Tuesday</th>
+                                     <th>Wednesday</th>
+                                     <th>Thursday</th>
+                                     <th>Friday</th>
+                                     <th>Saturday</th>
+                                     <th>Sunday</th>
+                                  </tr>
+                               </thead>
+                               <tbody>
+                                  <tr>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Monday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Tuesday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Wednesday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Thursday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Friday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Saturday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Sunday', $EmpTbl->id); ?></td>
+                                  </tr>
+                               </tbody>
+                            </table>
+                         </div>
+                      </div>
                   <!-- Social-Network -->
                   <!-- <div class="social-network">
                      <h2 class="border-bottom ">Social Network</h2>
@@ -724,7 +756,7 @@
                   </div>
                   <div class="premium-pro-desc text-center">
                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                     <button class="btn  bg-white">Know More</button>
+                    <a href="<?= '/premium_profile/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>"><button class="btn bg-white">Know More</button></a>
                   </div>
                </div>
                <?php 
@@ -850,9 +882,9 @@
                            <li><small>visits to your Profile</small></li>
                         </ul>
                      </div>
-                     <div class="statistics-know-more-button">
+                     <!-- <div class="statistics-know-more-button">
                         <button class="btn btn-primary w-75">Know More</button>
-                     </div>
+                     </div> -->
                   </div>
                </div>
                <div class="sidebar-support">

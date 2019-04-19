@@ -32,7 +32,7 @@
             </div>
          </div>
       </div>
-      <div class="row pro-page-columns">
+      <div class="row pro-page-columns mb-3">
          <div class="col-lg-4 pro-page-column-first text-center">
             <div class="pro-page-column-first-img">
                <i class="fa fa-picture-o" aria-hidden="true"></i>
@@ -45,7 +45,7 @@
                   <div class="pro-page-desc-icon">
                      <i class="fa fa-check" aria-hidden="true"></i>
                   </div>
-                  <div class="pro-page-desc text-left">
+                  <div class="pro-page-desc">
                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis enim quo, accusamus aperiam id velit in ullam odit suscipit.</p>
                   </div>
                </div>
@@ -66,7 +66,7 @@
                   <div class="pro-page-desc-icon">
                      <i class="fa fa-check" aria-hidden="true"></i>
                   </div>
-                  <div class="pro-page-desc text-left">
+                  <div class="pro-page-desc">
                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis enim quo, accusamus aperiam id velit in ullam odit suscipit.</p>
                   </div>
                </div>
@@ -87,7 +87,7 @@
                   <div class="pro-page-desc-icon">
                      <i class="fa fa-check" aria-hidden="true"></i>
                   </div>
-                  <div class="pro-page-desc text-left">
+                  <div class="pro-page-desc">
                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis enim quo, accusamus aperiam id velit in ullam odit suscipit.</p>
                   </div>
                </div>
@@ -98,19 +98,22 @@
          </div>
       </div>
       <!-- row -->
-      <!-- choose-your-premium-plan -->
-      <div class="choose-your-premium-plan text-center">
-         <div class="choose-your-plan-area ">
-            <ul class="list-unstyled">
-               <li>
-                  <a href="">For Only $ 25,990</a>
-               </li>
-               <li class="my-2"><button class="btn btn-primary">Choose Premium plan</button>
-               </li>
-            </ul>
+      <?php if ($EmpTbl->profile == 'basic'): ?>
+         <!-- choose-your-premium-plan -->
+         <div class="choose-your-premium-plan text-center">
+            <div class="choose-your-plan-area ">
+               <ul class="list-unstyled">
+                  <li>
+                     <span style="color: #4CAF51;">For Only $ 25,990</span>
+                  </li>
+                  <li class="my-2"><button class="btn btn-primary">Choose Premium plan</button>
+                  </li>
+               </ul>
+            </div>
          </div>
-      </div>
-      <!--choose-your-premium-plan-end  -->
+         <!--choose-your-premium-plan-end  -->
+      <?php endif ?>
+
       <!-- compare your current -->
       <div class="compre-your-account my-5">
          <div class="compare-your-premium-acc-head text-center my-5">
@@ -121,8 +124,8 @@
                <thead>
                   <tr>
                      <th>Visibility in Doctoralia</th>
-                     <th class="text-center">Basic <br> Current profile</th>
-                     <th class="text-center">Premium</th>
+                     <th class="text-center">Basic <?= ($EmpTbl->profile == 'basic') ? '<br> Current profile' : NULL; ?></th>
+                     <th class="text-center">Premium <?= ($EmpTbl->profile == 'premium') ? '<br> Current profile' : NULL; ?> </th>
                   </tr>
                </thead>
                <tbody class="table-body">
@@ -325,17 +328,19 @@
                   </div>
                </div>
             </div>
-            <div class="premium-pro-buy">
-               <div class="premium-pro-button">
-                  <ul class="list-unstyled">
-                     <li>
-                        <a href="">For Only $ 25,990</a>
-                     </li>
-                     <li><button class="btn btn-primary my-3">Choose Premium plan</button>
-                     </li>
-                  </ul>
+            <?php if ($EmpTbl->profile == 'basic'): ?>
+               <div class="premium-pro-buy">
+                  <div class="premium-pro-button">
+                     <ul class="list-unstyled">
+                        <li>
+                           <span style="color: #4CAF51;">For Only $ 25,990</span>
+                        </li>
+                        <li><button class="btn btn-primary my-3">Choose Premium plan</button>
+                        </li>
+                     </ul>
+                  </div>
                </div>
-            </div>
+            <?php endif ?>
          </div>
          <!-- premium-profile-page-content -->
       </div>

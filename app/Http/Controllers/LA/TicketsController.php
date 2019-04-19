@@ -106,7 +106,7 @@ class TicketsController extends Controller
 
 		if (Auth::check()) {
 			$title = 'Tickets';
-	        $tickets = DB::table('tickets')->get(); 
+	        $tickets = DB::table('tickets')->whereNull('deleted_at')->first(); 
 	        $ticket_replytable = Tickets_reply::with('tickets')->with('users')->where('ticket_id', $id)->get();
 	        $tickets_reply = json_decode($ticket_replytable);
 
@@ -229,9 +229,9 @@ class TicketsController extends Controller
 			
 			if($this->show_action) {
 				$output = '';
-				// if(Module::hasAccess("Tickets", "edit")) {
-				// 	$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/tickets/'.$data->data[$i][0].'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
-				// }
+				if(Module::hasAccess("Tickets", "edit")) {
+					$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/tickets/'.$data->data[$i][0].'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
+				}
 				
 				if(Module::hasAccess("Tickets", "delete")) {
 					$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.tickets.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);

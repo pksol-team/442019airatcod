@@ -111,6 +111,11 @@
    </div>
    <div class="row text-center consulting_fields_main_button">
       <div class="col-12">
+         <?php 
+            $user_id = Auth::user()->id;
+            $EmpTbl = DB::table('employees')->where('id', $user_id)->first();
+          ?>
+         <a href="/doctor_full_profile/<?= $EmpTbl->hash_key ?>"><button type="button" class="btn btn-dark">Back</button></a>
          <button type="submit" class="btn btn-success">Save Consulting</button> 
       </div><!-- /.col-12 -->
    </div><!-- /.row -->

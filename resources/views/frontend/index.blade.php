@@ -266,7 +266,9 @@
                         <div class="login-footer-links float-left">
                            <ul class="list-unstyled">
                               <li class="d-inline-block float-left text-white"><a href="#">About US</a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="#">Contact </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/contact_us">Contact </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/frequently">Frequent questions </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Health blog </a>|</li>
                               <li class="d-inline-block float-left text-white"><a href="#">Use and Privacy Policy</a></li>
                            </ul>
                         </div>

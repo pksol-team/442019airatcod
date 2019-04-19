@@ -1324,7 +1324,7 @@ label.col-lg-12 {
 }
 
 .contact-us .class-social-list-icon {
-    margin: 90px auto;
+    margin: 130px auto;
 }
 
 .contact-us .formas-officer img {
@@ -2729,11 +2729,11 @@ li.edit-profile-form .dralia-form dl dd input, li.edit-profile-form .dralia-form
     padding-bottom: 5px;
 }
 
-.doctor_view_main_page thead {
+.doctor_view_main_page thead, .doctor_full_main_page .consultantTime thead {
     background: #3abd3b;
 }
 
-.doctor_view_main_page th {
+.doctor_view_main_page th, .doctor_full_main_page .consultantTime th {
     font-size: medium;
     border-right: 1px solid #fff;
 }

@@ -111,14 +111,18 @@ Route::get('my_tickets','Frontend\IndexController@my_tickets');
 Route::get('/tickets/title/{id}','Frontend\IndexController@title_view');
 // close Ticket
 Route::get('/close_ticket/{ticket_id}/{status}', 'Frontend\IndexController@close_ticket');
-
+// Tick Add Page
 Route::get('/new_ticket', 'Frontend\IndexController@ticket_add_page');
 // Add New Ticket
 Route::post('/add_ticket_data', 'Frontend\IndexController@ticket_data_add');
-
+// Reply to Ticket
 Route::post('/add_reply', 'Frontend\IndexController@add_reply');
+// Check Subscription on Daily basis
+Route::get('/subscription_check', 'Frontend\IndexController@subscription_check');
 
-Route::get('/support', 'Frontend\IndexController@support_view');
+
+
+
 
 
 

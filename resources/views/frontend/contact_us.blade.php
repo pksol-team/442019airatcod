@@ -128,23 +128,8 @@
             <div class="class-social-list-icon">
                <ul class="list-unstyled">
                   <li>
-                     <a class="btn btn-block btn-social btn-linkedin">
-                     <span class="fa fa-linkedin linkdin-icon-color"></span> Sign in with Twitter
-                     </a>
-                  </li>
-                  <li>
-                     <a class="btn btn-block btn-social btn-twitter">
-                     <span class="fa fa-twitter twitter-icon-color"></span> Sign in with Twitter
-                     </a>
-                  </li>
-                  <li>
-                     <a class="btn btn-block btn-social btn-twitter">
-                     <span class="fa fa-facebook fb-icon-color"></span> Sign in with Twitter
-                     </a>
-                  </li>
-                  <li>
-                     <a class="btn btn-block btn-social btn-twitter">
-                     <span class="fa fa-globe globe-icon-color"></span> Sign in with Twitter
+                     <a href="{{ route('facebook.login') }}" class="btn btn-block btn-social btn-twitter">
+                     <span class="fa fa-facebook fb-icon-color"></span> Sign in with Facebook
                      </a>
                   </li>
                </ul>
@@ -188,7 +173,7 @@
                      </div>
                      <div class="row for-contact-label my-2">
                         <div class="col-lg-4 text-right">
-                           <label for="">Sur names</label>
+                           <label for="">Sur name</label>
                         </div>
                         <div class="col-lg-8">
                            <input type="text" class="w-100 form-control" name="last_name" required>
@@ -204,10 +189,10 @@
                      </div>
                      <div class="row for-contact-label my-2">
                         <div class="col-lg-4 text-right">
-                           <label for="">Commentary</label>
+                           <label for="">Comment</label>
                         </div>
                         <div class="col-lg-8">
-                           <textarea name="" id="" cols="30" rows="10" class="form-control" name="comment" required></textarea>
+                           <textarea id="" cols="30" rows="10" class="form-control" name="comment" required></textarea>
                         </div>
                      </div>
                      <div class="row for-contact-label my-2">

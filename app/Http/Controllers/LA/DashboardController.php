@@ -9,6 +9,8 @@ namespace App\Http\Controllers\LA;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use DB;
 
 /**
  * Class DashboardController
@@ -33,6 +35,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('la.dashboard');
+        $allDoctorsCount = DB::table('employees')->where('type', 'doctor')->count();
+        $unVerifiedDoctors = DB::table('users')->where('confirm_email', '!=', NULL)->count();
+        $allPatientCount = DB::table('employees')->where('type', 'patient')->count();
+        $todayDate = Carbon::now()->toDateString();
+        $upcomingAppointments = DB::table('appointments')->where('appointment_date', '>=', $todayDate)->count();
+        return view('la.dashboard', compact('allDoctorsCount', 'allPatientCount', 'upcomingAppointments', 'unVerifiedDoctors'));
     }
 }

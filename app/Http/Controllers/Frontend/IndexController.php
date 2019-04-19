@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Console\Scheduling\Schedule;
 use Session;
 use Carbon\Carbon;
 use Auth;
@@ -896,8 +897,43 @@ class IndexController extends Controller
 	}
 
 	// Contact Us Email Section
-	public function contact_us_email()
+	public function contact_us_email(Request $request)
 	{
+		$admin = DB::table('employees')->where('type', 'admin')->first();
+		$reason = $request->reason;
+		$first_name = $request->first_name;
+		$last_name = $request->last_name;
+		$email = $request->email;
+		$comment = $request->comment;
+
+    	$baseUrl = url('/');
+    	$msg_template = '
+		    	<div style="text-align: left;padding-left: 20px;padding-top: 50px;padding-bottom: 30px;">
+			    	<h3>psicologosVibemar.cl contacto: </h3>
+			    	<h4 style="padding: 0 20px 0 0;">Hola '.$admin->first_name.'! <br><br>
+			    		'.$first_name.' ha enviado un mensaje a través del formulario de contacto.
+			    		abajo están los detalles
+			    	</h4>
+			    	<p>
+			    		<ul style="list-style: none;">
+			    			<li>Reason: '.$reason.'</li>
+			    			<li>First Name: '.$first_name.'</li>
+			    			<li>last Name: '.$last_name.'</li>
+			    			<li>Email: '.$email.'</li>
+			    			<li>Comment: '.$comment.'</li>
+			    		</ul>
+			    	</p>
+		    	</div>
+		    	';
+        
+        //Updating Email content [Metakey]
+        $content = $msg_template;
+        $subject = 'Contact';
+
+		$data = array( 'email' => $admin->email, 'subject' => $subject, 'message' => $content);
+		Mail::send([], $data, function ($m) use($data) {
+           $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+    	});
 		return redirect()->back()->withInput()->with('message', 'Thank you for contacting us');
 	}
 	
@@ -940,6 +976,7 @@ class IndexController extends Controller
         }
 	}
 
+	// return doctor Schedule
 	public static function getTimingDoctor($day, $id) {
 		$allTimings = DB::table('consulting_time')->WHERE('day', $day)->WHERE('doctor_id', $id)->get();
         $EmpTbl = DB::table('employees')->WHERE('id', $id)->first();
@@ -950,6 +987,23 @@ class IndexController extends Controller
 					continue;
 				} else {
 					$times .= '<p class="mb-1"><a href="/book_appointment/'.$EmpTbl->id.'/'.$EmpTbl->hash_key.'/'.$allTiming->id.'">'.$allTiming->from_time.' '.$allTiming->from_AM_PM.'</a></p>';
+				}
+			}
+		}
+		return $times;
+	}
+
+	// return doctor Schedule for doctor's own profile
+	public static function getTimingDoctorProfile($day, $id) {
+		$allTimings = DB::table('consulting_time')->WHERE('day', $day)->WHERE('doctor_id', $id)->get();
+        $EmpTbl = DB::table('employees')->WHERE('id', $id)->first();
+		$times = '';
+		if ($allTimings != NULL) {
+			foreach ($allTimings as $key => $allTiming) {
+				if ($allTiming->status == 'off') {
+					continue;
+				} else {
+					$times .= '<p class="mb-1 text-black">'.$allTiming->from_time.' '.$allTiming->from_AM_PM.'</p>';
 				}
 			}
 		}
@@ -1395,7 +1449,7 @@ class IndexController extends Controller
 		$title = 'Tickets';
 		if (Auth::check()) {
 			$user_id = Auth::user()->id;
-	        $tickets = DB::table('tickets')->where('user_id', $user_id)->orderBy('id', 'DESC')->get();
+	        $tickets = DB::table('tickets')->where('user_id', $user_id)->whereNull('deleted_at')->orderBy('id', 'DESC')->get();
 			return view('frontend.support_ticket', compact('title', 'tickets'));
 		} else {
 			return redirect('/userlogin');
@@ -1407,7 +1461,7 @@ class IndexController extends Controller
 	{
 		if (Auth::check()) {
 			$title = 'Tickets';
-	        $tickets = DB::table('tickets')->where('id', $id)->first(); 
+	        $tickets = DB::table('tickets')->where('id', $id)->whereNull('deleted_at')->first(); 
 	        $ticket_replytable = Tickets_reply::with('tickets')->with('users')->where('ticket_id', $id)->get();
 	        $tickets_reply = json_decode($ticket_replytable);
 
@@ -1486,6 +1540,29 @@ class IndexController extends Controller
 
     // ******************************************* Tickets End ***************************************** //
 
+
+    // Check Subscription on daily basis
+    public function subscription_check()
+    {
+        $all_Doctors = DB::table('employees')->where([['type', 'doctor'], ['profile', 'premium']])->get();
+            if ($all_Doctors) {
+                foreach ($all_Doctors as $key => $doctor) {
+                    $premiumEndDate = $doctor->premium_end_date;
+                    
+                    $then = $premiumEndDate;
+                    $now = time();
+                    //convert $then into a timestamp.
+                    $thenTimestamp = strtotime($then);
+                    //Get the difference in seconds.
+                    $difference = $thenTimestamp - $now;
+
+                    if ($difference < 0) {
+                        $all_Doctors = DB::table('employees')->where('id', $doctor->id)->update(['profile' => 'basic']);
+                    }
+
+                }
+            }
+    }
 
 
 

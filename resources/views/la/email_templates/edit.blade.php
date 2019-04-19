@@ -39,7 +39,7 @@
 					@la_input($module, 'subject')
                     <br>
 					<div class="form-group">
-						{!! Form::submit( 'Update', ['class'=>'btn btn-success']) !!} <button class="btn btn-default pull-right"><a href="{{ url(config('laraadmin.adminRoute') . '/email_templates') }}">Cancel</a></button>
+						{!! Form::submit( 'Update', ['class'=>'btn btn-success']) !!} <button type="button" class="btn btn-default pull-right"><a href="{{ url(config('laraadmin.adminRoute') . '/email_templates') }}">Cancel</a></button>
 					</div>
 				{!! Form::close() !!}
 			</div>

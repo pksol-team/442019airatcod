@@ -28,8 +28,8 @@ use Log;
 class EmployeesController extends Controller
 {
 	public $show_action = true;
-	public $view_col = 'name';
-	public $listing_cols = ['id', 'name', 'designation', 'mobile', 'email', 'dept'];
+	public $view_col = 'first_name';
+	public $listing_cols = ['id', 'first_name', 'mobile', 'email'];
 	
 	public function __construct() {
 		
@@ -222,13 +222,13 @@ class EmployeesController extends Controller
         	
 			// Update User
 			$user = User::where('context_id', $employee_id)->first();
-			$user->name = $request->name;
+			$user->name = $request->first_name;
 			$user->save();
 			
 			// update user role
-			$user->detachRoles();
-			$role = Role::find($request->role);
-			$user->attachRole($role);
+			// $user->detachRoles();
+			// $role = Role::find($request->role);
+			// $user->attachRole($role);
 			
 			return redirect()->route(config('laraadmin.adminRoute') . '.employees.index');
 			
@@ -262,7 +262,7 @@ class EmployeesController extends Controller
 	 */
 	public function dtajax()
 	{
-		$values = DB::table('employees')->select($this->listing_cols)->whereNull('deleted_at');
+		$values = DB::table('employees')->select($this->listing_cols)->where('type', 'doctor')->whereNull('deleted_at');
 		$out = Datatables::of($values)->make();
 		$data = $out->getData();
 
@@ -288,11 +288,11 @@ class EmployeesController extends Controller
 					$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/employees/'.$data->data[$i][0].'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
 				}
 				
-				if(Module::hasAccess("Employees", "delete")) {
-					$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.employees.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
-					$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
-					$output .= Form::close();
-				}
+				// if(Module::hasAccess("Employees", "delete")) {
+				// 	$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.employees.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
+				// 	$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
+				// 	$output .= Form::close();
+				// }
 				$data->data[$i][] = (string)$output;
 			}
 		}

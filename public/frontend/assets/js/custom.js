@@ -137,7 +137,9 @@ jQuery(document).ready(function($) {
     $('.updateExperienceForm').on('submit', function(e) {
         e.preventDefault();
         var ExperienceValue = $('.AddDisease').val();
+        var previousDiseases = $('ul.all_disease_list_doc').find('li').length;
         if (ExperienceValue != '') {
+            if (previousDiseases < 12) {
 
             var newInput = `<li style="display:none;" data-key="newAdded">` + ExperienceValue + ` <a href="#" class="remove-exp">Remove</a>
                             <input type="hidden" value="` + ExperienceValue + `" name="data[Disease][]">
@@ -147,8 +149,12 @@ jQuery(document).ready(function($) {
                 $(this).removeAttr('data-key');
             });;
 
-            UpdateExperienceDisease('newAdded', '/updateExperience', '.formExperienceDisease');
+                UpdateExperienceDisease('newAdded', '/updateExperience', '.formExperienceDisease');
+            } else {
+                alert('You can select up to 12 diseases only');
+            }
             $('#AddExperienceModal').modal('hide');
+
 
         } else {
             $('.AddDisease').css({
@@ -265,23 +271,27 @@ jQuery(document).ready(function($) {
     //update Web Links
     $('.updateWebLinksForm').on('submit', function(e) {
         e.preventDefault();
+        var previousLinks = $('ul.user_links_list').find('li').length;
         var webTitle = $('.link_title').val();
         var webLink = $('.link_url').val();
         if (webTitle != '' && webLink != '') {
+            if (previousLinks < 3) {
+                var newInput = `<li style="display:none;" data-key="newAddedLink">` + webTitle + `, `+webLink+` <a href="#" class="remove-link">Remove</a>
+                                <input type="hidden" value="` + webTitle + `" name="data[webTitle][]">
+                                <input type="hidden" value="` + webLink + `" name="data[webLinks][]">
+                              </li>`;
+                $('.user_links_list').append(newInput);
+                $('li[data-key=newAddedLink]').show('fast', function() {
+                    $(this).removeAttr('data-key');
+                });;
 
-            var newInput = `<li style="display:none;" data-key="newAddedLink">` + webTitle + `, `+webLink+` <a href="#" class="remove-link">Remove</a>
-                            <input type="hidden" value="` + webTitle + `" name="data[webTitle][]">
-                            <input type="hidden" value="` + webLink + `" name="data[webLinks][]">
-                          </li>`;
-            $('.user_links_list').append(newInput);
-            $('li[data-key=newAddedLink]').show('fast', function() {
-                $(this).removeAttr('data-key');
-            });;
-
-            UpdateExperienceDisease('newAddedLink', '/updateWebLinks', '.formWebLinks');
-            
-            $('.link_title').val('');
-            $('.link_url').val('');
+                UpdateExperienceDisease('newAddedLink', '/updateWebLinks', '.formWebLinks');
+                
+                $('.link_title').val('');
+                $('.link_url').val('');
+            } else {
+                alert('You can add up to 3 links only');
+            }
 
         } else {
             if (webTitle == '') {
@@ -315,8 +325,11 @@ jQuery(document).ready(function($) {
     $('.updateTrainingForm').on('submit', function(e) {
         e.preventDefault();
         var instName = $('.intstitute_name').val();
+        var limit = $('.lim-typ-hidden').attr('data-lim');
+        var previousTraining = $('ul.user_training_list').find('li').length;
         var instYear = $('.intstitute_year').val();
         if (instName != '' && instYear != '') {
+            if (previousTraining < limit) {
 
             var newInput = `<li style="display:none;" data-key="newAddedLink">` + instName + `, `+instYear+` <a href="#" class="remove-training">Remove</a>
                             <input type="hidden" value="` + instName + `" name="data[instName][]">
@@ -331,6 +344,9 @@ jQuery(document).ready(function($) {
             
             $('.intstitute_name').val('');
             $('.intstitute_year').val('');
+            } else {
+                alert('You can add up to '+limit+' titles or courses');
+            }
 
         } else {
             if (instName == '') {
