@@ -52,7 +52,7 @@
                      <div class="form-part">
                         <form class="form-inline homePageSearch" action="/searchBySpecialty" method="get">
                            <input class="searchByInput form-control" type="text" name="searchByInput" />
-                           <button type="submit" class="btn bg-blue text-white">Search</button>
+                           <button type="submit" class="btn bg-blue text-white">Buscar</button>
                         </form>
                      </div>
                   </div>
@@ -219,39 +219,39 @@
             <div class="container">
                <div class="row">
                   <div class="col-12 text-white">
-                     <h3><i class="fa fa-bandcamp mr-3" aria-hidden="true"></i>Find your specialist</h3>
+                     <h3><i class="fa fa-bandcamp mr-3" aria-hidden="true"></i>Encuentra tu especialista</h3>
                   </div><!-- /.col-12 -->
                   <div class="col-lg-4">
                      <ul class="link-pages list-unstyled">
-                        <li class="p-1"><b>By Specialty</b></li>
+                        <li class="p-1"><b>Por especialidad</b></li>
                         <?php if ($allSpecialitiesBottom): ?>
                            <?php foreach ($allSpecialitiesBottom as $key => $allSpecialy): ?>
                               <li class="p-1"><a href="/all_professional?specialty=<?= $allSpecialy->id; ?>&city=&forecast=&searchByInput=" class="text-white"><?= $allSpecialy->name; ?></a></li>
                            <?php endforeach ?>
                         <?php endif ?>
-                        <li class="p-1"><a href="/viewFull/Specialty"><b>See All</b></a></li>
+                        <li class="p-1"><a href="/viewFull/Specialty"><b>Ver todo</b></a></li>
                      </ul>
                   </div>
                   <div class="col-lg-4">
                      <ul class="link-pages list-unstyled">
-                        <li class="p-1"><b>By City</b></li>
+                        <li class="p-1"><b>Por ciudad</b></li>
                         <?php if ($allCities): ?>
                            <?php foreach ($allCities as $key => $allCity): ?>
                               <li class="p-1"><a href="/all_professional?specialty=&city=<?= $allCity->name; ?>&forecast=&searchByInput=" class="text-white"><?= $allCity->name; ?></a></li>
                            <?php endforeach ?>
                         <?php endif ?>
-                        <li class="p-1"><a href="/viewFull/City"><b>See All</b></a></li>
+                        <li class="p-1"><a href="/viewFull/City"><b>Ver todo</b></a></li>
                      </ul>
                   </div>
                   <div class="col-lg-4">
                      <ul class="link-pages list-unstyled">
-                        <li class="p-1"><b>By Forecast</b></li>
+                        <li class="p-1"><b>Por pronóstico</b></li>
                         <?php if ($allForecasts): ?>
                            <?php foreach ($allForecasts as $key => $allForecast): ?>
                               <li class="p-1"><a href="/all_professional?specialty=&city=&forecast=<?= $allForecast->name; ?>&searchByInput=" class="text-white"><?= $allForecast->name; ?></a></li>
                            <?php endforeach ?>
                         <?php endif ?>
-                        <li class="p-1"><a href="/viewFull/Forecast"><b>See All</b></a></li>
+                        <li class="p-1"><a href="/viewFull/Forecast"><b>Ver todo</b></a></li>
                      </ul>
                   </div>
                </div>
@@ -265,11 +265,11 @@
                      <div class="login-footer-items float-left w-75 order-2">
                         <div class="login-footer-links float-left">
                            <ul class="list-unstyled">
-                              <li class="d-inline-block float-left text-white"><a href="#">About US</a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="/contact_us">Contact </a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="/frequently">Frequent questions </a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="#">Health blog </a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="#">Use and Privacy Policy</a></li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Sobre nosotros</a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/contact_us">Contacto </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/frequently">Preguntas frecuentes </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Blog de salud </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Uso y política de privacidad</a></li>
                            </ul>
                         </div>
                      </div>
@@ -283,8 +283,8 @@
             <!-- footer-sec-bottom start -->
             <div class="footer-bottom bg-green">
                <div class="terms-and-conditions text-center">
-                  <p class="text-white m-0 d-inline-block"><i class="fa fa-copyright" aria-hidden="true"></i>2019 Doctrolia Internet,SL</p>
-                  <a href="#" class="text-white">About US Contact Us And Privacy Policy</a>
+                  <p class="text-white m-0 d-inline-block"><i class="fa fa-copyright" aria-hidden="true"></i>2019 psicologos Internet,SL</p>
+                  <a href="#" class="text-white">Sobre Nosotros Contáctenos y Política de Privacidad</a>
                </div>
             </div>
          </div>

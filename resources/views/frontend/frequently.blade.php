@@ -9,12 +9,12 @@
             <div class="main_faq">
                <h2 class="d-inline-block">F.A.Q</h2>
                <div class="cant_find d-inline-block float-right">
-                  <span class="f-size">if you can't find your question click this button to generate ticket</span>
-                  <button class="btn btn-success"><a href="/my_tickets" class="text-white">Ticket</a></button>
+                  <span class="f-size">Si no puede encontrar su pregunta, haga clic en este botón para generar el ticket.</span>
+                  <button class="btn btn-success"><a href="/my_tickets" class="text-white">Boleto</a></button>
                </div>
                <?php if ($question != NULL): ?>
                   <div class="mt-4">
-                     <span>Your Question:</span>
+                     <span>Tu pregunta:</span>
                      <span><b><?= $question; ?></b></span>
                   </div>
                <?php endif ?>

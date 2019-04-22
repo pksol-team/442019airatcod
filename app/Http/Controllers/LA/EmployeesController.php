@@ -103,7 +103,7 @@ class EmployeesController extends Controller
 				'email' => $request->email,
 				'password' => bcrypt($password),
 				'context_id' => $employee_id,
-				'type' => "Employee",
+				'type' => "doctor",
 			]);
 	
 			// update user role
@@ -114,8 +114,8 @@ class EmployeesController extends Controller
 			if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != "null" && env('MAIL_USERNAME') != "") {
 				// Send mail to User his Password
 				Mail::send('emails.send_login_cred', ['user' => $user, 'password' => $password], function ($m) use ($user) {
-					$m->from('support-cl@doctorolia.com', 'Doctaria');
-					$m->to($user->email, $user->name)->subject('Doctaria - Your Login Credentials');
+					$m->from('support-cl@doctorolia.com', 'psicologos vibemar');
+					$m->to($user->email, $user->name)->subject('psicologos vibemar - Sus credenciales de inicio de sesión');
 				});
 			} else {
 				Log::info("User created: username: ".$user->email." Password: ".$password);
@@ -289,7 +289,7 @@ class EmployeesController extends Controller
 				}
 				
 				// if(Module::hasAccess("Employees", "delete")) {
-				// 	$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.employees.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
+				// 	$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.employees.destroy', $data->data[$i][0]], 'method' => 'delete', 'onsubmit'=> 'return confirm("¿Seguro que quieres borrar?")', 'style'=>'display:inline']);
 				// 	$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
 				// 	$output .= Form::close();
 				// }
@@ -321,14 +321,14 @@ class EmployeesController extends Controller
 		$user->password = bcrypt($request->password);
 		$user->save();
 		
-		\Session::flash('success_message', 'Password is successfully changed');
+		\Session::flash('success_message', 'La contraseña se ha cambiado correctamente');
 		
 		// Send mail to User his new Password
 		if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != "null" && env('MAIL_USERNAME') != "") {
 			// Send mail to User his new Password
 			Mail::send('emails.send_login_cred_change', ['user' => $user, 'password' => $request->password], function ($m) use ($user) {
 				$m->from(LAConfigs::getByKey('default_email'), LAConfigs::getByKey('sitename'));
-				$m->to($user->email, $user->name)->subject('LaraAdmin - Login Credentials chnaged');
+				$m->to($user->email, $user->name)->subject('psicologos vibemar - Credenciales de inicio de sesión cambiadas');
 			});
 		} else {
 			Log::info("User change_password: username: ".$user->email." Password: ".$request->password);

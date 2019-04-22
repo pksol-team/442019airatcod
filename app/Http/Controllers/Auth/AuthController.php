@@ -108,14 +108,14 @@ class AuthController extends Controller
         $employee = Employee::create([
             'name' => $data['name'],
             'designation' => "Super Admin",
-            'mobile' => "8888888888",
+            'mobile' => "",
             'mobile2' => "",
             'email' => $data['email'],
             'gender' => 'Male',
             'dept' => "1",
-            'city' => "Pune",
-            'address' => "Karve nagar, Pune 411030",
-            'about' => "About user / biography",
+            'city' => "",
+            'address' => "",
+            'about' => "",
             'date_birth' => date("Y-m-d"),
             'date_hire' => date("Y-m-d"),
             'date_left' => date("Y-m-d"),
@@ -129,7 +129,7 @@ class AuthController extends Controller
             'context_id' => $employee->id,
             'type' => "Employee",
         ]);
-        $role = Role::where('name', 'SUPER_ADMIN')->first();
+        $role = Role::where('name', 'Doctor')->first();
         $user->attachRole($role);
     
         return $user;

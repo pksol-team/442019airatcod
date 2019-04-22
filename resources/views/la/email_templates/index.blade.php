@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
-@section("contentheader_title", "Email Templates")
-@section("contentheader_description", "Email Templates listing")
-@section("section", "Email Templates")
-@section("sub_section", "Listing")
-@section("htmlheader_title", "Email Templates Listing")
+@section("contentheader_title", "Plantilla de correo electrónico")
+@section("contentheader_description", "Plantilla de correo electrónico listado")
+@section("section", "Plantilla de correo electrónico")
+@section("sub_section", "listado")
+@section("htmlheader_title", "Plantilla de correo electrónico listado")
 
 @section("headerElems")
 @la_access("Email_Templates", "create")
-	<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Add Email Template</button>
+	<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Añadir plantilla de correo electrónico</button>
 @endla_access
 @endsection
 
@@ -34,7 +34,7 @@
 			<th>{{ $module->fields[$col]['label'] or ucfirst($col) }}</th>
 			@endforeach
 			@if($show_actions)
-			<th>Actions</th>
+			<th>Comportamiento</th>
 			@endif
 		</tr>
 		</thead>
@@ -51,7 +51,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Add Email Template</h4>
+				<h4 class="modal-title" id="myModalLabel">Añadir plantilla de correo electrónico</h4>
 			</div>
 			{!! Form::open(['action' => 'LA\Email_TemplatesController@store', 'id' => 'email_template-add-form']) !!}
 			<div class="modal-body">
@@ -66,8 +66,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				{!! Form::submit( 'Submit', ['class'=>'btn btn-success']) !!}
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				{!! Form::submit( 'Enviar', ['class'=>'btn btn-success']) !!}
 			</div>
 			{!! Form::close() !!}
 		</div>
@@ -93,7 +93,8 @@ $(function () {
 		language: {
 			lengthMenu: "_MENU_",
 			search: "_INPUT_",
-			searchPlaceholder: "Search"
+			searchPlaceholder: "Buscar",
+			url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
 		},
 		@if($show_actions)
 		columnDefs: [ { orderable: false, targets: [-1] }],

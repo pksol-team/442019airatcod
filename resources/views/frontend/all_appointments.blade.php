@@ -7,9 +7,9 @@
    <div class="container">
       <div class="pages-links">
          <ul class="list-unstyled">
-            <li class="d-inline-block active"><a href="<?= '/doctor_full_profile/'.$EmpTbl->hash_key ?>">PROFILE</a></li>
-            <li class="d-inline-block"><a href="">BOOKING APPOINTMENT</a></li>
-            <li class="d-inline-block"><a href="/quote_doctor">Quote PSYCHOLOGIST</a></li>
+            <li class="d-inline-block active"><a href="<?= '/doctor_full_profile/'.$EmpTbl->hash_key ?>">PERFIL</a></li>
+            <li class="d-inline-block"><a href="">CITA DE RESERVA</a></li>
+            <li class="d-inline-block"><a href="/quote_doctor">Cotizar psicólogo</a></li>
 
             <!-- <li class="d-inline-block"><a href="">STATISTICS</a></li> -->
             <!-- <li class="d-inline-block"><a href="">ACCOUNT</a></li> -->
@@ -21,10 +21,10 @@
    <div class="container">
       <div class="pages-links text-gray-dark">
          <ul class="list-unstyled">
-            <li class="d-inline-block active"><a href="" class="text-dark">PROFILE</a></li>
-            <li class="d-inline-block"><a href="/my_data" class="text-dark">My Data</a></li>
+            <li class="d-inline-block active"><a href="" class="text-dark">PERFIL</a></li>
+            <li class="d-inline-block"><a href="/my_data" class="text-dark">Mis datos</a></li>
             <!-- <li class="d-inline-block"><a href="" class="text-dark">Opinions</a></li> -->
-            <li class="d-inline-block"><a href="" class="text-dark">Premium profiles</a></li>
+            <li class="d-inline-block"><a href="" class="text-dark">Perfil premium</a></li>
          </ul>
       </div>
    </div>
@@ -34,7 +34,7 @@
    <div class="row quotes-sec">
       <div class="container">
          <div class="quotes-head text-center">
-            <h3>UPCOMING APPOINTMENTS</h3>
+            <h3>NOMBRES PRÓXIMOS</h3>
          </div>
       </div>
    </div>
@@ -52,11 +52,11 @@
             <table class="table table-sec table-bordered">
                <thead class="bg-green">
                   <tr class="text-center">
-                     <th class="text-white">Date</th>
-                     <th class="text-white">Day</th>
-                     <th class="text-white">Time</th>
-                     <th class="text-white">Patient Name</th>
-                     <th class="text-white">Phone</th>
+                     <th class="text-white">Fecha</th>
+                     <th class="text-white">Día</th>
+                     <th class="text-white">Hora</th>
+                     <th class="text-white">Nombre del paciente</th>
+                     <th class="text-white">Teléfono</th>
                   </tr>
                </thead>
                <tbody>
@@ -71,7 +71,7 @@
                         </tr>
                      <?php endforeach ?>
                   <?php else: ?>
-                     <tr><td colspan="12"><i>You Still dont have reservation</i></td></tr>
+                     <tr><td colspan="12"><i>Todavía no tienes reserva</i></td></tr>
                   <?php endif ?>
                </tbody>
             </table>

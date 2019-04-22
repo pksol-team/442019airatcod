@@ -7,10 +7,10 @@
    <div class="container">
       <div class="pages-links">
          <ul class="list-unstyled">
-            <li class="d-inline-block active"><a href="/reservations">Quotes</a></li>
-            <li class="d-inline-block"><a href="/favourites">Favourites</a></li>
-            <li class="d-inline-block"><a href="/quote_doctor">Quote PSYCHOLOGIST</a></li>
-            <li class="d-inline-block"><a href="/my_data">My Data</a></li>
+            <li class="d-inline-block active"><a href="/reservations">Citas</a></li>
+            <li class="d-inline-block"><a href="/favourites">Favoritas</a></li>
+            <li class="d-inline-block"><a href="/quote_doctor">Cotizar psicólogo</a></li>
+            <li class="d-inline-block"><a href="/my_data">Mis datos</a></li>
          </ul>
       </div>
    </div>
@@ -20,7 +20,7 @@
    <div class="row quotes-sec">
       <div class="container">
          <div class="quotes-head text-center">
-            <h3>UPCOMING APPOINTMENTS</h3>
+            <h3>NOMBRES PRÓXIMOS</h3>
          </div>
       </div>
    </div>
@@ -38,13 +38,13 @@
             <table class="table table-sec table-bordered">
                <thead class="bg-green">
                   <tr class="text-center">
-                     <th class="text-white">Date</th>
-                     <th class="text-white">Day</th>
-                     <th class="text-white">Time</th>
-                     <th class="text-white">Doctor Name</th>
-                     <th class="text-white">Address</th>
-                     <th class="text-white">Phone</th>
-                     <th class="text-white">Action</th>
+                     <th class="text-white">Fecha</th>
+                     <th class="text-white">Día</th>
+                     <th class="text-white">Hora</th>
+                     <th class="text-white">Nombre del doctor</th>
+                     <th class="text-white">Dirección</th>
+                     <th class="text-white">Teléfono</th>
+                     <th class="text-white">Acción</th>
                   </tr>
                </thead>
                <tbody>
@@ -69,12 +69,12 @@
                            </td>
                            <td>
                               <?php $doctor = IndexController::getDoctorInfo($upcommingAppointment->doctor_id); ?>
-                              <a href="<?= '/deleteReservations/'.$upcommingAppointment->id ?>" onclick="return confirm('Are you sure?')"><button class="btn btn-sm btn-danger">Delete</button></a>
+                              <a href="<?= '/deleteReservations/'.$upcommingAppointment->id ?>" onclick="return confirm('¿Estás seguro?')"><button class="btn btn-sm btn-danger">Borrar</button></a>
                            </td>
                         </tr>
                      <?php endforeach ?>
                   <?php else: ?>
-                     <tr><td colspan="12"><i>You Still dont have reservation</i></td></tr>
+                     <tr><td colspan="12"><i>Todavía no tienes reserva</i></td></tr>
                   <?php endif ?>
                </tbody>
             </table>

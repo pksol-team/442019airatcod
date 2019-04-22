@@ -1,8 +1,8 @@
 @extends('la.layouts.app')
 
-@section('htmlheader_title') Dashboard @endsection
-@section('contentheader_title') Dashboard @endsection
-@section('contentheader_description') Doctaria Overview @endsection
+@section('htmlheader_title') Tablero @endsection
+@section('contentheader_title') Tablero @endsection
+@section('contentheader_description') psicologos Visión general @endsection
 
 @section('main-content')
 <!-- Main content -->
@@ -14,12 +14,12 @@
               <div class="small-box bg-aqua">
                 <div class="inner">
                   <h3>{{ $allDoctorsCount }}</h3>
-                  <p>All Doctors</p>
+                  <p>Todos los doctores</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-bag"></i>
                 </div>
-                <a href="/admin/employees" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="/admin/employees" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
@@ -27,12 +27,12 @@
               <div class="small-box bg-green">
                 <div class="inner">
                   <h3>{{ $allPatientCount }}</h3>
-                  <p>All Patients</p>
+                  <p>Todos los pacientes</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="#" class="small-box-footer" style="visibility: hidden;">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer" style="visibility: hidden;">Más información <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
@@ -40,12 +40,12 @@
               <div class="small-box bg-yellow">
                 <div class="inner">
                   <h3>{{ $upcomingAppointments }}</h3>
-                  <p>Upcoming Appointments</p>
+                  <p>Próximas citas</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-person-add"></i>
                 </div>
-                <a href="#" class="small-box-footer" style="visibility: hidden;">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer" style="visibility: hidden;">Más información <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
@@ -53,12 +53,12 @@
               <div class="small-box bg-red">
                 <div class="inner">
                   <h3>{{ $unVerifiedDoctors }}</h3>
-                  <p>Unverified Users</p>
+                  <p>Usuarios no verificados</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
                 </div>
-                <a href="#" class="small-box-footer" style="visibility: hidden;">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer" style="visibility: hidden;">Más información <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
           </div><!-- /.row -->

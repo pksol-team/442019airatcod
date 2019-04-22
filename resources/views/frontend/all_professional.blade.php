@@ -34,11 +34,11 @@
       <div class="container">
          <div class="professional">
             <div class="professional-main-head pt-2 pb-2 pl-2 border">
-               <h3>All Professionals</h3>
+               <h3>Todos los profesionales</h3>
             </div>
             <div class="professional-content bg-white">
-               <h3>Book Your Appointment</h3>
-               <p class="prof-subtitle">Find you doctor and book your appointment (its easy and free)</p>
+               <h3>Reserve su cita</h3>
+               <p class="prof-subtitle">Encuentra a tu médico y reserva tu cita (es fácil y gratis)</p>
             </div>
             <div class="row bg-white">
                <div class="col-11 bg-grey filter_location">
@@ -46,7 +46,7 @@
                   <div class="row w-100">
                      <div class="col-lg-4 col-md-4 col-sm-4 col-11 item-1">
                         <div>
-                           <p>Filter by Speciality</p>
+                           <p>Filtrar por especialidad</p>
                               <select class="js-example-basic-single searchBySpecialty" name="specialty">
                                 <option value="" hidden></option>
                                 <?php if ($allSpecialities): ?>
@@ -59,7 +59,7 @@
                      </div>
                      <div class="col-lg-3 col-md-3 col-sm-3 col-11 pr-0 pl-0 item-2">
                         <div>
-                           <p>Filter by location</p>
+                           <p>Filtrar por ubicación</p>
                            <?php if ($allCities): ?>
                               <select class="js-example-basic-single searchByCity" name="city">
                                 <option value="" hidden></option>
@@ -72,7 +72,7 @@
                      </div>
                      <div class="col-lg-3 col-md-3 col-sm-3 col-11 pl-0 forecast-filter">
                         <div>
-                           <p>Filter by forecast</p>
+                           <p>Filtrar por previsión</p>
                            <?php if ($allForecasts): ?>
                               <select class="js-example-basic-single searchByForecast" name="forecast">
                                 <option value="" hidden></option>
@@ -86,7 +86,7 @@
                      <div class="col-lg-1 col-md-1 col-sm-1 col-11 pl-0 ml-5 text-right">
                         <div>
                            <p>&nbsp;</p>
-                           <button type="submit" class="btn btn-secondary">search</button>
+                           <button type="submit" class="btn btn-secondary">Buscar</button>
                         </div>
                      </div>
                   </div><!-- /.row -->
@@ -106,15 +106,15 @@
             <table class="table table-bordered" id="available_times">
                <thead class="bg-green">
                   <tr>
-                     <th>DOCTOR</th>
+                     <th>DOCTORA</th>
                      <th>&nbsp;</th>
-                     <th>Monday</th>
-                     <th>Tuesday</th>
-                     <th>Wednesday</th>
-                     <th>Thursday</th>
-                     <th>Friday</th>
-                     <th>Saturday</th>
-                     <th>Sunday</th>
+                     <th>lunes</th>
+                     <th>martes</th>
+                     <th>miércoles</th>
+                     <th>jueves</th>
+                     <th>viernes</th>
+                     <th>sábado</th>
+                     <th>domingo</th>
                   </tr>
                </thead>
                <tbody class="all_professional_with_review">
@@ -131,7 +131,11 @@
                               </div>
                               <p><small><?= $doctor->address ?></small></p>
                            </th>
-                           <td>&nbsp;</td>
+                           <td class="text-center align-middle">
+                              <?php if ($doctor->profile == 'premium'): ?>
+                                 <img width="50" src="/frontend/assets/img/premium.png" alt="Premium Member" />
+                              <?php endif ?>
+                           </td>
                            <td><?php echo IndexController::getTimingDoctor('Monday', $doctor->id); ?></td>
                            <td><?php echo IndexController::getTimingDoctor('Tuesday', $doctor->id); ?></td>
                            <td><?php echo IndexController::getTimingDoctor('Wednesday', $doctor->id); ?></td>
@@ -141,6 +145,18 @@
                            <td><?php echo IndexController::getTimingDoctor('Sunday', $doctor->id); ?></td>
                         </tr>
                      <?php endforeach ?>
+                  <?php else: ?>
+                     <tr>
+                        <td colspan="12" class="text-center">No hay datos disponibles en la tabla</td>
+                        <td class="d-none">&nbsp;</td>
+                        <td class="d-none">&nbsp;</td>
+                        <td class="d-none">&nbsp;</td>
+                        <td class="d-none">&nbsp;</td>
+                        <td class="d-none">&nbsp;</td>
+                        <td class="d-none">&nbsp;</td>
+                        <td class="d-none">&nbsp;</td>
+                        <td class="d-none">&nbsp;</td>
+                     </tr>
                   <?php endif ?>
                </tbody>
             </table>

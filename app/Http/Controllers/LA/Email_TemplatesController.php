@@ -236,7 +236,7 @@ class Email_TemplatesController extends Controller
 				}
 				
 				if(Module::hasAccess("Email_Templates", "delete")) {
-					$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.email_templates.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
+					$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.email_templates.destroy', $data->data[$i][0]], 'method' => 'delete', 'onsubmit'=> 'return confirm("¿Seguro que quieres borrar?")', 'style'=>'display:inline']);
 					$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
 					$output .= Form::close();
 				}

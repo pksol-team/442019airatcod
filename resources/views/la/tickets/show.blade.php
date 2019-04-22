@@ -1,7 +1,7 @@
 @extends('la.layouts.app')
 
 @section('htmlheader_title')
-	Ticket View
+	Vista de entradas
 @endsection
 
 @section('main-content')
@@ -21,11 +21,11 @@
          <div class="row w-100 d-block text-right button-div-admin">
           <div class="col-12">
             @if($ticket->ticket_status == 'Close')
-            <a href="/close_ticket/{{ $ticket->id }}/open"><button class="close_button text-white btn btn-success"><i class="fa fa-check mr-1" aria-hidden="true"></i>Open Ticket</button></a>
+            <a href="/close_ticket/{{ $ticket->id }}/open"><button class="close_button text-white btn btn-success"><i class="fa fa-check mr-1" aria-hidden="true"></i>Boleto abierto</button></a>
             @else
-             <a href="/close_ticket/{{ $ticket->id }}/close"><button class="close_button btn btn-danger"><i class="fa fa-close mr-1" aria-hidden="true"></i>Close Ticket</button></a>
+             <a href="/close_ticket/{{ $ticket->id }}/close"><button class="close_button btn btn-danger"><i class="fa fa-close mr-1" aria-hidden="true"></i>Cerrar Ticket</button></a>
              @endif
-            <a href="/admin/tickets"><button class="close_button text-white btn btn-default"><i class="fa fa-angle-left mr-2" aria-hidden="true"></i> All Tickets</button></a>
+            <a href="/admin/tickets"><button class="close_button text-white btn btn-default"><i class="fa fa-angle-left mr-2" aria-hidden="true"></i> Todas las entradas</button></a>
           </div>
          </div>
          <div class="row mt-4">
@@ -49,12 +49,12 @@
             <div class="reply-type-area">
                <form id="contact-form" class="form-horizontal" method="POST" action="/add_reply">
                   {{ csrf_field() }}
-                  <label class="ml-1">Write Your Reply</label>
+                  <label class="ml-1">Escribe tu respuesta</label>
                   <textarea class="chat-textarea form-control" rows="5" cols="5" name="message" required></textarea>
                   <input type="hidden" name="user_id" value="{{ Auth::user()->id}}">
                   <input type="hidden" name="reply_date" value="{{ date('Y-m-d h:i:s') }}">
                   <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
-                  <button class="btn btn-success reply-btn" type="submit">Reply</button>
+                  <button class="btn btn-success reply-btn" type="submit">Respuesta</button>
                </form>
             </div>
 

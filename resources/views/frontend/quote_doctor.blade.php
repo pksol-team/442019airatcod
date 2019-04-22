@@ -8,14 +8,14 @@
     <div class="pages-links">
        <ul class="list-unstyled">
           <?php if ($EmpTbl->type == 'patient'): ?>
-            <li class="d-inline-block"><a href="/reservations">Quotes</a></li>
-            <li class="d-inline-block"><a href="/favourites">Favourites</a></li>
-            <li class="d-inline-block"><a href="/quote_doctor">Quote PSYCHOLOGIST</a></li>
+            <li class="d-inline-block"><a href="/reservations">Citas</a></li>
+            <li class="d-inline-block"><a href="/favourites">Favoritas</a></li>
+            <li class="d-inline-block"><a href="/quote_doctor">Cotizar psicólogo</a></li>
 
           <?php else: ?>
-            <li class="d-inline-block"><a href="/doctor_full_profile/<?= $UserTbl->hash_key ?>">Profile</a></li>
+            <li class="d-inline-block"><a href="/doctor_full_profile/<?= $UserTbl->hash_key ?>">Perfil</a></li>
           <?php endif ?>
-          <li class="d-inline-block active"><a href="/my_data">My Data</a></li>
+          <li class="d-inline-block active"><a href="/my_data">Mis datos</a></li>
        </ul>
     </div>
  </div>
@@ -27,7 +27,7 @@
       <div class="container">
          <div class="professional">
             <div class="professional-main-head pt-2 pb-2 pl-2 border">
-               <h2>Quote PSYCHOLOGIST</h2>
+               <h2>Cotizar psicólogo</h2>
             </div>
          </div>
       </div>
@@ -50,20 +50,20 @@
         @endif
             <form action="/send_quote_email" method="POST">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
-               <label>Full Name</label>
+               <label for="name">Nombre completo</label>
                <div class="form-group">
-                  <input type="text" class="form-control" value="{{ old('name') }}" name="name" placeholder="Enter Your Name">
+                  <input type="text" class="form-control" value="{{ old('name') }}" name="name" placeholder="Introduzca su nombre">
                </div>
-               <label>Contact</label>
+               <label for="contact">Contacto</label>
                <div class="form-group">
-                  <input type="number" class="form-control" value="{{ old('contact') }}" name="contact" placeholder="Enter Your Contact Number" required>
+                  <input type="number" class="form-control" value="{{ old('contact') }}" name="contact" placeholder="Ingrese su número de contacto" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                </div>
-               <label>Email</label>
+               <label for="email">correo electrónico</label>
                <div class="form-group">
-                  <input type="email" class="form-control" value="{{ old('email') }}" name="email" placeholder="Enter Your Surname" required>
+                  <input type="email" class="form-control" value="{{ old('email') }}" name="email" placeholder="Introduce tu correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                </div>
-               <label>Region</label>
-               <select class="form-control" name="forecast" required>
+               <label for="forecast">Región</label>
+               <select class="form-control" name="forecast" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                    <option value="" hidden></option>
                     <?php if ($allForecasts): ?>
                           <?php foreach ($allForecasts as $key => $forecast): ?>
@@ -71,8 +71,8 @@
                           <?php endforeach ?>
                     <?php endif ?>
                </select>
-               <label>City</label>
-	            <select class="form-control" name="city" required>
+               <label for="city">Ciudad</label>
+	            <select class="form-control" name="city" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
 	                <option value="" hidden></option>
 	                 <?php if ($allCities): ?>
 	                       <?php foreach ($allCities as $key => $city): ?>
@@ -80,8 +80,8 @@
 	                       <?php endforeach ?>
 	                 <?php endif ?>
 	            </select>
-               <label>Specialty</label>
-               <select class="form-control" name="specialty" required>
+               <label for="specialty">Especialidad</label>
+               <select class="form-control" name="specialty" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                    <option value="" hidden></option>
                     <?php if ($allSpecialities): ?>
                           <?php foreach ($allSpecialities as $key => $specialty): ?>
@@ -89,11 +89,11 @@
                           <?php endforeach ?>
                     <?php endif ?>
                </select>
-               <label>Note</label>
-               <textarea class="form-control" name="note" id="" cols="20" rows="4" required></textarea>
+               <label for="note">Nota</label>
+               <textarea class="form-control" name="note" id="" cols="20" rows="4" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required></textarea>
                <br>
                <div class="quote-btn">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Enviar</button>
                </div>
             </form>
          </div>

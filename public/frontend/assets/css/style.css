@@ -2431,19 +2431,19 @@ li.edit-profile-form .dralia-form dl dd input, li.edit-profile-form .dralia-form
 }
 
 .facilites-col {
-    margin-left: 30%;
+    padding-left: 28%;
 }
 
 .puntuality-col {
-    margin-left: 29%;
+    padding-left: 28.5%;
 }
 
 .attention-col {
-    margin-left: 29.5%;
+    padding-left: 30.5%;
 }
 
 .recommendable-col {
-    margin-left: 24.5%;
+    padding-left: 26.5%;
 }
 
 /*doctors-profile*/

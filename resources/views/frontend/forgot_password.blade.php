@@ -7,11 +7,11 @@
       <div class="row login-sec">
          <div class="col-lg-8">
             <div class="login-main-head">
-               <h2 class="border-bottom">Forgot Password</h2>
+               <h2 class="border-bottom">Se te olvidó tu contraseña</h2>
             </div>
             <div class="login-points">
                <ul class="list-unstyled">
-                  <li><i class="fa fa-arrow-right" aria-hidden="true"></i>Only Patients:<a href="{{ route('facebook.login') }}" class="pl-2">Login With Facebook</a></li>
+                  <li><i class="fa fa-arrow-right" aria-hidden="true"></i>Solo pacientes:<a href="{{ route('facebook.login') }}" class="pl-2">Iniciar sesión con Facebook</a></li>
                   <!-- <li><i class="fa fa-arrow-right" aria-hidden="true"></i>Login With Doctorolia User Account</li> -->
                </ul>
                @if(session()->has('error'))
@@ -30,10 +30,10 @@
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <div class="row">
                      <div class="col-lg-2 col-md-2 col-sm-4 col-2 label-sec">
-                        <label for="email" class="email">Email</label>
+                        <label for="email" class="email">correo electrónico</label>
                      </div>
                      <div class="col-lg-10 col-md-10 col-sm-4 col-10 login_input-sec">
-                        <input value="{{ old('email') }}" name="email" type="email" id="exampleInputEmail1" aria-describedby="emailHelp" class="form-control element-block" placeholder="Enter Email" required>
+                        <input value="{{ old('email') }}" name="email" type="email" id="exampleInputEmail1" aria-describedby="emailHelp" class="form-control element-block" placeholder="Ingrese correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                      </div>
                   </div>
                   <div class="row">
@@ -46,7 +46,7 @@
                            </div>
                         </div>
                         <div class="logIn-button">
-                           <button type="submit" class="btn btn-primary">Submit</button>
+                           <button type="submit" class="btn btn-primary">Enviar</button>
                         </div>
                      </div>
                   </div>
@@ -55,8 +55,8 @@
          </div>
          <div class="col-lg-3">
             <div class="support">
-               <h3>Support</h3>
-               <p>If you have any questions,contact doctorolia</p>
+               <h3>Apoyo</h3>
+               <p>Si tienes alguna duda, contacta con doctorolia.</p>
                <a href="mailto:support-cl@doctorolia.com">support-cl@doctorolia.com</a>
             </div>
          </div>

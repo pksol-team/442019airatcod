@@ -8,7 +8,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title>@yield('title')- Doctaria</title>
+      <title>@yield('title')- psicologos</title>
       <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap.min.css">
       <link rel="stylesheet" type="text/css" href="/frontend/assets/css/font-awesome.min.css">
       <link rel="stylesheet" type="text/css" href="/frontend/assets/css/yearpicker.css">
@@ -40,8 +40,8 @@
                           <?php endif ?>
                           <?php if (Auth::check() == true): ?>
                           <li class="d-inline-block float-left text-white"><?php echo $user->name; ?> |</li>
-                          <li class="d-inline-block float-left text-white"><a href="/">Go to Home Page</a>|</li>
-                          <li class="d-inline-block float-left text-white"><a href="/logout" onclick="return confirm('Are you sure want to Logout?')" >Logout</a></li>
+                          <li class="d-inline-block float-left text-white"><a href="/">Ir a la página de inicio</a>|</li>
+                          <li class="d-inline-block float-left text-white"><a href="/logout" onclick="return confirm('¿Seguro que quieres cerrar sesión?')" >Cerrar sesión</a></li>
                           <?php endif ?>
                        </ul>
                     </div>
@@ -65,11 +65,11 @@
                      <div class="login-footer-items float-left w-75 order-2">
                         <div class="login-footer-links float-left">
                            <ul class="list-unstyled">
-                              <li class="d-inline-block float-left text-white"><a href="#">About US</a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="/contact_us">Contact </a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="/frequently">Frequent questions </a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="#">Health blog </a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="#">Use and Privacy Policy</a></li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Sobre nosotros</a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/contact_us">Contacto </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/frequently">Preguntas frecuentes </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Blog de salud </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Uso y política de privacidad</a></li>
                            </ul>
                         </div>
                      </div>
@@ -83,8 +83,8 @@
             <!-- footer-sec-bottom start -->
             <div class="footer-bottom bg-green">
                <div class="terms-and-conditions text-center">
-                  <p class="text-white m-0 d-inline-block"><i class="fa fa-copyright" aria-hidden="true"></i>2019 Doctrolia Internet,SL</p>
-                  <a href="#" class="text-white">About US Contact Us And Privacy Policy</a>
+                  <p class="text-white m-0 d-inline-block"><i class="fa fa-copyright" aria-hidden="true"></i>2019 psicologos Internet,SL</p>
+                  <a href="#" class="text-white">Sobre Nosotros Contáctenos y Política de Privacidad</a>
                </div>
             </div>
          </div>

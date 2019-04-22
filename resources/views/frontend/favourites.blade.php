@@ -6,10 +6,10 @@
    <div class="container">
       <div class="pages-links">
          <ul class="list-unstyled">
-            <li class="d-inline-block"><a href="/reservations">Quotes</a></li>
-            <li class="d-inline-block active"><a href="/favourites">Favourites</a></li>
-            <li class="d-inline-block"><a href="/quote_doctor">Quote PSYCHOLOGIST</a></li>
-            <li class="d-inline-block"><a href="/my_data">My Data</a></li>
+            <li class="d-inline-block"><a href="/reservations">Citas</a></li>
+            <li class="d-inline-block active"><a href="/favourites">Favoritas</a></li>
+            <li class="d-inline-block"><a href="/quote_doctor">Cotizar psicólogo</a></li>
+            <li class="d-inline-block"><a href="/my_data">Mis datos</a></li>
          </ul>
       </div>
    </div>
@@ -19,7 +19,7 @@
    <div class="row quotes-sec">
       <div class="container">
          <div class="quotes-head text-center">
-            <h3>MY FAVOURITE DOCTORS</h3>
+            <h3>MIS DOCTORES FAVORITOS</h3>
          </div>
       </div>
    </div>
@@ -31,7 +31,7 @@
          <table class="table table-sec">
             <thead class="bg-green">
                <tr>
-                  <th class="text-white">Doctor Name</th>
+                  <th class="text-white">Nombre del doctor</th>
                   <!-- <th class="text-white">Specially</th> -->
                </tr>
             </thead>
@@ -47,7 +47,7 @@
                   <?php endforeach ?>
                <?php else: ?>
                   <tr>
-                     <td colspan="12">You don't make any doctor favourite yet</td>
+                     <td colspan="12">Aún no tienes ningún doctor favorito</td>
                   </tr>
                <?php endif ?>
             </tbody>

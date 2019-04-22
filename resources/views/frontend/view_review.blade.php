@@ -9,8 +9,8 @@
             <div class="feedback">
                <div class="row pt-2">
                   <div class="col-12 professional-main-head pt-3 pb-3 review-pat-head">
-                     <h4 class="d-inline-block text-left">REVIEWS OF PATIENTS</h4>
-                     <button class="btn btn-success d-inline-block float-right"><a href="/doctor_profile_view/<?= $UserTbl->id.'/'.$UserTbl->hash_key; ?>" class="text-white">Go Back</a></button>
+                     <h4 class="d-inline-block text-left">REVISIONES DE PACIENTES</h4>
+                     <button class="btn btn-success d-inline-block float-right"><a href="/doctor_profile_view/<?= $UserTbl->id.'/'.$UserTbl->hash_key; ?>" class="text-white">Devolver</a></button>
                   </div>
                   <?php if ($reviews): ?>
                   	<?php foreach ($reviews as $key => $review): ?>
@@ -27,14 +27,14 @@
 		                         <span class="rating-avg-large ml-0"><span style="width: <?= (int)$ratings ?>%;"></span></span>
 		                       </span>
 		                     </div>
-		                     <p><b>Reason : </b><?= $review->reason; ?></p>
-		                     <p><b>Like : </b><?= $review->like; ?></p>
-		                     <p><b>Improved : </b><?= $review->improved; ?></p>
+		                     <p><b>Razón : </b><?= $review->reason; ?></p>
+		                     <p><b>Me gusta : </b><?= $review->like; ?></p>
+		                     <p><b>Mejorado : </b><?= $review->improved; ?></p>
 		                  </div>
                   	<?php endforeach ?>
                   	<?php else: ?>
                   		<div id="comment" class="col-lg-12">
-                  		   <p>Not rated Yet</p>
+                  		   <p>Todavía no calificado</p>
                   		</div>
                   <?php endif ?>
                </div>

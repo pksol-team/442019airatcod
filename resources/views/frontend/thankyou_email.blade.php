@@ -10,7 +10,7 @@
             <h3><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $message }}</font></font></h3>
             <div class="more-reviews">
                <a class="btn-more-reviews" href="/userlogin"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-               Login</font></font></a>
+               Iniciar sesión</font></font></a>
             </div>
          </div>
       </div>

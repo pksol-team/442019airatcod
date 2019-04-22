@@ -97,8 +97,8 @@
 				</li>
 				@endif
 				@if (Auth::guest())
-					<li><a href="{{ url('/login') }}">Login</a></li>
-					<li><a href="{{ url('/register') }}">Register</a></li>
+					<li><a href="{{ url('/login') }}">Iniciar sesión</a></li>
+					<li><a href="{{ url('/register') }}">Registro</a></li>
 				@else
 					<!-- User Account Menu -->
 					<li class="dropdown user user-menu">
@@ -118,7 +118,7 @@
 									<?php
 									$datec = Auth::user()['created_at'];
 									?>
-									<small>Member since <?php echo date("M. Y", strtotime($datec)); ?></small>
+									<small>Miembro desde <?php echo date("M. Y", strtotime($datec)); ?></small>
 								</p>
 							</li>
 							<!-- Menu Body -->
@@ -144,10 +144,10 @@
 							<!-- Menu Footer-->
 							<li class="user-footer">
 								<div class="pull-left">
-									<a href="{{ url(config('laraadmin.adminRoute') . '/employees/') .'/'. Auth::user()->id .'/edit' }}" class="btn btn-default btn-flat">Profile</a>
+									<a href="{{ url(config('laraadmin.adminRoute') . '/employees/') .'/'. Auth::user()->id .'/edit' }}" class="btn btn-default btn-flat">Perfil</a>
 								</div>
 								<div class="pull-right">
-									<a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>
+									<a href="{{ url('/logout') }}" class="btn btn-default btn-flat">desconectar</a>
 								</div>
 							</li>
 						</ul>

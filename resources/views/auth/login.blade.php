@@ -13,7 +13,7 @@
 
     @if (count($errors) > 0)
         <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <strong>¡Vaya! </strong> Hubo algunos problemas con tu opinión.<br><br>
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -23,34 +23,34 @@
     @endif
 
     <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">Inicia sesión para iniciar tu sesión.</p>
     <form action="{{ url('/login') }}" method="post">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group has-feedback">
-            <input type="email" class="form-control" placeholder="Email" name="email"/>
+            <input type="email" class="form-control" placeholder="correo electrónico" name="email"/>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="Password" name="password"/>
+            <input type="password" class="form-control" placeholder="Contraseña" name="password"/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="row">
             <div class="col-xs-8">
                 <div class="checkbox icheck">
                     <label>
-                        <input type="checkbox" name="remember"> Remember Me
+                        <input type="checkbox" name="remember"> Recuérdame
                     </label>
                 </div>
             </div><!-- /.col -->
             <div class="col-xs-4">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                <button type="submit" class="btn btn-primary btn-block btn-flat">registro</button>
             </div><!-- /.col -->
         </div>
     </form>
 
     @include('auth.partials.social_login')
 
-    <a href="{{ url('/password/reset') }}">I forgot my password</a><br>
+    <!-- <a href="{{ url('/password/reset') }}">I forgot my password</a><br> -->
     <!--<a href="{{ url('/register') }}" class="text-center">Register a new membership</a>-->
 
 </div><!-- /.login-box-body -->

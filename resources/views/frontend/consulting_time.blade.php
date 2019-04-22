@@ -5,7 +5,7 @@
 <div class="container my-5 add_appointment_day_time">
    <div class="row">
       <div class=" col-lg-12 consulting-time text-center">
-         <h2 class="text-center">Counsulting Time</h2>
+         <h2 class="text-center">Tiempo de consulta</h2>
       </div>
    </div>
    @if(session()->has('error'))
@@ -25,15 +25,15 @@
          <div class="row">
             <div class="col-lg-10 days justify-content-center">
                <div class="form-group">
-                  <label for="sel1">Day</label>
+                  <label for="sel1">Día</label>
                   <select class="form-control" name="day">
-                     <option value="Monday">Monday</option>
-                     <option value="Tuesday">Tuesday</option>
-                     <option value="Wednesday">Wednesday</option>
-                     <option value="Thursday">Thursday</option>
-                     <option value="Friday">Friday</option>
-                     <option value="Saturday">Saturday</option>
-                     <option value="Sunday">Sunday</option>
+                     <option value="lunes">lunes</option>
+                     <option value="martes">martes</option>
+                     <option value="miércoles">miércoles</option>
+                     <option value="jueves">jueves</option>
+                     <option value="viernes">viernes</option>
+                     <option value="sábado">sábado</option>
+                     <option value="domingo">domingo</option>
                   </select>
                </div>
             </div>
@@ -46,7 +46,7 @@
          <div class="row">
             <div class="col-lg-2">
                <div class="form-group">
-                  <label for="sel1">From:</label>
+                  <label for="sel1">Desde:</label>
                   <select class="form-control" name="from_time">
                      <option value="1:00">1:00</option>
                      <option value="2:00">2:00</option>
@@ -74,7 +74,7 @@
             </div>
             <div class="col-lg-2">
                <div class="form-group">
-                  <label for="sel1">To :</label>
+                  <label for="sel1">a :</label>
                   <select class="form-control" name="to_time">
                      <option value="1:00">1:00</option>
                      <option value="2:00">2:00</option>
@@ -103,7 +103,7 @@
             <div class="col-lg-4">
                <div class="form-group">
                   <label for="sel1">Location</label>
-                  <input type="text" class="form-control location" placeholder="Enter Location" name="location" required />
+                  <input type="text" class="form-control location" placeholder="Ingresar Ubicación" name="location" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required />
                </div>
             </div>
          </div>
@@ -115,8 +115,8 @@
             $user_id = Auth::user()->id;
             $EmpTbl = DB::table('employees')->where('id', $user_id)->first();
           ?>
-         <a href="/doctor_full_profile/<?= $EmpTbl->hash_key ?>"><button type="button" class="btn btn-dark">Back</button></a>
-         <button type="submit" class="btn btn-success">Save Consulting</button> 
+         <a href="/doctor_full_profile/<?= $EmpTbl->hash_key ?>"><button type="button" class="btn btn-dark">Espalda</button></a>
+         <button type="submit" class="btn btn-success">Guardar Consultoría</button> 
       </div><!-- /.col-12 -->
    </div><!-- /.row -->
    </form>

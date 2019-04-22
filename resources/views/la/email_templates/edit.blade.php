@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
 @section("contentheader_title")
-	<a href="{{ url(config('laraadmin.adminRoute') . '/email_templates') }}">Email Template</a> :
+	<a href="{{ url(config('laraadmin.adminRoute') . '/email_templates') }}">Plantilla de correo electrónico</a> :
 @endsection
 @section("contentheader_description", $email_template->$view_col)
-@section("section", "Email Templates")
+@section("section", "Plantilla de correo electrónico")
 @section("section_url", url(config('laraadmin.adminRoute') . '/email_templates'))
-@section("sub_section", "Edit")
+@section("sub_section", "Editar")
 
-@section("htmlheader_title", "Email Templates Edit : ".$email_template->$view_col)
+@section("htmlheader_title", "Plantilla de correo electrónico Editar : ".$email_template->$view_col)
 
 @section("main-content")
 
@@ -39,7 +39,7 @@
 					@la_input($module, 'subject')
                     <br>
 					<div class="form-group">
-						{!! Form::submit( 'Update', ['class'=>'btn btn-success']) !!} <button type="button" class="btn btn-default pull-right"><a href="{{ url(config('laraadmin.adminRoute') . '/email_templates') }}">Cancel</a></button>
+						{!! Form::submit( 'Actualizar', ['class'=>'btn btn-success']) !!} <button type="button" class="btn btn-default pull-right"><a href="{{ url(config('laraadmin.adminRoute') . '/email_templates') }}">Cerrar</a></button>
 					</div>
 				{!! Form::close() !!}
 			</div>

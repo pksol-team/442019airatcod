@@ -1,7 +1,7 @@
 @extends('la.layouts.app')
 
 @section('htmlheader_title')
-	Employee View
+	Vista del doctor
 @endsection
 
 
@@ -58,11 +58,11 @@
 	</div> -->
 
 	<ul data-toggle="ajax-tab" class="nav nav-tabs profile" role="tablist">
-		<li class=""><a href="{{ url(config('laraadmin.adminRoute') . '/employees') }}" data-toggle="tooltip" data-placement="right" title="Back to Employees"><i class="fa fa-chevron-left"></i></a></li>
-		<li class="active"><a role="tab" data-toggle="tab" class="active" href="#tab-info" data-target="#tab-info"><i class="fa fa-bars"></i> General Info</a></li>
+		<li class=""><a href="{{ url(config('laraadmin.adminRoute') . '/employees') }}" data-toggle="tooltip" data-placement="right" title="Volver a los medicos"><i class="fa fa-chevron-left"></i></a></li>
+		<li class="active"><a role="tab" data-toggle="tab" class="active" href="#tab-info" data-target="#tab-info"><i class="fa fa-bars"></i> Información general</a></li>
 		<!-- <li class=""><a role="tab" data-toggle="tab" href="#tab-timeline" data-target="#tab-timeline"><i class="fa fa-clock-o"></i> Timeline</a></li> -->
 		@if($employee->id == Auth::user()->id || Entrust::hasRole("SUPER_ADMIN"))
-			<li class=""><a role="tab" data-toggle="tab" href="#tab-account-settings" data-target="#tab-account-settings"><i class="fa fa-key"></i> Account settings</a></li>
+			<li class=""><a role="tab" data-toggle="tab" href="#tab-account-settings" data-target="#tab-account-settings"><i class="fa fa-key"></i> Configuraciones de la cuenta</a></li>
 		@endif
 	</ul>
 
@@ -71,7 +71,7 @@
 			<div class="tab-content">
 				<div class="panel infolist">
 					<div class="panel-default panel-heading">
-						<h4>General Info</h4>
+						<h4>Información general</h4>
 					</div>
 					<div class="panel-body">
 						@la_display($module, 'first_name')
@@ -188,7 +188,7 @@
 					{{ csrf_field() }}
 					<div class="panel">
 						<div class="panel-default panel-heading">
-							<h4>Account settings</h4>
+							<h4>Configuraciones de la cuenta</h4>
 						</div>
 						<div class="panel-body">
 							@if (count($errors) > 0)
@@ -204,20 +204,20 @@
 								<p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('success_message') }}</p>
 							@endif
 							<div class="form-group">
-								<label for="password" class=" col-md-2">Password</label>
+								<label for="password" class=" col-md-2">contraseña</label>
 								<div class=" col-md-10">
-									<input type="password" name="password" value="" id="password" class="form-control" placeholder="Password" autocomplete="off" required="required" data-rule-minlength="6" data-msg-minlength="Please enter at least 6 characters.">
+									<input type="password" name="password" value="" id="password" class="form-control" placeholder="contraseña" autocomplete="off" required="required" data-rule-minlength="6" data-msg-minlength="Por favor ingrese al menos 6 caracteres.">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="password_confirmation" class=" col-md-2">Retype password</label>
+								<label for="password_confirmation" class=" col-md-2">Vuelva a escribir la contraseña</label>
 								<div class=" col-md-10">
-									<input type="password" name="password_confirmation" value="" id="password_confirmation" class="form-control" placeholder="Retype password" autocomplete="off" required="required" data-rule-equalto="#password" data-msg-equalto="Please enter the same value again.">
+									<input type="password" name="password_confirmation" value="" id="password_confirmation" class="form-control" placeholder="Vuelva a escribir la contraseña" autocomplete="off" required="required" data-rule-equalto="#password" data-msg-equalto="Por favor, introduzca el mismo valor de nuevo.">
 								</div>
 							</div>
 						</div>
 						<div class="panel-footer">
-							<button type="submit" class="btn btn-primary"><span class="fa fa-check-circle"></span> Change Password</button>
+							<button type="submit" class="btn btn-primary"><span class="fa fa-check-circle"></span> Cambia la contraseña</button>
 						</div>
 					</div>
 				</form>

@@ -4,7 +4,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title><?= $title ?> - Doctaria</title>
+      <title><?= $title ?> - psicologos</title>
       <link rel="stylesheet" href="/frontend/assets/css/bootstrap.min.css">
       <link rel="stylesheet" href="/frontend/assets/css/font-awesome.min.css">
       <link rel="stylesheet" href="/frontend/assets/css/croppie.css">
@@ -18,7 +18,7 @@
             <div class="container row">
                <div class="col-lg-4">
                  <div class="brand">
-                   <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - Doctaria"></a>
+                   <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - psicologos"></a>
                  </div>
                </div>
                <div class="col-lg-4">
@@ -61,9 +61,9 @@
             <div class="login-points">
                <ul class="list-unstyled">
                   <li>
-                     <span class="point-1">3</span>
+                     <span class="point-1">4</span>
                      <span class="point-1-head">
-                        <h4>Validación de su cuenta en Doctoralia</h4>
+                        <h4>Validación de su cuenta en psicologos</h4>
                      </span>
                   </li>
                   <li class="reg-pro-sub-valid sub-valid"><i class="fa fa-info-circle info" aria-hidden="true"></i>Consulte su email para continuar con el registro</li>
@@ -74,8 +74,8 @@
                   <li>
                      <i class="fa fa-arrow-right" aria-hidden="true"></i>Has Not the confirmation email arrive ?
                      <ul>
-                        <li>The email <?= $NewUser->email ?>, is it correct? <a href="/change_register_email/<?= $NewUser->hash_key ?>">Change Email</a></li>
-                        <li>If the email is correct, please check your spam folder</li>
+                        <li>El correo electrónico <?= $NewUser->email ?>, ¿es correcto? <a href="/change_register_email/<?= $NewUser->hash_key ?>">Cambiar e-mail</a></li>
+                        <li>Si el correo electrónico es correcto, revisa tu carpeta de spam</li>
                      </ul>
                   </li>
                </ul>
@@ -83,8 +83,8 @@
          </div>
          <div class="col-lg-3">
             <div class="support">
-               <h3>Support</h3>
-               <p>If you have any questions,contact doctorolia</p>
+               <h3>Apoyo</h3>
+               <p>Si tienes alguna duda, contacta con psicologos.</p>
                <a href="mailto:support-cl@doctorolia.com">support-cl@doctorolia.com</a>
             </div>
          </div>
@@ -101,11 +101,11 @@
                <div class="login-footer-items float-left w-75 order-2">
                   <div class="login-footer-links float-left">
                      <ul class="list-unstyled">
-                        <li class="d-inline-block float-left text-white"><a href="#">About US</a>|</li>
-                        <li class="d-inline-block float-left text-white"><a href="/contact_us">Contact </a>|</li>
-                        <li class="d-inline-block float-left text-white"><a href="/frequently">Frequent questions </a>|</li>
-                        <li class="d-inline-block float-left text-white"><a href="#">Health blog </a>|</li>
-                        <li class="d-inline-block float-left text-white"><a href="#">Use and Privacy Policy</a></li>
+                        <li class="d-inline-block float-left text-white"><a href="#">Sobre nosotros</a>|</li>
+                        <li class="d-inline-block float-left text-white"><a href="/contact_us">Contacto </a>|</li>
+                        <li class="d-inline-block float-left text-white"><a href="/frequently">Preguntas frecuentes </a>|</li>
+                        <li class="d-inline-block float-left text-white"><a href="#">Blog de salud </a>|</li>
+                        <li class="d-inline-block float-left text-white"><a href="#">Uso y política de privacidad</a></li>
                      </ul>
                   </div>
                </div>
@@ -119,8 +119,8 @@
       <!-- footer-sec-bottom start -->
       <div class="footer-bottom bg-green">
          <div class="terms-and-conditions text-center">
-            <p class="text-white m-0 d-inline-block"><i class="fa fa-copyright" aria-hidden="true"></i>2019 Doctrolia Internet,SL</p>
-            <a href="#" class="text-white">About US Contact Us And Privacy Policy</a>
+            <p class="text-white m-0 d-inline-block"><i class="fa fa-copyright" aria-hidden="true"></i>2019 psicologos Internet,SL</p>
+            <a href="#" class="text-white">Sobre Nosotros Contáctenos y Política de Privacidad</a>
          </div>
       </div>
    </div>

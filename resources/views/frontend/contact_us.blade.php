@@ -13,10 +13,10 @@
             @endif
             <div class="who-are-we-sec my-5">
                <div class="who-are-we-head text-center">
-                  <h2>Who we are and what we do</h2>
+                  <h2>Quiénes somos y qué hacemos</h2>
                </div>
                <div class="who-are-we-desc text-center">
-                  <p class="f-22">Doctoralia is the   <strong>   world's leading platform </strong> that connects health professionals with patients, transforming and improving the relationship between them.</p>
+                  <p class="f-22">psicologos is the   <strong>   plataforma líder mundial </strong> que conecta a los profesionales de la salud con los pacientes, transformando y mejorando la relación entre ellos.</p>
                </div>
                <div class="who-are-we-img">
                   <img src="/frontend/assets/img/contact-us.jpg" alt="" class="w-100">
@@ -85,7 +85,7 @@
                </div>
             </div>
             <div class="formas-desc-pro text-center">
-               <p>En 2007, los fundadores de Doctoralia, dos médicos y un tecnólogo, vieron que millones de pacientes usaban la red para resolver necesidades relacionadas con la salud, y que a los profesionales les faltaban las herramientas para llegar a ellos. Años después los resultados hablan por sí mismos y hoy seguimos trabajando para ofrecer más soluciones para conectar pacientes con profesionales.</p>
+               <p>En 2007, los fundadores de psicologos, dos médicos y un tecnólogo, vieron que millones de pacientes usaban la red para resolver necesidades relacionadas con la salud, y que a los profesionales les faltaban las herramientas para llegar a ellos. Años después los resultados hablan por sí mismos y hoy seguimos trabajando para ofrecer más soluciones para conectar pacientes con profesionales.</p>
             </div>
          </div>
       </div>
@@ -96,7 +96,7 @@
          <div class="col-lg-4 col-md-12">
             <div class="contactar-con-Doctoralia">
                <div class="contactar-con-Doctoralia-head text-center">
-                  <h3>Contactar-con-Doctoralia</h3>
+                  <h3>Contactar-con-psicologos</h3>
                </div>
             </div>
          </div>
@@ -109,7 +109,7 @@
          </div>
          <div class="col-lg-4 col-md-6 col-sm-6 col-6">
             <div class="doctoralia-internet clearfix border-right">
-               <strong>Doctoralia Internet S.L.</strong>
+               <strong>psicologos Internet S.L.</strong>
                <div class="doctoralia-internet-items">
                   <ul class="list-unstyled">
                      <li>
@@ -141,11 +141,11 @@
          <div class="col-lg-12">
             <div class="do-you-want-to-contact-us">
                <span><i class="fa fa-envelope"></i></span>
-               <p class="d-inline-block"><strong>Hello! Do you want to contact us? Select the reason in the drop-down and we will respond as soon as possible.</strong></p>
+               <p class="d-inline-block"><strong>¡Hola! ¿Quieres contactar con nosotros? Seleccione el motivo en el menú desplegable y le responderemos lo antes posible.</strong></p>
             </div>
             <div class="info-contact-us ml-5">
                <span><i class="fa fa-info-circle"></i></span>
-               <p class="d-inline-block">* All fields are required.</p>
+               <p class="d-inline-block">* Todos los campos son obligatorios.</p>
             </div>
             <div class="row">
                <div class="col-lg-8 offset-md-2">
@@ -153,10 +153,10 @@
                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                      <div class="row for-contact-label">
                         <div class="col-lg-4 text-right">
-                           <label for="">Reason For Contact label</label>
+                           <label for="reason">Razón para contactar</label>
                         </div>
                         <div class="col-lg-8">
-                           <select class="form-control w-25" id="sel1" name="reason" required>
+                           <select class="form-control w-25" id="sel1" name="reason" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                               <option value="Press">Press</option>
                               <option value="Support">Support</option>
                               <option value="Business">Business</option>
@@ -165,34 +165,34 @@
                      </div>
                      <div class="row for-contact-label my-2">
                         <div class="col-lg-4 text-right">
-                           <label for="">First name</label>
+                           <label for="first_name">Nombre de pila</label>
                         </div>
                         <div class="col-lg-8">
-                           <input type="text" class="w-100 form-control" name="first_name" required>
+                           <input type="text" class="w-100 form-control" name="first_name" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                         </div>
                      </div>
                      <div class="row for-contact-label my-2">
                         <div class="col-lg-4 text-right">
-                           <label for="">Sur name</label>
+                           <label for="last_name">Nombre sur</label>
                         </div>
                         <div class="col-lg-8">
-                           <input type="text" class="w-100 form-control" name="last_name" required>
+                           <input type="text" class="w-100 form-control" name="last_name" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                         </div>
                      </div>
                      <div class="row for-contact-label my-2">
                         <div class="col-lg-4 text-right">
-                           <label for="">E-mail</label>
+                           <label for="email">correo electrónico</label>
                         </div>
                         <div class="col-lg-8">
-                           <input type="email" class="w-100 form-control" name="email" required>
+                           <input type="email" class="w-100 form-control" name="email" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                         </div>
                      </div>
                      <div class="row for-contact-label my-2">
                         <div class="col-lg-4 text-right">
-                           <label for="">Comment</label>
+                           <label for="comment">Comentario</label>
                         </div>
                         <div class="col-lg-8">
-                           <textarea id="" cols="30" rows="10" class="form-control" name="comment" required></textarea>
+                           <textarea id="" cols="30" rows="10" class="form-control" name="comment" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required></textarea>
                         </div>
                      </div>
                      <div class="row for-contact-label my-2">
@@ -200,8 +200,8 @@
                            &nbsp;
                         </div>
                         <div class="col-lg-8">
-                           <button type="submit" class="btn btn-primary">Submit</button>
-                           <p class="my-2" > <small>By clicking "Send" you agree to <a href="#"> our Data Protection Policies</a></small></p>
+                           <button type="submit" class="btn btn-primary">Enviar</button>
+                           <p class="my-2"><small>By clicking "Send" you agree to our Data Protection Policies</small></p>
                         </div>
                      </div>
                   </form>

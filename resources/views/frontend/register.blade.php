@@ -5,7 +5,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title><?= $title ?> - Doctaria</title>
+      <title><?= $title ?> - psicologos</title>
       <link rel="stylesheet" href="/frontend/assets/css/bootstrap.min.css">
       <link rel="stylesheet" href="/frontend/assets/css/font-awesome.min.css">
       <link rel="stylesheet" href="/frontend/assets/css/croppie.css">
@@ -19,18 +19,20 @@
          <div class="container row">
             <div class="col-lg-4">
               <div class="brand">
-                <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - Doctaria"></a>
+                <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - psicologos"></a>
               </div>
             </div>
             <div class="col-lg-4">
                <div class="search-box float-left">
-                  <div class="input-group">
-                     <input class="form-control border-0 py-2" type="search" value="search">
-                     <div class="input-group-append bg-white">
-                        <button class="btn bg-white">
-                        <i class="fa fa-search"></i>
-                        </button>
-                     </div>
+                  <div class="input-group d-block">
+                     <form class="homePageSearch d-flex" action="/searchBySpecialty" method="get">
+                        <input class="searchByInput form-control border-0 py-2" type="text" name="searchByInput" placeholder="buscar">
+                        <div class="input-group-append bg-white" style="border-radius: 5px; margin-left: -6px;">
+                           <button type="submit" class="btn bg-white">
+                           <i class="fa fa-search"></i>
+                           </button>
+                        </div>
+                     </form>
                   </div>
                </div>
             </div>
@@ -90,7 +92,7 @@
                         <label for="" class="email text-right">Número RUT</label>
                      </div>
                      <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input-sec">
-                        <input type="text" class="form-control" id="RUT_number" name="RUT_number" value="{{ old('RUT_number') }}" placeholder="Entrar Número RUT" required>
+                        <input type="text" class="form-control" id="RUT_number" name="RUT_number" value="{{ old('RUT_number') }}" placeholder="Entrar Número RUT" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                         <p class="textHelp f-size">Es <strong>imprescindible</strong> para que podamos validar su registro</p>
                      </div>
                   </div>
@@ -99,16 +101,16 @@
                         <label for="" class="mt-2 pt-2 text-right">Su teléfono celular con prefijo local</label>
                      </div>
                      <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input-sec">
-                        <input type="text" class="form-control mt-2 w-50" id="exampleInputcontact" name="contact" value="{{ old('contact') }}" placeholder="Entrar en contacto" required>
+                        <input type="text" class="form-control mt-2 w-50" id="exampleInputcontact" name="contact" value="{{ old('contact') }}" placeholder="Entrar en contacto" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                         <p class="textHelp f-size"><strong>9 DÍGITOS</strong>. No será visible. Sólo será utilizado por el departamento de soporte de Doctoralia.</p>
                      </div>
                   </div>
                   <div class="row">
                      <div class="col-lg-3 col-md-2 col-sm-4 col-3 offset-lg-2 label-sec text-right">
-                        <label for="" class="mt-2 pt-2 text-right">Email</label>
+                        <label for="" class="mt-2 pt-2 text-right">correo electrónico</label>
                      </div>
                      <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input_email-sec">
-                        <input type="email" class="form-control mt-2 w-100" id="email" name="email" value="{{ old('email') }}" placeholder="Ingrese correo electrónico" required>
+                        <input type="email" class="form-control mt-2 w-100" id="email" name="email" value="{{ old('email') }}" placeholder="Ingrese correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                         <p class="textHelp f-size text-left">Enviaremos un email de confirmación a esta dirección</p>
                      </div>
                   </div>
@@ -117,7 +119,7 @@
                         <label for="" class="mt-2 pt-2 text-right">Contraseña</label>
                      </div>
                      <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input_email-sec">
-                        <input type="password" class="form-control mt-2 w-50" id="password" name="password" placeholder="Introducir la contraseña" minlength="6" required>
+                        <input type="password" class="form-control mt-2 w-50" id="password" name="password" placeholder="Introducir la contraseña" minlength="6" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                         <p class="textHelp f-size text-left">Para iniciar sesión en Doctoralia</p>
                      </div>
                   </div>
@@ -126,7 +128,7 @@
                         <label for="password" class="mt-2 pt-2 text-right">Confirme contraseña</label>
                      </div>
                      <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input_email-sec">
-                        <input type="password" class="form-control mt-2 w-50" id="confirm_password" name="confirm_password" placeholder="Introduzca la contraseña de confirmación" minlength="6" required>
+                        <input type="password" class="form-control mt-2 w-50" id="confirm_password" name="confirm_password" placeholder="Introduzca la contraseña de confirmación" minlength="6" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                      </div>
                   </div>
                   <div class="row">
@@ -148,7 +150,7 @@
                   <div class="acceptance">
                      <div class="first-terms-cond text-left">
                         <label>
-	                        <input type="checkbox" name="" required>
+	                        <input type="checkbox" name="" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
 	                        <span>Acepto las <a href="#">condiciones de uso</a> la <a href="#">política de privacidad</a> y el tratamiento de mis datos</span>
                         </label>
                      </div>
@@ -170,8 +172,8 @@
 	     </form>
          <div class="col-lg-3">
             <div class="support">
-               <h3>Support</h3>
-               <p>If you have any questions,contact doctorolia</p>
+               <h3>Apoyo</h3>
+               <p>Si tienes alguna duda, contacta con psicologos.</p>
                <a href="mailto:support-cl@doctorolia.com">support-cl@doctorolia.com</a>
             </div>
          </div>
@@ -188,11 +190,11 @@
                      <div class="login-footer-items float-left w-75 order-2">
                         <div class="login-footer-links float-left">
                            <ul class="list-unstyled">
-                              <li class="d-inline-block float-left text-white"><a href="#">About US</a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="/contact_us">Contact </a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="/frequently">Frequent questions </a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="#">Health blog </a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="#">Use and Privacy Policy</a></li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Sobre nosotros</a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/contact_us">Contacto </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/frequently">Preguntas frecuentes</a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Blog de salud </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="#">Uso y política de privacidad</a></li>
                            </ul>
                         </div>
                      </div>
@@ -206,8 +208,8 @@
             <!-- footer-sec-bottom start -->
             <div class="footer-bottom bg-green">
                <div class="terms-and-conditions text-center">
-                  <p class="text-white m-0 d-inline-block"><i class="fa fa-copyright" aria-hidden="true"></i>2019 Doctrolia Internet,SL</p>
-                  <a href="#" class="text-white">About US Contact Us And Privacy Policy</a>
+                  <p class="text-white m-0 d-inline-block"><i class="fa fa-copyright" aria-hidden="true"></i>2019 psicologos Internet,SL</p>
+                  <a href="#" class="text-white">Sobre Nosotros Contáctenos y Política de Privacidad</a>
                </div>
             </div>
          </div>
@@ -217,6 +219,9 @@
       <script src="/frontend/assets/js/bootstrap.min.js"></script>
       <script src="/frontend/assets/js/yearpicker.js"></script>
       <script src="/frontend/assets/js/croppie.js"></script>
+      <script src="/frontend/assets/js/select2.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
       <script src="/frontend/assets/js/custom.js"></script>
    </body>
 </html>

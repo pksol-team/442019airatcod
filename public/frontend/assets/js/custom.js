@@ -31,7 +31,7 @@ jQuery(document).ready(function($) {
           $image_crop.croppie('bind', {
             url: event.target.result
           }).then(function(){
-            console.log('jQuery bind complete');
+            // console.log('jQuery bind complete');
           });
         }
         reader.readAsDataURL(this.files[0]);
@@ -55,7 +55,7 @@ jQuery(document).ready(function($) {
             success:function(data)
             {
               $('.doctor_profile_picture').attr('src', '/upload/'+data+'');
-              $('<button class="f-size removeProfilePicture">Remove</button>').insertAfter('.doctor_profile_picture');
+              $('<button class="f-size removeProfilePicture">retirar</button>').insertAfter('.doctor_profile_picture');
               $('#upload_image').val('');
             }
           });
@@ -141,7 +141,7 @@ jQuery(document).ready(function($) {
         if (ExperienceValue != '') {
             if (previousDiseases < 12) {
 
-            var newInput = `<li style="display:none;" data-key="newAdded">` + ExperienceValue + ` <a href="#" class="remove-exp">Remove</a>
+            var newInput = `<li style="display:none;" data-key="newAdded">` + ExperienceValue + ` <a href="#" class="remove-exp">retirar</a>
                             <input type="hidden" value="` + ExperienceValue + `" name="data[Disease][]">
                           </li>`;
             $('.all_disease_list_doc').append(newInput);
@@ -151,7 +151,7 @@ jQuery(document).ready(function($) {
 
                 UpdateExperienceDisease('newAdded', '/updateExperience', '.formExperienceDisease');
             } else {
-                alert('You can select up to 12 diseases only');
+                alert('Puede seleccionar hasta 12 enfermedades solamente');
             }
             $('#AddExperienceModal').modal('hide');
 
@@ -178,7 +178,7 @@ jQuery(document).ready(function($) {
     function UpdateExperienceDisease(type, action, formName) {
          var previouseDisease = $(formName).serializeArray();
          $.post(action, previouseDisease).fail(function(){
-            alert('Oops! something went wrong may be Error in your data please refresh and try again');
+            alert('¡Uy! algo salió mal puede ser Error en sus datos, actualice e intente nuevamente');
          });
     }
 
@@ -276,7 +276,7 @@ jQuery(document).ready(function($) {
         var webLink = $('.link_url').val();
         if (webTitle != '' && webLink != '') {
             if (previousLinks < 3) {
-                var newInput = `<li style="display:none;" data-key="newAddedLink">` + webTitle + `, `+webLink+` <a href="#" class="remove-link">Remove</a>
+                var newInput = `<li style="display:none;" data-key="newAddedLink">` + webTitle + `, `+webLink+` <a href="#" class="remove-link">retirar</a>
                                 <input type="hidden" value="` + webTitle + `" name="data[webTitle][]">
                                 <input type="hidden" value="` + webLink + `" name="data[webLinks][]">
                               </li>`;
@@ -290,7 +290,7 @@ jQuery(document).ready(function($) {
                 $('.link_title').val('');
                 $('.link_url').val('');
             } else {
-                alert('You can add up to 3 links only');
+                alert('Puede agregar hasta 3 enlaces solamente');
             }
 
         } else {
@@ -331,7 +331,7 @@ jQuery(document).ready(function($) {
         if (instName != '' && instYear != '') {
             if (previousTraining < limit) {
 
-            var newInput = `<li style="display:none;" data-key="newAddedLink">` + instName + `, `+instYear+` <a href="#" class="remove-training">Remove</a>
+            var newInput = `<li style="display:none;" data-key="newAddedLink">` + instName + `, `+instYear+` <a href="#" class="remove-training">retirar</a>
                             <input type="hidden" value="` + instName + `" name="data[instName][]">
                             <input type="hidden" value="` + instYear + `" name="data[instYear][]">
                           </li>`;
@@ -345,7 +345,7 @@ jQuery(document).ready(function($) {
             $('.intstitute_name').val('');
             $('.intstitute_year').val('');
             } else {
-                alert('You can add up to '+limit+' titles or courses');
+                alert('Puede agregar hasta '+ limit +' títulos o cursos');
             }
 
         } else {
@@ -461,7 +461,7 @@ jQuery(document).ready(function($) {
         if(specialty != '') {
             $this[0].submit();
         } else {
-            alert('Please select any one specialty');
+            alert('Por favor seleccione cualquier especialidad');
         }
     });
 
@@ -486,7 +486,7 @@ jQuery(document).ready(function($) {
                     });;
                     var alreadySpecialty = $('input[name=selectspecialty][value='+specialty_id+']');
                 } else {
-                    alert('Error! atleast 1 specialty required');
+                    alert('¡Error! por lo menos 1 especialidad requerida');
                 }
             });
     });
@@ -502,7 +502,7 @@ jQuery(document).ready(function($) {
         if(specialty != '') {
                     $.each(specialty.split(','), function(index, val) {
                         var field = $('.all_specialties_modal').find(".selectspecialty-modal[value='"+val+"']").next('h6').html();
-                        var append = '<li data-name="'+field+'" data-speciality_id="'+val+'">'+field+' -- <a href="#" class="remove-speciality"> Remove</a></li>';
+                        var append = '<li data-name="'+field+'" data-speciality_id="'+val+'">'+field+' -- <a href="#" class="remove-speciality"> retirar</a></li>';
                         $('ul.specialty_exists').append(append);
                         $('.all_specialties_modal').find(".selectspecialty-modal[value='"+val+"']").parent('li').remove();
 
@@ -517,7 +517,7 @@ jQuery(document).ready(function($) {
                 });
             
         } else {
-            alert('Please select any one specialty');
+            alert('Por favor seleccione cualquier especialidad');
         }
     });
 
@@ -527,7 +527,10 @@ jQuery(document).ready(function($) {
         "bFilter": false,
         "bInfo": false,
         "ordering": false,
-        "pageLength": 15
+        "pageLength": 15,
+        "language": {
+            url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
     });
 
     // Experience insert in Database
@@ -538,7 +541,7 @@ jQuery(document).ready(function($) {
         if (serviceValue != '') {
 
             var newInput = `<tr style="display:none;" data-key="newAdded">
-                              <td>`+serviceValue+` </td><td class="text-center">€ `+serviceRate+`</td><td><a href="#" class="remove-service">Delete</a>
+                              <td>`+serviceValue+` </td><td class="text-center">$ `+serviceRate+`</td><td><a href="#" class="remove-service">Borrar</a>
                               </td>
                               <input type="hidden" value="`+serviceValue+`" name="data[service][]" />
                               <input type="hidden" value="`+serviceRate+`" name="data[rate][]" />

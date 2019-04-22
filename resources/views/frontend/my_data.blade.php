@@ -7,14 +7,14 @@
     <div class="pages-links">
        <ul class="list-unstyled">
           <?php if ($EmpTbl->type == 'patient'): ?>
-            <li class="d-inline-block"><a href="/reservations">Quotes</a></li>
-            <li class="d-inline-block"><a href="/favourites">Favourites</a></li>
-            <li class="d-inline-block"><a href="/quote_doctor">Quote PSYCHOLOGIST</a></li>
+            <li class="d-inline-block"><a href="/reservations">Citas</a></li>
+            <li class="d-inline-block"><a href="/favourites">Favoritas</a></li>
+            <li class="d-inline-block"><a href="/quote_doctor">Cotizar psicólogo</a></li>
 
           <?php else: ?>
-            <li class="d-inline-block"><a href="/doctor_full_profile/<?= $UserTbl->hash_key ?>">Profile</a></li>
+            <li class="d-inline-block"><a href="/doctor_full_profile/<?= $UserTbl->hash_key ?>">Perfil</a></li>
           <?php endif ?>
-          <li class="d-inline-block active"><a href="/my_data">My Data</a></li>
+          <li class="d-inline-block active"><a href="/my_data">Mes données</a></li>
        </ul>
     </div>
  </div>
@@ -24,7 +24,7 @@
  <div class="row quotes-sec">
     <div class="container">
        <div class="quotes-head text-center">
-          <h3>MY DATA</h3>
+          <h3>Mes données</h3>
        </div>
     </div>
  </div>
@@ -45,42 +45,42 @@
          @endif
              <div class="row">
                 <div class="col-sm-6 form-group">
-                   <label>First Name</label>
-                   <input type="text" placeholder="Enter First Name Here.." class="form-control" name="first_name" value="<?= $EmpTbl->first_name; ?>" required>
+                   <label>Prénom</label>
+                   <input type="text" placeholder="Entrez le prénom ici .." class="form-control" name="first_name" value="<?= $EmpTbl->first_name; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                 </div>
                 <div class="col-sm-6 form-group">
-                   <label>Last Name</label>
-                   <input type="text" placeholder="Enter Last Name Here.." class="form-control" name="last_name" value="<?= $EmpTbl->last_name; ?>" required>
+                   <label>Nom de famille</label>
+                   <input type="text" placeholder="Entrez le nom de famille ici .." class="form-control" name="last_name" value="<?= $EmpTbl->last_name; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                 </div>
              </div>
              <div class="row">
                 <div class="col-sm-6 form-group">
                    <label>Mobile</label>
-                   <input type="text" placeholder="Enter Mobile Number Here.." class="form-control" name="mobile" value="<?= $EmpTbl->mobile; ?>" required>
+                   <input type="text" placeholder="Entrez le numéro de téléphone ici .." class="form-control" name="mobile" value="<?= $EmpTbl->mobile; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                 </div>
                 <div class="col-sm-6 form-group">
-                   <label>Postal Code</label>
-                   <input type="text" placeholder="Enter Postal Code Here.." class="form-control" name="postal_code" value="<?= $EmpTbl->postal_code; ?>" >
+                   <label>code postal</label>
+                   <input type="text" placeholder="Entrez le code postal ici .." class="form-control" name="postal_code" value="<?= $EmpTbl->postal_code; ?>" >
                 </div>
              </div>
              <div class="row">
                 <div class="col-sm-6 form-group">
-                   <label>Email</label>
-                   <input type="email" placeholder="Enter email Here.." class="form-control" name="email" value="<?= $EmpTbl->email; ?>" required>
+                   <label>adresse électronique</label>
+                   <input type="email" placeholder="Entrez email ici .." class="form-control" name="email" value="<?= $EmpTbl->email; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
                 </div>
                 <div class="col-sm-6 form-group">
-                   <label>Password (leave it blank if you don't want to change it)</label>
-                   <input type="password" name="password" placeholder="Enter password Here.." class="type_password form-control">
+                   <label>Mot de passe (laissez le champ vide si vous ne voulez pas le changer)</label>
+                   <input type="password" name="password" placeholder="Entrez le mot de passe ici .." class="type_password form-control">
                 </div>
              </div>
              <div class="row">
                 <div class="col-sm-6">
                    <label>Isapre</label>
-                   <input type="text" name="isapre" placeholder="Private Without Forecast" value="<?= $EmpTbl->isapre; ?>" class="form-control">
+                   <input type="text" name="isapre" placeholder="Privé sans prévisions" value="<?= $EmpTbl->isapre; ?>" class="form-control">
                    <div class="checkbox-my-data">	
                       <span class="d-block">
                         <input type="checkbox" name="notification" <?= ($EmpTbl->notification == 'on') ? 'checked' : NULL ; ?> >
-                        <label >Recieve Appointment Opinion Email</label>
+                        <label for="notification">Recevoir un email d'avis de rendez-vous</label>
                       </span>   
                       
                    </div>

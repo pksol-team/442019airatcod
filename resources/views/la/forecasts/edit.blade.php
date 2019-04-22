@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
 @section("contentheader_title")
-	<a href="{{ url(config('laraadmin.adminRoute') . '/forecasts') }}">Forecast</a> :
+	<a href="{{ url(config('laraadmin.adminRoute') . '/forecasts') }}">Pronóstico</a> :
 @endsection
 @section("contentheader_description", $forecast->$view_col)
-@section("section", "Forecasts")
+@section("section", "Pronóstico")
 @section("section_url", url(config('laraadmin.adminRoute') . '/forecasts'))
-@section("sub_section", "Edit")
+@section("sub_section", "Editar")
 
-@section("htmlheader_title", "Forecasts Edit : ".$forecast->$view_col)
+@section("htmlheader_title", "Pronóstico Editar : ".$forecast->$view_col)
 
 @section("main-content")
 
@@ -37,7 +37,7 @@
 					--}}
                     <br>
 					<div class="form-group">
-						{!! Form::submit( 'Update', ['class'=>'btn btn-success']) !!} <button type="button" class="btn btn-default pull-right"><a href="{{ url(config('laraadmin.adminRoute') . '/forecasts') }}">Cancel</a></button>
+						{!! Form::submit( 'Actualizar', ['class'=>'btn btn-success']) !!} <button type="button" class="btn btn-default pull-right"><a href="{{ url(config('laraadmin.adminRoute') . '/forecasts') }}">Cerrar</a></button>
 					</div>
 				{!! Form::close() !!}
 			</div>

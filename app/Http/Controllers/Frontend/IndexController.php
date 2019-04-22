@@ -50,7 +50,7 @@ class IndexController extends Controller
 	// View Home Page
 	public function index()
 	{
-		$title = 'Home-Doctaria';
+		$title = 'Home-psicologos';
 		$allSpecialitiesBottom = DB::table('specialities')->take(10)->get();
 		$allCities = DB::table('cities')->take(10)->get();
 		$allForecasts = DB::table('forecasts')->take(10)->get();
@@ -60,18 +60,18 @@ class IndexController extends Controller
 	// View city/specialty/forecast
 	public function viewFullbyTag($tag)
 	{
-		$title = 'All '.$tag;
+		$title = 'Todas '.$tag;
 		if ($tag == 'Specialty') {
 			$table = 'specialities';
-			$heading = 'Specialists';
+			$heading = 'Especialistas';
 		}
 		if ($tag == 'City') {
 			$table = 'cities';
-			$heading = 'Health professionals Chile';
+			$heading = 'Profesionales de la salud chile';
 		}
 		if ($tag == 'Forecast') {
 			$table = 'forecasts';
-			$heading = 'Forecast';
+			$heading = 'Pronóstico';
 		}
 		$allTags = DB::table($table)->get();
 		return view('frontend.viewFullbyTag', compact('title', 'table', 'allTags', 'heading'));
@@ -82,7 +82,7 @@ class IndexController extends Controller
 	// View Doctor Login Page
 	public function login()
 	{
-		$title = 'Login';
+		$title = 'Iniciar sesión';
 		if (Auth::check()) {
 			return redirect('/');
 		} else {
@@ -100,7 +100,7 @@ class IndexController extends Controller
 	// View Patient register Page
 	public function patient_register()
 	{
-		$title = 'Patient Login';
+		$title = 'Inicio de sesión del paciente';
 		if (Auth::check()) {
 			return redirect('/');
 		} else {
@@ -121,17 +121,17 @@ class IndexController extends Controller
 				return redirect('/');
 			}
 			else{
-				return redirect()->back()->withInput()->with('error', 'User Password Does Not Match! if you dont have your accout  <a href="/register">Register Here </a>');
+				return redirect()->back()->withInput()->with('error', '¡La contraseña del usuario no coincide! si no tienes tu cuenta  <a href="/register">Registrar aquí </a>');
 			}
 		}else {
-			return redirect()->back()->withInput()->with('error', 'This Email address is not registered <a href="/register">Register Here </a>');
+			return redirect()->back()->withInput()->with('error', 'Esta dirección de email no está registrada <a href="/register">Registrar aquí </a>');
 		}
 	}
 
 	// View Forgot password Page
 	public function forgot_password()
 	{
-		$title = 'Forgot Password';
+		$title = 'Se te olvidó tu contraseña';
 		if (Auth::check()) {
 			return redirect('/');
 		} else {
@@ -154,20 +154,20 @@ class IndexController extends Controller
         		<div style="text-align: left;padding-left: 20px;padding-top: 50px;padding-bottom: 30px;">
 				<h3>psicologosVibemar.cl restablecimiento de contraseña: </h3>
 				<h4 style="padding: 0 20px 0 0;">Hola! <span style="color: #52a2f5;">'.$email.'</span>, Haga clic en el enlace de abajo para restablecer su contraseña</h4><h4 style="padding: 0 20px 0 0;"> </h4>
-				<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/enter_new_password/'.$GUID.'" style="color:#fff;">Reset Password</a></button>
+				<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/enter_new_password/'.$GUID.'" style="color:#fff;">Restablecer la contraseña</a></button>
 				</div>';
             
             //Updating Email content [Metakey]
             $content = $msg_template;
-            $subject = 'Reset Password';
+            $subject = 'Restablecer la contraseña';
 
 			$data = array( 'email' => $email, 'subject' => $subject, 'message' => $content);
 			Mail::send([], $data, function ($m) use($data) {
 	           $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
 	    	});
-			return redirect()->back()->withInput()->with('message', 'Password Reset link send to your email Kindly check your email');
+			return redirect()->back()->withInput()->with('message', 'Contraseña Restablecer enlace enviar a su correo electrónico Revise amablemente su correo electrónico');
 		}else {
-			return redirect()->back()->withInput()->with('error', 'This Email address is not registered <a href="/register">Register Here </a>');
+			return redirect()->back()->withInput()->with('error', 'This Email address is not registered <a href="/register">Registrar aquí </a>');
 		}
 		
 	}
@@ -175,7 +175,7 @@ class IndexController extends Controller
 	// enter new password after forgot page
 	public function enter_new_password($GUID)
 	{
-		$title = 'Reset Password';
+		$title = 'Restablecer la contraseña';
 		if (Auth::check()) {
 			return redirect('/');
 		} else {
@@ -201,12 +201,12 @@ class IndexController extends Controller
 		    	$Updatepassword = ['password' => bcrypt($confirm_password), 'GUID' => NULL];
 		        $UserUpd = DB::table('users')->WHERE('GUID', $GUID)->update($Updatepassword);
 		        if ($UserUpd == TRUE) {
-					return redirect('/userlogin')->with('message', 'Password Reset Successfully');
+					return redirect('/userlogin')->with('message', 'Contraseña restablecida con éxito');
 		        } else {
-					return redirect()->back()->withInput()->with('error', 'Oops! Something went wrong..');
+					return redirect()->back()->withInput()->with('error', '¡Uy! Algo salió mal..');
 		        }
 			} else {
-				return redirect()->back()->with('error', 'Your password and confirmation password do not match');	
+				return redirect()->back()->with('error', 'Su contraseña y la contraseña de confirmación no coinciden');	
 			}
 		}
 	}
@@ -214,7 +214,7 @@ class IndexController extends Controller
 	// Doctor register page
 	public function register_doctor_init()
 	{
-		$title = 'Register Doctor';
+		$title = 'Registro doctor';
 		if (Auth::check()) {
 			return redirect('/');
 		} else {
@@ -227,7 +227,7 @@ class IndexController extends Controller
 	// Doctor register page select speciality
 	public function register_doctor_mid(Request $request)
 	{
-		$title = 'Register Doctor';
+		$title = 'Registro doctor';
 		if (Auth::check()) {
 			return redirect('/');
 		} else {
@@ -245,7 +245,7 @@ class IndexController extends Controller
 	// Doctor register page
 	public function register_doctor(Request $request)
 	{
-		$title = 'Register Doctor';
+		$title = 'Registro doctor';
 		if (Auth::check()) {
 			return redirect('/');
 		} else {
@@ -287,13 +287,13 @@ class IndexController extends Controller
 			$city = $request->input('city');
 			$forecast = $request->input('forecast');
 			if ($validator->fails()) {
-				return redirect()->back()->withInput()->with('error', 'Oops! Something went wrong..');;
+				return redirect()->back()->withInput()->with('error', '¡Uy! Algo salió mal..');;
 			}
 		} else {
 			$type = 'patient';
 			$profile = '';
 			if ($email == '' || $confirm_password == '' || $request->input('password') == '' || $confirm_password != $request->input('password')) {
-				return redirect()->back()->withInput()->with('error', 'Oops! Something went wrong..');
+				return redirect()->back()->withInput()->with('error', '¡Uy! Algo salió mal..');
 			}
 
 			$first_name = 'user';
@@ -378,15 +378,15 @@ class IndexController extends Controller
 					los datos de su perfil para asegurarnos de que son válidos.</span>
 					</strong><br>
 				</h4>
-				<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/verify_email/'.$getInsertedId.'/'.$confirm_email.'" style="color:#fff;">Confirm Your Email Here</a>
+				<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/verify_email/'.$getInsertedId.'/'.$confirm_email.'" style="color:#fff;">Confirme su correo electrónico aquí</a>
 				</button>
 			</div>
 		';
 		$to = $email;
-	    $subject = 'Account Register';
+	    $subject = 'Registro de cuenta';
 	    $content = $msg_template;
 
-		$data = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $content);
+		$data = array( 'email' => $to, 'subject' => $subject, 'message' => $content);
 		Mail::send([], $data, function ($m) use($data) {
            $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
     	});
@@ -403,7 +403,7 @@ class IndexController extends Controller
 	{
         $haveUser = DB::table('users')->WHERE('email', $email)->first();
         if ($haveUser) {
-    		return $messsage = 'Email Address already exists!';
+    		return $messsage = '¡La dirección de correo ya existe!';
         }
         else {
         	return true;
@@ -413,7 +413,7 @@ class IndexController extends Controller
 	//view Confirm email page
 	public function confirm_email($hash_key)
 	{
-		$title = 'Confirm Email';
+		$title = 'Confirmar correo electrónico';
 		if (Auth::check()) {
 			// return redirect('/');
 			return view('frontend.confirm_email', compact('title'));
@@ -426,7 +426,7 @@ class IndexController extends Controller
 	// change register email page
 	public function change_register_email($hash_key)
 	{
-		$title = 'Change Email';
+		$title = 'Cambiar e-mail';
         $NewUser = DB::table('users')->WHERE('hash_key', $hash_key)->first();
 		if (Auth::check()) {
 			return redirect('/');
@@ -463,23 +463,23 @@ class IndexController extends Controller
 	        				los datos de su perfil para asegurarnos de que son válidos.</span>
 	        				</strong><br>
 	        			</h4>
-	        			<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/verify_email/'.$Userid.'/'.$NewUser->confirm_email.'" style="color:#fff;">Confirm Your Email Here</a>
+	        			<button style="cursor: pointer;color: #fff;background-color: #28a745;border-color: #28a745;display: inline-block;font-weight: 400;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;"><a href="'.$baseUrl.'/verify_email/'.$Userid.'/'.$NewUser->confirm_email.'" style="color:#fff;">Confirme su correo electrónico aquí</a>
 	        			</button>
 	        		</div>
 	        	';
 
         		$to = $NewEmail;
-        	    $subject = 'Account Register';
+        	    $subject = 'Registro de cuenta';
         	    $content = $msg_template;
 
-        		$data = array( 'email' => 'aminshoukat4@gmail.com', 'subject' => $subject, 'message' => $content);
+        		$data = array( 'email' => $to, 'subject' => $subject, 'message' => $content);
         		Mail::send([], $data, function ($m) use($data) {
                    $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
             	});
 
 				return redirect('confirm_email/'.$NewUser->hash_key);
 	    	} else {
-				return redirect()->back()->withInput()->with('error', 'Email Address already exists!');
+				return redirect()->back()->withInput()->with('error', '¡La dirección de correo ya existe!');
 	    	}
 		}
 	}
@@ -487,7 +487,7 @@ class IndexController extends Controller
 	// Verify Email through email
 	public function verify_email($id, $hashkey)
 	{
-		$title = 'Email verify';
+		$title = 'Correo electrónico de verificación';
         $userFound = DB::table('users')->where([['id', $id], ['confirm_email', $hashkey]])->first();
         if ($userFound) {
 
@@ -497,10 +497,10 @@ class IndexController extends Controller
         	];
         
         	DB::table('users')->where([['id', $id], ['confirm_email', $hashkey]])->update($confirm_email);
-        	$message = 'Thank You For Email Confirmation. Please complete your profile';
+        	$message = 'Gracias por verificar su correo electrónico. Por favor complete su perfil';
 
         } else {
-        	$message = 'Oops! Link Expired or account is already confirmed';
+        	$message = '¡Uy! Enlace caducado o cuenta ya confirmada';
         }
 		return view('frontend.thankyou_email', compact('title', 'message'));
 	}
@@ -508,7 +508,7 @@ class IndexController extends Controller
 	// View normal Profile Page
 	public function my_data()
 	{
-		$title = 'Edit Profile';
+		$title = 'Editar perfil';
 		if (Auth::check()) {
 			
 			$userID = Auth::user()->id;
@@ -569,7 +569,7 @@ class IndexController extends Controller
 		    } else {
 		        $done = DB::table('users')->where('id', $userID)->update($user);	
 		    }
-			return redirect()->back()->withInput()->with('message', 'Profile Updated Successfully');
+			return redirect()->back()->withInput()->with('message', 'Perfil actualizado con éxito');
 
 		} else {
 			return redirect('/');
@@ -796,7 +796,7 @@ class IndexController extends Controller
     // View Consulting Time add page
     public function consulting_time()
 	{
-		$title = 'Consulting Time';
+		$title = 'Tiempo de consulta';
 		if (Auth::check()) {
 			return view('frontend.consulting_time', compact('title'));
 		} else {
@@ -829,7 +829,7 @@ class IndexController extends Controller
 
 			if ($status != NULL) {
 		        $done = DB::table('consulting_time')->insert($updateConsulting);
-				return redirect()->back()->with('message', 'Consulting time updated successfully');
+				return redirect()->back()->with('message', 'Tiempo de consulta actualizado con éxito.');
 			} else {
 				$updateConsultingOff = [
 		            'doctor_id' => $user_id,
@@ -838,7 +838,7 @@ class IndexController extends Controller
 				];
 
 		        $done = DB::table('consulting_time')->insert($updateConsultingOff);
-				return redirect()->back()->with('message', 'Consulting time updated successfully');
+				return redirect()->back()->with('message', 'Tiempo de consulta actualizado con éxito.');
 			}
 		} else {
 			return redirect('/');
@@ -848,7 +848,7 @@ class IndexController extends Controller
 	// View all Doctors
 	public function all_professional(Request $request)
 	{
-		$title = 'All Professional';
+		$title = 'Todos los profesionales';
 		$allDoctorswithFilters = DB::table('employees')->where('type', 'doctor');
 		$specialty = $request->specialty.',';
 		$city = $request->city;
@@ -892,7 +892,7 @@ class IndexController extends Controller
 	// Contact Us page
 	public function contact_us()
 	{
-		$title = 'Contact Us';
+		$title = 'Contáctenos';
 		return view('frontend.contact_us', compact('title'));
 	}
 
@@ -916,11 +916,11 @@ class IndexController extends Controller
 			    	</h4>
 			    	<p>
 			    		<ul style="list-style: none;">
-			    			<li>Reason: '.$reason.'</li>
-			    			<li>First Name: '.$first_name.'</li>
-			    			<li>last Name: '.$last_name.'</li>
-			    			<li>Email: '.$email.'</li>
-			    			<li>Comment: '.$comment.'</li>
+			    			<li>Razón: '.$reason.'</li>
+			    			<li>Nombre de pila: '.$first_name.'</li>
+			    			<li>apellido: '.$last_name.'</li>
+			    			<li>correo electrónico: '.$email.'</li>
+			    			<li>Comentario: '.$comment.'</li>
 			    		</ul>
 			    	</p>
 		    	</div>
@@ -928,13 +928,13 @@ class IndexController extends Controller
         
         //Updating Email content [Metakey]
         $content = $msg_template;
-        $subject = 'Contact';
+        $subject = 'Contacto';
 
 		$data = array( 'email' => $admin->email, 'subject' => $subject, 'message' => $content);
 		Mail::send([], $data, function ($m) use($data) {
            $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
     	});
-		return redirect()->back()->withInput()->with('message', 'Thank you for contacting us');
+		return redirect()->back()->withInput()->with('message', 'Gracias por contactarnos');
 	}
 	
 	
@@ -947,7 +947,7 @@ class IndexController extends Controller
 	        $EmpTbl = DB::table('employees')->where('id', $userID)->first();
 	        $UserTbl = DB::table('users')->where('id', $userID)->first();
 	        if ($UserTbl->type == 'patient') {
-				$title = 'My Favourites';
+				$title = 'Mis favoritos';
 				$favourite = DB::table('favourite_doctors')->where('patient_id', $userID)->first();
 				return view('frontend.favourites', compact('title', 'userID', 'EmpTbl', 'UserTbl', 'favourite'));
         	} else {
@@ -1128,7 +1128,7 @@ class IndexController extends Controller
 	// View Thank You page after review
 	public function thankyou_review($hash_key)
 	{
-		$title = 'Thank You! Your opinion was sent';
+		$title = '¡Gracias! Tu opinion fue enviada';
 		if (Auth::check()) {
 			return view('frontend.thankyou_review', compact('title'));
 		} else {
@@ -1260,13 +1260,13 @@ class IndexController extends Controller
 						</h4>
 						<h5>A continuación se muestran los detalles.</h5>
 						<ul style="list-style: none">
-							<li>First Name: '.$request->first_name.'</li>
-							<li>Last Name: '.$request->last_name.'</li>
-							<li>Email: '.$request->email.'</li>
-							<li>Contact: '.$request->mobile.'</li>
-							<li>Day: '.$request->day.'</li>
-							<li>Time: '.$request->from_time.' '.$request->from_AM_PM.'</li>
-							<li>Comment: '.$request->comments.'</li>
+							<li>Nombre de pila: '.$request->first_name.'</li>
+							<li>Apellido: '.$request->last_name.'</li>
+							<li>correo electrónico: '.$request->email.'</li>
+							<li>Contacto: '.$request->mobile.'</li>
+							<li>Día: '.$request->day.'</li>
+							<li>Hora: '.$request->from_time.' '.$request->from_AM_PM.'</li>
+							<li>Comentario: '.$request->comments.'</li>
 						</ul>
 						
 					</div>
@@ -1281,7 +1281,7 @@ class IndexController extends Controller
 						</h4>
 					</div>
 	        	';
-        	    $subject = 'Appointment Booking';
+        	    $subject = 'Reserva de cita';
         	    $content = $msg_template;
         	    $contentPatient = $msg_templatePatient;
 
@@ -1296,12 +1296,12 @@ class IndexController extends Controller
             	});
 
 
-			    return redirect('/reservations')->with('message', 'Your Appointment is booked');
+			    return redirect('/reservations')->with('message', 'Tu cita esta reservada');
 			} else {
-				return redirect()->back()->withInput()->with('error', 'Oops! Something went wrong..');
+				return redirect()->back()->withInput()->with('error', '¡Uy! Algo salió mal..');
 			}
 		} else {
-			return redirect()->back()->withInput()->with('error', 'Please Login or Register to book your Appointment with Doctor');
+			return redirect()->back()->withInput()->with('error', 'Por favor, inicie sesión o regístrese para reservar su cita con el médico');
 		}
 	}
 
@@ -1314,7 +1314,7 @@ class IndexController extends Controller
 		    $todayDate = Carbon::now()->toDateString();
 		    $upcomingAppointments = DB::table('appointments')->where([['patient_id', $userID], ['appointment_date', '>=', $todayDate]])->orderBy('appointment_date', 'ASC')->get();
 	        if ($EmpTbl->type == 'patient') {
-				$title = 'All Reservations';
+				$title = 'Todas las reservas';
 				$allDoctors = DB::table('employees')->where('type', 'doctor')->get();
 				return view('frontend.quotes', compact('title', 'allDoctors', 'userID', 'EmpTbl', 'upcomingAppointments'));
 	        } else {
@@ -1330,7 +1330,7 @@ class IndexController extends Controller
 	public function quote_doctor()
 	{
 		if (Auth::check() && Auth::user()->type == 'patient') {
-			$title = 'Quote Doctor';
+			$title = 'Cita doctor';
 			$userID = Auth::user()->id;
 	        $EmpTbl = DB::table('employees')->where('id', $userID)->first();
 	        $allCities = DB::table('cities')->whereNull('deleted_at')->get();
@@ -1395,7 +1395,7 @@ class IndexController extends Controller
 				}
 				return redirect()->back()->with('message', 'Nota: Explícanos quesituación tienes para que te responda el psicólogo más adecuado.<br> Hemos enviado tu cotización ¡Pronto te contactara el psicólogo más adecuado!');
 			} else {
-				return redirect()->back()->with('error', 'Oops! Something went wrong..');
+				return redirect()->back()->with('error', '¡Uy! Algo salió mal..');
 			}
 		} else {
 			return redirect('/');
@@ -1413,7 +1413,7 @@ class IndexController extends Controller
 	{
 		if (Auth::check()) {
 			$deleted = DB::table('appointments')->where('id', $timeid)->delete();
-		    return redirect('/reservations')->with('message', 'Your appointment is deleted');
+		    return redirect('/reservations')->with('message', 'Su cita es eliminada');
 		} else {
 			return redirect('/');
 		}
@@ -1423,7 +1423,7 @@ class IndexController extends Controller
 	public function doctor_appointments($id, $hash_key)
 	{
 		if (Auth::check()) {
-			$title = 'All Apointments';
+			$title = 'Todas las citas';
 		    $todayDate = Carbon::now()->toDateString();
 			$upcomingAppointments = DB::table('appointments')->where([['doctor_id', $id], ['appointment_date', '>=', $todayDate]])->orderBy('appointment_date', 'ASC')->get();
 	        $EmpTbl = DB::table('employees')->WHERE('id', $id)->first();
@@ -1446,7 +1446,7 @@ class IndexController extends Controller
 	// View all Tickets Page
 	public function my_tickets()
 	{
-		$title = 'Tickets';
+		$title = 'Boleto';
 		if (Auth::check()) {
 			$user_id = Auth::user()->id;
 	        $tickets = DB::table('tickets')->where('user_id', $user_id)->whereNull('deleted_at')->orderBy('id', 'DESC')->get();
@@ -1460,7 +1460,7 @@ class IndexController extends Controller
 	public function title_view($id)
 	{
 		if (Auth::check()) {
-			$title = 'Tickets';
+			$title = 'Boleto';
 	        $tickets = DB::table('tickets')->where('id', $id)->whereNull('deleted_at')->first(); 
 	        $ticket_replytable = Tickets_reply::with('tickets')->with('users')->where('ticket_id', $id)->get();
 	        $tickets_reply = json_decode($ticket_replytable);
@@ -1474,7 +1474,7 @@ class IndexController extends Controller
     public function ticket_add_page()
     {
 		if (Auth::check()) {
-			$title = 'Tickets';
+			$title = 'Boleto';
         	return view('frontend.add_ticket', compact('title'));
 		} else {
 			return redirect('/userlogin');

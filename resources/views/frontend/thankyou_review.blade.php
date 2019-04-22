@@ -7,14 +7,14 @@
       <div class="post-lead-feedback-wrap mt-5">
          <div class="post-lead-feedback happy">
             
-            <h3><i class="fa fa-smile-o post-lead-icon" aria-hidden="true"></i> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thank you for your opinion!</font></font></h3>
-            <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Your assessment will help millions of patients find the best health professional.</font></font></p>
+            <h3><i class="fa fa-smile-o post-lead-icon" aria-hidden="true"></i> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">¡Gracias por su opinión!</font></font></h3>
+            <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Su evaluación ayudará a millones de pacientes a encontrar al mejor profesional de la salud.</font></font></p>
             <div class="more-reviews">
                <div class="more-reviews-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                  Comment now on someone else!</font></font>
+                  ¡Comenta ahora sobre alguien más!</font></font>
                </div>
                <a class="btn-more-reviews" href="/all_professional"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-               Rate another professional</font></font></a>
+               Califica a otro profesional</font></font></a>
             </div>
          </div>
       </div>

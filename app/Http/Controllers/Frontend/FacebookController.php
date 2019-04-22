@@ -87,14 +87,14 @@ class FacebookController extends Controller
 
 		} else {
 			if ($checkUser->type == 'doctor') {
-		    	return redirect('/userlogin')->with('error', 'Login with facebook is only for Patients');
+		    	return redirect('/userlogin')->with('error', 'Entrar con facebook es solo para pacientes');
 			} else {
 				Auth::loginUsingId($user->id);
 				return redirect('/');
 			}
 		}
     		
-    	return redirect('/userlogin')->with('error', 'Oops! Something went wrong..');
+    	return redirect('/userlogin')->with('error', '¡Uy! Algo salió mal..');
     }
 	
 }

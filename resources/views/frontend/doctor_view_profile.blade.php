@@ -21,7 +21,7 @@
                     $profilePic = '/frontend/assets/img/default-doctor_1.png';
                   }
                 ?>
-                  <img src="<?= $profilePic; ?>" class="img-thumbnail" alt="Doctor Image">
+                  <img src="<?= $profilePic; ?>" class="img-thumbnail" alt="Imagen del doctor">
                </figure>
             </div>
             <div id="doctor-profile-section" class="col-lg-7">
@@ -30,7 +30,7 @@
                      <h1>Dr. <?= $EmpTbl->first_name.' '.$EmpTbl->last_name;  ?></h1>
                   </div>
                   <div id="doctor-speciality" class="col-lg-12">
-                     <p>Specialist in: 
+                     <p>Especialista en: 
                       <?php 
                         $oldSpecialty = explode(',', substr($EmpTbl->specialty, 0, -1));
                         $specialty = DB::table('specialities')->where('id', $oldSpecialty[0])->first();
@@ -44,13 +44,13 @@
                   <div id="book-button" class="row">
                      <div id="button1">
                         <a href="#timingsOfDoctor"><i class="fa fa-calendar mr-2" aria-hidden="true"></i>
-                        Book Appointment</a>
+                        Reservar una cita</a>
                      </div>
                      <!-- <div id="button2">
                         <a href=""><i class="fa fa-envelope mr-2" aria-hidden="true"></i> Send Message</a>
                      </div> -->
                      <div id="button3">
-                        <a href="/" class="see_phone_profile"><i class="fa fa-phone mr-2" aria-hidden="true"></i> See Phone</a>
+                        <a href="/" class="see_phone_profile"><i class="fa fa-phone mr-2" aria-hidden="true"></i> Ver telefono</a>
                         <a class="d-none phone_number_show" href="tel:<?= $EmpTbl->mobile; ?>"><i class="fa fa-phone mr-2"></i> <?= $EmpTbl->mobile; ?></a>
                      </div>
                   </div>
@@ -68,10 +68,10 @@
                     </span>
                   </div>
                   <div id="addr" class="col-lg-12 text-center mb-4">
-                     <a href="/view_reviews_doctor/<?= $EmpTbl->id.'/'.$EmpTbl->hash_key ?>"><span><?= $allReviews->count(); ?></span> reviews</a>
+                     <a href="/view_reviews_doctor/<?= $EmpTbl->id.'/'.$EmpTbl->hash_key ?>"><span><?= $allReviews->count(); ?></span> opiniones</a>
                   </div>
                   <div class="col-lg-12 text-center">
-                   <a href="/review_doctor/<?= $EmpTbl->id.'/'.$EmpTbl->hash_key ?>" class="review_view button4 p-2"><i class="fa fa-comment" aria-hidden="true"></i></a><span>Review</span>
+                   <a href="/review_doctor/<?= $EmpTbl->id.'/'.$EmpTbl->hash_key ?>" class="review_view button4 p-2"><i class="fa fa-comment" aria-hidden="true"></i></a><span>revisión</span>
                     <!-- Make Favourite -->
                     <?php 
                       $checked = '';
@@ -96,9 +96,14 @@
                         <div class="state p-on p-info-o">
                             <i class="icon fa fa-heart" style="color:#008000; stroke: #008000;"></i>
                         </div>
-                    </div> <span> Favourite</span>
+                    </div> <span> Favorita</span>
                     <!-- End Make Favourite -->
                   </div>
+                  <?php if ($EmpTbl->profile == 'premium'): ?>
+                    <div class="col-12 text-center mt-2 border">
+                       <img width="80" src="/frontend/assets/img/premium.png" alt="Premium Member" />
+                    </div><!-- /.col-12 -->
+                  <?php endif ?>
                </div>
             </div>
          </div>
@@ -106,13 +111,14 @@
    </header>
    <nav role="navigation" class="onpage">
       <ul>
-         <li class="active"><a href="#booking_section_view"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Booking appointment</font></font></a></li>
+         <li class="active"><a href="#booking_section_view"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cita de reserva</font></font></a></li>
          <!-- <li class=""><a href="#location"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Queries</font></font></a></li> -->
-         <li class=""><a href="#experience_section_view"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Experience</font></font></a></li>
+         <li class=""><a href="#experience_section_view"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Experiencia</font></font></a></li>
+         <li class=""><a href="#doctor_view_main_page_Service"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Servicios</font></font></a></li>
          <!-- <li class="#services_section_view"><a href="#services"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Services</font></font></a></li> -->
          <!-- <li class=""><a href="#articles"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Articles</font></font></a></li> -->
          <!-- <li><a href="#answers"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Answers</font></font></a></li> -->
-         <li><a href="#photos_section_view"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Photos</font></font></a></li>
+         <li><a href="#photos_section_view"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Las fotos</font></font></a></li>
       </ul>
    </nav>
 </section>
@@ -120,7 +126,7 @@
    <div class="container">
       <div class="row" id="timingsOfDoctor">
          <div id="main-heading" class="col-lg-12">
-            <h1 id="booking_section_view">Booking appointment</h1>
+            <h1 id="booking_section_view">Cita de reserva</h1>
          </div>
          <div id="sep" class="col-lg-12"></div>
          <div id="addre" class="col-lg-12">
@@ -135,7 +141,7 @@
          </div>
          <div class="row">
             <div class="col-lg-12">
-               <h3>What day and time is going well?</h3>
+               <h3>¿Qué día y hora va bien?</h3>
             </div>
          </div>
          <div class="row">
@@ -143,24 +149,24 @@
                <table class="table table-bordered">
                   <thead>
                      <tr>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                        <th>Saturday</th>
-                        <th>Sunday</th>
+                        <th>lunes</th>
+                        <th>martes</th>
+                        <th>miércoles</th>
+                        <th>jueves</th>
+                        <th>viernes</th>
+                        <th>sábado</th>
+                        <th>domingo</th>
                      </tr>
                   </thead>
                   <tbody>
                      <tr>
-                        <td><?php echo IndexController::getTimingDoctor('Monday', $EmpTbl->id); ?></td>
-                        <td><?php echo IndexController::getTimingDoctor('Tuesday', $EmpTbl->id); ?></td>
-                        <td><?php echo IndexController::getTimingDoctor('Wednesday', $EmpTbl->id); ?></td>
-                        <td><?php echo IndexController::getTimingDoctor('Thursday', $EmpTbl->id); ?></td>
-                        <td><?php echo IndexController::getTimingDoctor('Friday', $EmpTbl->id); ?></td>
-                        <td><?php echo IndexController::getTimingDoctor('Saturday', $EmpTbl->id); ?></td>
-                        <td><?php echo IndexController::getTimingDoctor('Sunday', $EmpTbl->id); ?></td>
+                      <td><?php echo IndexController::getTimingDoctor('lunes', $EmpTbl->id); ?></td>
+                      <td><?php echo IndexController::getTimingDoctor('martes', $EmpTbl->id); ?></td>
+                      <td><?php echo IndexController::getTimingDoctor('miércoles', $EmpTbl->id); ?></td>
+                      <td><?php echo IndexController::getTimingDoctor('jueves', $EmpTbl->id); ?></td>
+                      <td><?php echo IndexController::getTimingDoctor('viernes', $EmpTbl->id); ?></td>
+                      <td><?php echo IndexController::getTimingDoctor('sábado', $EmpTbl->id); ?></td>
+                      <td><?php echo IndexController::getTimingDoctor('domingo', $EmpTbl->id); ?></td>
                      </tr>
                   </tbody>
                </table>
@@ -168,8 +174,8 @@
             <div class="col-lg-3">
                <aside>
                   <div class="note">
-                     <h4><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Book your appointment now! </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">It's easy, fast and safe</font></font></strong></h4>
-                     <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">The appointment reservation is a free Doctoralia service.</font></font></p>
+                     <h4><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Reserve su cita ahora! </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Es fácil, rápido y seguro.</font></font></strong></h4>
+                     <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">La reserva de cita es un servicio psicologos gratuito.</font></font></p>
                   </div>
                </aside>
             </div>
@@ -181,12 +187,12 @@
    <div class="container">
       <div class="row">
          <div id="main-heading" class="col-lg-12">
-            <h1 id="experience_section_view">Experience</h1>
+            <h1 id="experience_section_view">Experiencia</h1>
          </div>
          <div id="sep" class="col-lg-12"></div>
          <section class="training1 col-lg-12">
             <i class="icon icon-training"></i>
-            <h3>Training</h3>
+            <h3>Formación</h3>
             <ul>
               <?php 
                  $arrayTrainings = unserialize($EmpTbl->training);
@@ -204,7 +210,7 @@
          </section>
          <section class="about-me col-lg-12">
             <i class="icon"></i>
-            <h3>About Me</h3>
+            <h3>Sobre mi</h3>
             <div id="doctor-reg-num" class="col-lg-12">
                <p>RUT: <?= $EmpTbl->RUT_number ?></p>
             </div>
@@ -216,12 +222,12 @@
          </section>
          <section class="webs-social-network col-lg-12 mb-5">
             <i class="icon"></i>
-            <h3>Webs and links of interest</h3>
+            <h3>Webs y enlaces de interés.</h3>
             <ul class="website-links blt">
               <?php 
                  $arrayLinks = unserialize($EmpTbl->web_links);
                  if ($arrayLinks != FALSE) {
-                    
+
                     foreach ($arrayLinks["webTitle"] as $key => $arrayLink) {
 
                        $webTitle = $arrayLink;
@@ -233,17 +239,13 @@
                ?>
             </ul>
             <hr>
-            <!-- <ul class="social-networks">
-               <li><a target="_blank" class="sn-facebook" href="http://Jose Manuel Martinez ">Facebook</a></li>
-               <li><a target="_blank" class="sn-linkedin" href="https://www.linkedin.com/in/jose-manuel-martinez-martinez-611550119?trk=nav_responsive_tab_profile">LinkedIn</a></li>
-            </ul> -->
          </section>
       </div>
    </div>
 </section>
-<section class="box services col-lg-12 doctor_view_main_page">
+<section class="box services col-lg-12 doctor_view_main_page" id="doctor_view_main_page_Service">
    <div class="details ">
-      <h2>Services</h2>
+      <h2>Servicios</h2>
       <ul id="servicesList" class="body">
         <?php 
            $arrayServices = unserialize($EmpTbl->services);
@@ -266,15 +268,15 @@
       </ul>
    </div>
    <aside>
-      <p>Want to book appointment</p>
+      <p>Quiero reservar cita</p>
       <div class="contact">
-         <a class="btn-book-app-bottom" href="#timingsOfDoctor"><i class="fa fa-calendar mr-2" aria-hidden="true"></i>Book Appointment</a>
+         <a class="btn-book-app-bottom" href="#timingsOfDoctor"><i class="fa fa-calendar mr-2" aria-hidden="true"></i>Reservar una cita</a>
       </div>
    </aside>
 </section>
 <section class="photos col-lg-12 doctor_view_main_page">
    <div class="container">
-      <h2 id="photos_section_view">Photos</h2>
+      <h2 id="photos_section_view">Las fotos</h2>
       <div id="sep" class="col-lg-12"></div>
       <div class="row">
         <?php if ($EmpTbl->photos != ''): ?>
@@ -297,18 +299,18 @@
                   </div>
                   <a class="carousel-control-prev" href="#slider2" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
+                  <span class="sr-only">Anterior</span>
                   </a>
                   <a class="carousel-control-next" href="#slider2" role="button" data-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
+                  <span class="sr-only">Siguiente</span>
                   </a>
                </div>
             </div>
          </div>
          <div class="col-lg-4"></div>
           <?php else: ?>
-            <div class="col-12 mt-4">This doctor has not added any Photo</div>
+            <div class="col-12 mt-4">Este doctor no ha añadido ninguna foto.</div>
           <?php endif ?>
       </div>
    </div>

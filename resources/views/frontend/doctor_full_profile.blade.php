@@ -7,8 +7,8 @@
    <div class="container">
       <div class="pages-links">
          <ul class="list-unstyled">
-            <li class="d-inline-block active"><a href="">PROFILE</a></li>
-            <li class="d-inline-block"><a href="<?= '/doctor_appointments/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>">BOOKING APPOINTMENT</a></li>
+            <li class="d-inline-block active"><a href="">PERFIL</a></li>
+            <li class="d-inline-block"><a href="<?= '/doctor_appointments/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>">CITA DE RESERVA</a></li>
             <!-- <li class="d-inline-block"><a href="">STATISTICS</a></li> -->
             <!-- <li class="d-inline-block"><a href="">ACCOUNT</a></li> -->
          </ul>
@@ -19,10 +19,10 @@
    <div class="container">
       <div class="pages-links text-gray-dark">
          <ul class="list-unstyled">
-            <li class="d-inline-block active"><a href="" class="text-dark">PROFILE</a></li>
-            <li class="d-inline-block"><a href="/my_data" class="text-dark">My Data</a></li>
+            <li class="d-inline-block active"><a href="" class="text-dark">PERFIL</a></li>
+            <li class="d-inline-block"><a href="/my_data" class="text-dark">Mis datos</a></li>
             <!-- <li class="d-inline-block"><a href="" class="text-dark">Opinions</a></li> -->
-            <li class="d-inline-block"><a href="<?= '/premium_profile/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>" class="text-dark">Premium profiles</a></li>
+            <li class="d-inline-block"><a href="<?= '/premium_profile/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>" class="text-dark">Perfil premium</a></li>
          </ul>
       </div>
    </div>
@@ -32,7 +32,7 @@
    <div class="row quotes-sec">
       <div class="container">
          <div class="quotes-head text-center">
-            <h3>PROFILE</h3>
+            <h3>PERFIL</h3>
          </div>
       </div>
    </div>
@@ -43,12 +43,12 @@
                <div class="row">
                   <div class="col-lg-3 user_image" id="user_image">
                      <?php if ($EmpTbl->profile_picture == '0'): ?>
-                        <img src="/frontend/assets/img/default-doctor_1.png" alt="Doctor Profile Picture" class="img-thumbnail w-100 doctor_profile_picture">
+                        <img src="/frontend/assets/img/default-doctor_1.png" alt="Foto del perfil del doctor" class="img-thumbnail w-100 doctor_profile_picture">
                      <?php else: ?>
-                        <img src="/upload/<?= $EmpTbl->profile_picture; ?>" alt="Doctor Profile Picture" class="img-thumbnail w-100 doctor_profile_picture">
-                        <button class="f-size removeProfilePicture">Remove</button>
+                        <img src="/upload/<?= $EmpTbl->profile_picture; ?>" alt="Foto del perfil del doctor" class="img-thumbnail w-100 doctor_profile_picture">
+                        <button class="f-size removeProfilePicture">retirar</button>
                      <?php endif ?>
-                     <button class="f-size change_profile_button" data-toggle="modal" data-target="#changeProfileModal">Change photo</button>
+                     <button class="f-size change_profile_button" data-toggle="modal" data-target="#changeProfileModal">Cambiar Fotografía</button>
                      <!-- Modal -->
                      <div class="modal fade" id="changeProfileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                        <div class="modal-dialog modal-dialog-centered" role="document">
@@ -60,14 +60,14 @@
                              </button>
                            </div>
                            <div class="modal-body">
-                             <div class="f-size mb-2">Add the photo you want to show on your profile by clicking on "Select file".</div>
+                             <div class="f-size mb-2">Agregue la foto que desea mostrar en su perfil haciendo clic en "Seleccionar archivo".</div>
                                <input type="file" name="upload_image" id="upload_image" accept=".png, .jpg, .jpeg" />
                               <input class="csrf_token_profile" type="hidden" name="_token" value="{{ csrf_token() }}">
                               <input class="user_id" type="hidden" name="user_id" value="<?= $EmpTbl->id; ?>">
                                <div id="uploaded_image"></div>
                            </div>
                             <div class="text-right p-4">
-                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                             </div>
                          </div>
                        </div>
@@ -77,7 +77,7 @@
                        <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Upload & Crop Image</h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Subir y recortar imagen</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
@@ -92,8 +92,8 @@
                                   </div>
                                 </div>
                                 <div class="modal-footer">
-                                  <button class="btn btn-success crop_image">Crop & Upload Image</button>
-                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button class="btn btn-success crop_image">Recortar y subir imagen</button>
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                 </div>
                              </div>
                          </div>
@@ -104,19 +104,19 @@
                         <ul class="list-unstyled">
                            <li class="modify_bio_button">
                               <h4 class="d-inline-block"><?= $UserTbl->name ?></h4>
-                              <a href="#" class="modify_bio">Modify</a>
+                              <a href="#" class="modify_bio">Modificar</a>
                            </li>
                            <li class="RUT_number_li">
                               <p><small>Rut number: <span class="RUT_number_default"><?= $EmpTbl->RUT_number ?></span></small></p>
                            </li>
                            <li class="specialty_li">
-                            <h6>Specialty <button class="f-size add_Experience" data-toggle="modal" data-target="#AddSpecialtyModal">Add</button></h6>
+                            <h6>Especialidad <button class="f-size add_Experience" data-toggle="modal" data-target="#AddSpecialtyModal">Añadir</button></h6>
                             <!-- Modal -->
                             <div class="modal fade" id="AddSpecialtyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                               <div class="modal-dialog modal_specialty modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Add Specialty</h5>
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Añadir Especialidad</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -143,8 +143,8 @@
                                            <?php endif ?>
                                         </ul>  
                                       </div>
-                                      <button type="button" class="btn btn-secondary" data-dismiss="modal" id="speciality_modal_close">Close</button>
-                                      <button type="submit" class="btn btn-primary">Save changes</button>
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal" id="speciality_modal_close">Cerrar</button>
+                                      <button type="submit" class="btn btn-primary">Guardar cambios</button>
                                     </form>
                                   </div>
                                 </div>
@@ -156,7 +156,7 @@
                                 $allSpecialities = explode(',', substr($EmpTbl->specialty, 0, -1));
                                 foreach ($allSpecialities as $key => $allSpecialty) {
                                   $specialitiesTable = DB::table('specialities')->where('id', (int)$allSpecialty)->first();
-                                  echo '<li data-name="'.$specialitiesTable->name.'" data-speciality_id="'.$specialitiesTable->id.'">'.$specialitiesTable->name.' -- <a href="#" class="remove-speciality"> Remove</a></li>';
+                                  echo '<li data-name="'.$specialitiesTable->name.'" data-speciality_id="'.$specialitiesTable->id.'">'.$specialitiesTable->name.' -- <a href="#" class="remove-speciality"> retirar</a></li>';
                                 }
                               }
                               ?>
@@ -196,7 +196,7 @@
                                        <label for="Name">Nombre<span class="field-required"> *</span></label>
                                     </dt>
                                     <dd>
-                                       <input type="text" maxlength="50" id="Name" name="Name" value="<?= $EmpTbl->first_name ?>"  required="" disabled="">
+                                       <input type="text" maxlength="50" id="Name" name="Name" value="<?= $EmpTbl->first_name ?>"  oninvalid="this.setCustomValidity('Por favor rellene este campo')" required disabled>
                                     </dd>
                                  </dl>
                                  <dl>
@@ -204,7 +204,7 @@
                                        <label for="LastName">Apellidos<span class="field-required"> *</span></label>
                                     </dt>
                                     <dd>
-                                       <input type="text" maxlength="50" id="LastName" name="LastName" value="<?= $EmpTbl->last_name ?>"  required="" disabled="">
+                                       <input type="text" maxlength="50" id="LastName" name="LastName" value="<?= $EmpTbl->last_name ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required disabled>
                                     </dd>
                                  </dl>
                                  <dl class="mb-4">
@@ -232,8 +232,8 @@
                <div class="col-lg-12">
                   <div class="doc-extract">
                      <div class="doc-extract-head" id="doc-extract-head">
-                        <h2 class="border-bottom ">Exract
-                           <a href="#" class="f-size modify_exract">Modify</a>
+                        <h2 class="border-bottom ">Extraer
+                           <a href="#" class="f-size modify_exract">Modificar</a>
                         </h2>
                           <p class="dralia_para_exract">
                             <?php if ($EmpTbl->exract != '' || $EmpTbl->exract != NULL): ?>
@@ -250,12 +250,12 @@
                            </dl>
                            <dl>
                               <dd>
-                                 <p><strong>The extract will only be visible on its Doctoralia.me website.</strong><br><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">This is the first information that users will see on their website, so we recommend you write briefly and concisely, taking into account their specialties, experience and work method.</font></font></p>
+                                 <p><strong>El extracto solo será visible en su sitio web de psicologos.</strong><br><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Esta es la primera información que los usuarios verán en su sitio web, por lo que le recomendamos que escriba de manera breve y concisa, teniendo en cuenta sus especialidades, experiencia y método de trabajo.</font></font></p>
                               </dd>
                            </dl>
                            <footer class="text-right">
-         							<button type="submit" class="btn btn-primary save_data">Save Data</button>
-         							<button class="btn btn-secondary cancel_data">Cancel</button>
+         							<button type="submit" class="btn btn-primary save_data">Guardar datos</button>
+         							<button class="btn btn-secondary cancel_data">Cancelar</button>
                            </footer>
                         </form>
                      </div>
@@ -277,24 +277,24 @@
                   </div> -->
                   <div class="doc-exp-disease" id="doc-exp-disease">
                      <div class="doc-exp-disease-head">
-                        <h2 class="border-bottom ">Experience in disease or disorders
-                        	<button class="f-size add_Experience" data-toggle="modal" data-target="#AddExperienceModal">Add</button>
+                        <h2 class="border-bottom ">Experiencia en enfermedades o trastornos.
+                        	<button class="f-size add_Experience" data-toggle="modal" data-target="#AddExperienceModal">Añadir</button>
                         	<!-- Modal -->
                         	<div class="modal fade" id="AddExperienceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         	  <div class="modal-dialog modal-dialog-centered" role="document">
                         	    <div class="modal-content">
                         	      <div class="modal-header">
-                        	        <h5 class="modal-title" id="exampleModalLongTitle">Add disease</h5>
+                        	        <h5 class="modal-title" id="exampleModalLongTitle">Añadir enfermedad</h5>
                         	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         	          <span aria-hidden="true">&times;</span>
                         	        </button>
                         	      </div>
                         	      <div class="modal-body">
-                        	      	<p class="f-size">Type the diseases or disorders</p>
+                        	      	<p class="f-size">Escriba las enfermedades o trastornos</p>
                         	      	<form action="/updateExperience" method="post" class="updateExperienceForm">
                         	      		<textarea name="data[Disease][]" id="AddDisease" class="form-control mb-3 AddDisease" cols="30" rows="4"></textarea>
-	                        	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	                        	        <button type="submit" class="btn btn-primary">Save changes</button>
+	                        	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+	                        	        <button type="submit" class="btn btn-primary">Guardar cambios</button>
                         	      	</form>
                         	      </div>
                         	    </div>
@@ -312,7 +312,7 @@
                         		$array1 = unserialize($EmpTbl->experience);
                         		if ($array1 != FALSE) {
 	                        		foreach ($array1['Disease'] as $key => $array2) {
-	                        		echo '<li>'.$array2.' <a href="#" class="remove-exp">Remove</a>
+	                        		echo '<li>'.$array2.' <a href="#" class="remove-exp">retirar</a>
               												<input type="hidden" value="'.$array2.'" name="data[Disease][]" />
     		                        		</li>';
 	                        		}
@@ -323,14 +323,14 @@
                      </div>
                   </div>
                   <div class="doc-services-rates">
-                     <h2>Services and rates<button class="f-size change_profile_button" data-toggle="modal" data-target="#addServicesRates">Add more services</button></h2>
-                     <div class="doc-services-rates-subtitle"><p><small>You can add as many services as you want</small></p></div>
+                     <h2>Servicios y tarifas<button class="f-size change_profile_button" data-toggle="modal" data-target="#addServicesRates">Añadir mas servicios</button></h2>
+                     <div class="doc-services-rates-subtitle"><p><small>Puedes añadir tantos servicios como quieras.</small></p></div>
                      <!-- Modal -->
                       <div class="modal fade" id="addServicesRates" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLongTitle">Add Services</h5>
+                              <h5 class="modal-title" id="exampleModalLongTitle">Añadir servicios</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -338,12 +338,12 @@
                             <div class="modal-body">
                               <!-- <p class="f-size">Type the diseases or disorders</p> -->
                               <form method="post" class="updateServiceForm">
-                                <div>Service</div>
-                                <input type="text" name="data[service][]" id="addService" class="form-control mb-3 addService" required/>
-                                <div>Rate</div>
+                                <div>Servicio</div>
+                                <input type="text" name="data[service][]" id="addService" class="form-control mb-3 addService" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required/>
+                                <div>Tarifa</div>
                                 <input type="number" name="data[rate][]" id="addRate" class="form-control mb-3 addRate"/>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Añadir</button>
                               </form>
                             </div>
                           </div>
@@ -354,8 +354,8 @@
                         <form class="formServices" method="post" >
                         <table class="table">
                            <thead>
-                              <th>Your Services</th>
-                              <th class="text-center">Rates</th>
+                              <th>Sus servicios</th>
+                              <th class="text-center">Tarifas</th>
                               <th>&nbsp;</th>
                            </thead>
                            <tbody class="all_services_tbody">
@@ -365,7 +365,7 @@
                                 $arrayServices = unserialize($EmpTbl->services);
                                 if ($arrayServices != FALSE) {
                                   foreach ($arrayServices['service'] as $key => $arrayService) {
-                                  echo '<tr><td>'.$arrayService.' </td><td class="text-center">€ '.$arrayServices['rate'][$key].'</td><td><a href="#" class="remove-service">Delete</a>
+                                  echo '<tr><td>'.$arrayService.' </td><td class="text-center">$ '.$arrayServices['rate'][$key].'</td><td><a href="#" class="remove-service">Borrar</a>
                                   </td>
                                   <input type="hidden" value="'.$arrayService.'" name="data[service][]" />
                                   <input type="hidden" value="'.$arrayServices['rate'][$key].'" name="data[rate][]" />
@@ -380,7 +380,7 @@
                   </div>
                   <div class="about-you" id="about-you">
                      <div class="about-you-head">
-                        <h2 class="border-bottom ">About You</h2>
+                        <h2 class="border-bottom ">Acerca de ti</h2>
                      </div>
                            <p class="dralia_para_about">
                             <?php if ($EmpTbl->about != '' || $EmpTbl->about != NULL): ?>
@@ -396,12 +396,12 @@
                               </dd>
                            </dl>
                            <footer class="text-right">
-                              <button type="submit" class="btn btn-primary save_data">Save Data</button>
-                              <button type="button" class="btn btn-secondary cancel_about">Cancel</button>
+                              <button type="submit" class="btn btn-primary save_data">Guardar datos</button>
+                              <button type="button" class="btn btn-secondary cancel_about">Cancelar</button>
                            </footer>
                         </form>
                      <div class="about-you-add">
-                        <button class="btn btn-primary add_about">Add</button>
+                        <button class="btn btn-primary add_about">Añadir</button>
                      </div>
                   </div>
                  <!--  <div class="languages">
@@ -464,31 +464,31 @@
                   <div class="training" id="training">
                      <form action="/updateTraining" method="post" class="updateTrainingForm">
                       <input class="lim-typ-hidden" type="hidden" data-type="<?= $EmpTbl->type ?>" data-lim="<?= ($EmpTbl->profile == 'premium') ? '10': '3'; ?>" />
-                     <h2 class="border-bottom ">Training</h2>
+                     <h2 class="border-bottom ">Formación</h2>
                      <div class="training-set-fields">
-                        <p>You can add up to 3 titles or courses (career, specialty, doctorate, certification, rotations ...).</p>
-                        <p>Premium Users can add up to 10 ( <a href="<?= '/premium_profile/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>"> Know more</a> )</p>
+                        <p>Puede agregar hasta 3 títulos o cursos (carrera, especialidad, doctorado, certificación, rotaciones ...).</p>
+                        <p>Los usuarios Premium pueden agregar hasta 10( <a href="<?= '/premium_profile/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>"> Saber más</a> )</p>
                      </div>
                      <div class="row training-input">
                         <div class="col-lg-2 offset-lg-4 training-input-fields text-right">
-                           <label for="" class="text-right">Institution*
+                           <label for="" class="text-right">Institución*
                            </label>
                         </div>
                         <div class="col-lg-5">
                            <input type="text" name="data[instName][]" class="w-100 form-control intstitute_name">
-                           <p class="training_title_error d-none" style="color:red; font-size: 12px;">Obligatory field</p>
+                           <p class="training_title_error d-none" style="color:red; font-size: 12px;">Campo obligatorio</p>
                            <p><small>University of Santiago, Chile</small></p>
                         </div>
                      </div>
                      <div class="row training-input">
                         <div class="col-lg-2 offset-lg-4 training-input-fields text-right">
-                           <label for="" class="text-right">Year*
+                           <label for="" class="text-right">Año*
                            </label>
                         </div>
                         <div class="col-lg-5">
                            <input type="number" name="data[instYear][]" class="w-100 form-control intstitute_year" autocomplete="off">
-                           <p class="training_title_error d-none" style="color:red; font-size: 12px;">Obligatory field</p>
-                           <button type="submit" class="btn btn-primary mt-3">Add</button>
+                           <p class="training_title_error d-none" style="color:red; font-size: 12px;">Campo obligatorio</p>
+                           <button type="submit" class="btn btn-primary mt-3">Añadir</button>
                         </div>
                         </form>
                         <form class="formTraining">
@@ -504,7 +504,7 @@
                                     $instName = $arrayTraining;
                                     $instYear = $arrayTrainings['instYear'][$key];
 
-                                 echo '<li>'.$instName.', '.$instYear.' <a href="#" class="remove-training">Remove</a>
+                                 echo '<li>'.$instName.', '.$instYear.' <a href="#" class="remove-training">retirar</a>
                                     <input type="hidden" value="'.$instName.'" name="data[instName][]" />
                                     <input type="hidden" value="'.$instYear.'" name="data[instYear][]" />
                                     </li>';
@@ -516,50 +516,50 @@
                      </div>
                   </div>
                   <div class="photos" id="photos_dropzone_upload">
-                     <h2 class="border-bottom">Photos</h2>
-                     <p>Add Photos. Option only <b>available for Premium</b></p>
+                     <h2 class="border-bottom">Las fotos</h2>
+                     <p>Agregar fotos. Opción solamente <b>disponible para Premium</b></p>
                      <?php if ($EmpTbl->profile == 'premium'): ?>
                        <div>
                           <form method="post" action="/upload_photos" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
                            {{ csrf_field() }}
                           <input class="user_id" type="hidden" name="user_id" value="<?= $EmpTbl->id; ?>">
                              <div class="dz-message needsclick text-center mt-2">
-                                Drop files here or click to upload
+                                Coloque los archivos aquí o haga clic para subir
                              </div>
                           </form>
                        </div>
                      <?php endif ?>
                   </div>
                   <div class="webs-and-link-of-interest" id="webs-and-link-of-interest">
-                     <h2 class="border-bottom ">Webs And Link Of Interest</h2>
+                     <h2 class="border-bottom ">Webs y link de interes</h2>
                      <div class="web-set-fields">
-                        <p>You can add up to 3 links to your web pages</p>
+                        <p>Puedes agregar hasta 3 enlaces a tus páginas web</p>
                      </div>
                      <form action="/updateWebLinks" method="post" class="updateWebLinksForm">
                      <div class="row web-input">
                         <div class="col-lg-2 offset-lg-2 training-input-fields text-right">
-                           <label for="" class="text-right">Title*</label>
+                           <label for="" class="text-right">Título*</label>
                         </div>
                         <div class="col-lg-8">
                            <input type="text" name="data[webTitle][]" class="w-100 form-control link_title">
-                           <p class="link_title_error d-none" style="color:red; font-size: 12px;">Obligatory field</p>
-                           <p><small>For example: "My personal web", "My blog", "Web of my center"</small></p>
+                           <p class="link_title_error d-none" style="color:red; font-size: 12px;">Campo obligatorio</p>
+                           <p><small>Por ejemplo: "Mi web personal", "Mi blog", "Web de mi centro"</small></p>
                         </div>
                      </div>
                      <div class="row web-input">
                         <div class="col-lg-2 offset-lg-2 training-input-fields text-right">
-                           <label for="" class="text-right">Address*</label>
+                           <label for="" class="text-right">Dirección*</label>
                         </div>
                         <div class="col-lg-8">
                            <input type="text" name="data[webLinks][]" class="w-100 form-control link_url">
-                           <p class="link_title_error d-none" style="color:red; font-size: 12px;">Obligatory field</p>
-                           <p><small>Example: "<b>http://www.miblog.com</b>"</small></p>
-                           <button class="btn btn-primary float-right add_user_links">Add</button>
+                           <p class="link_title_error d-none" style="color:red; font-size: 12px;">Campo obligatorio</p>
+                           <p><small>Ejemplo: "<b>http://www.miblog.com</b>"</small></p>
+                           <button class="btn btn-primary float-right add_user_links">Añadir</button>
                         </div>
                      </div>
                      </form>
                      <div class="link-add">
-                        <p><small>Links added to your Doctoralia profile:</small></p>
+                        <p><small>Enlaces agregados a tu perfil de psicologos:</small></p>
                         <form class="formWebLinks">
                         <ul class="user_links_list">
                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -573,7 +573,7 @@
                                     $webTitle = $arrayLink;
                                     $webLink = $arrayLinks['webLinks'][$key];
 
-                                 echo '<li>'.$webTitle.', '.$webLink.' <a target="_blank" href="'.$webLink.'" class="remove-link">Remove</a>
+                                 echo '<li>'.$webTitle.', '.$webLink.' <a target="_blank" href="'.$webLink.'" class="remove-link">retirar</a>
                                     <input type="hidden" value="'.$webTitle.'" name="data[webTitle][]" />
                                     <input type="hidden" value="'.$webLink.'" name="data[webLinks][]" />
                                     </li>';
@@ -585,34 +585,34 @@
                      </div>
                   </div>
                   <div class="row mb-2">
-                     <h2 class="border-bottom">Counsulting Time</h2>
+                     <h2 class="border-bottom">Tiempo de consulta</h2>
                   </div>
                    <div class="row mb-4">
-                      <a href="/consulting_time"><button class="btn btn-primary">Add Counsulting Time</button></a>
+                      <a href="/consulting_time"><button class="btn btn-primary">Añadir tiempo de consulta</button></a>
                    </div><!-- /.row -->
                    <div class="row consultantTime">
                          <div id="table-day" class="col-lg-9">
                             <table class="table table-bordered">
                                <thead>
                                   <tr>
-                                     <th>Monday</th>
-                                     <th>Tuesday</th>
-                                     <th>Wednesday</th>
-                                     <th>Thursday</th>
-                                     <th>Friday</th>
-                                     <th>Saturday</th>
-                                     <th>Sunday</th>
+                                     <th>lunes</th>
+                                     <th>martes</th>
+                                     <th>miércoles</th>
+                                     <th>jueves</th>
+                                     <th>viernes</th>
+                                     <th>sábado</th>
+                                     <th>domingo</th>
                                   </tr>
                                </thead>
                                <tbody>
                                   <tr>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('Monday', $EmpTbl->id); ?></td>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('Tuesday', $EmpTbl->id); ?></td>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('Wednesday', $EmpTbl->id); ?></td>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('Thursday', $EmpTbl->id); ?></td>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('Friday', $EmpTbl->id); ?></td>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('Saturday', $EmpTbl->id); ?></td>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('Sunday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('lunes', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('martes', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('miércoles', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('jueves', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('viernes', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('sábado', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('domingo', $EmpTbl->id); ?></td>
                                   </tr>
                                </tbody>
                             </table>
@@ -640,18 +640,18 @@
                      </div>
                   </div> -->
                   <div class="resource-website">
-                     <h2 class="border-bottom ">Doctorolia Resources For Your Website</h2>
+                     <h2 class="border-bottom ">psicologos Recursos para su sitio web</h2>
                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse nostrum delectus</p>
                      <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                            <div class="valuations-module">
                               <div class="valuation-module-head bg-grey">
-                                 <h5>Valuation Module</h5>
+                                 <h5>Módulo de valoración</h5>
                               </div>
                               <div class="row valuation-module-desc-div">
                                  <div class="col-lg-6 col-md-12 col-sm-6 col-12 valuation-module-desc-area">
-                                    <p>Show the evaluations of your patients on your website</p>
-                                    <button class="btn btn-primary">Know More</button>
+                                    <p>Muestra las evaluaciones de tus pacientes en tu sitio web.</p>
+                                    <button class="btn btn-primary">Saber más</button>
                                  </div>
                                  <div class="col-lg-6 col-md-12 col-sm-6 col-12 valuation-module-review">
                                     <div class="review-area bg-green">
@@ -666,7 +666,7 @@
                                           </p>
                                        </div>
                                        <div class="total-review">
-                                          <p>20 Review</p>
+                                          <p>20 revisión</p>
                                        </div>
                                        <div class="brand-footer">
                                           <img src="/frontend/assets/img/Original.png" alt="" class="w-100 bg-green-dark">
@@ -679,12 +679,12 @@
                         <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                            <div class="doc-icon-for-your-website">
                               <div class="doc-icon-for-your-web-head text-center bg-grey">
-                                 <h5>Doctoralia icon for your website</h5>
+                                 <h5>Icono de psicologos para tu sitio web.</h5>
                               </div>
                               <div class="row doc-icon-for-your-website-desc-div">
                                  <div class="col-lg-6 col-md-12 col-sm-6 col-12 doc-icon-for-your-website-desc-area">
-                                    <p>Link your Doctoralia profile from your website</p>
-                                    <button class="btn btn-primary">Know More</button>
+                                    <p>Enlace su perfil psicologos desde su sitio web.</p>
+                                    <button class="btn btn-primary">Saber más</button>
                                  </div>
                                  <div class="col-lg-6 col-md-12 col-sm-6 col-12 doc-icon-for-your-website-icons text-center">
                                     <div class="doc-social-icon-area">
@@ -703,11 +703,11 @@
                   </div>
                   <!-- Your Profile on the internet -->
                   <div class="profile-on-the-internet-sec">
-                     <h2 class="border-bottom ">Share Your Profile On the internet</h2>
+                     <h2 class="border-bottom">Comparte tu perfil en internet</h2>
                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse nostrum delectus</p>
                      <div class="doctoralia-social-network border">
                         <div class="doctoralia-social-network-head bg-grey">
-                           <h5 class="text-center">Doctoralia in their Social Network</h5>
+                           <h5 class="text-center">Psicologos en su red social.</h5>
                         </div>
                         <div class="doctoralia-social-icons">
                            <div class="doctoralia-social-icon-list">
@@ -752,11 +752,11 @@
                <div class="doc-premium-pro-sec">
                   <div class="premium-profile-img text-center">
                      <i class="fa fa-picture-o" aria-hidden="true"></i>
-                     <p>Premium Profile</p>
+                     <p>Perfil premium</p>
                   </div>
                   <div class="premium-pro-desc text-center">
                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <a href="<?= '/premium_profile/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>"><button class="btn bg-white">Know More</button></a>
+                    <a href="<?= '/premium_profile/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>"><button class="btn bg-white">Saber más</button></a>
                   </div>
                </div>
                <?php 
@@ -769,7 +769,7 @@
                     // add button of remaining profile section
                     $completenessFields .= '<li class="py-2">
                            <a href="#user_image"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
-                           <span class="pl-2">Add Profile Picture 30%</span>  </a>
+                           <span class="pl-2">Agregar imagen de perfil 30%</span>  </a>
                         </li>';
                   }
                   if ($UserTbl->confirm_email == null || $UserTbl->confirm_email == 'null' || $UserTbl->confirm_email == '') {
@@ -781,7 +781,7 @@
                     // add button of remaining profile section
                     $completenessFields .= '<li class="py-2">
                            <a href="#about-you"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
-                           <span class="pl-2">Add About Yourself 10%</span>  </a>
+                           <span class="pl-2">Añadir sobre ti mismo 10%</span>  </a>
                         </li>';
                   }
                   if ($EmpTbl->experience != '' && $EmpTbl->experience != null && $EmpTbl->experience != 'N;') {
@@ -790,7 +790,7 @@
                     // add button of remaining profile section
                     $completenessFields .= '<li class="py-2">
                            <a href="#doc-exp-disease"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
-                           <span class="pl-2">Add Experience 10%</span>  </a>
+                           <span class="pl-2">Añadir experiencia 10%</span>  </a>
                         </li>';
                   }
                   if ($EmpTbl->exract != '' && $EmpTbl->exract != null) {
@@ -799,7 +799,7 @@
                     // add button of remaining profile section
                     $completenessFields .= '<li class="py-2">
                            <a href="#doc-extract-head"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
-                           <span class="pl-2">Add Exract 5%</span>  </a>
+                           <span class="pl-2">Añadir extracto 5%</span>  </a>
                         </li>';
                   }
                   if ($EmpTbl->training != '' && $EmpTbl->training != null && $EmpTbl->training != 'N;') {
@@ -808,7 +808,7 @@
                     // add button of remaining profile section
                     $completenessFields .= '<li class="py-2">
                            <a href="#training"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
-                           <span class="pl-2">Add Training 5%</span>  </a>
+                           <span class="pl-2">Añadir entrenamiento 5%</span>  </a>
                         </li>';
                   }
                   if ($EmpTbl->web_links != '' && $EmpTbl->web_links != null && $EmpTbl->web_links != 'N;') {
@@ -817,7 +817,7 @@
                     // add button of remaining profile section
                     $completenessFields .= '<li class="py-2">
                            <a href="#webs-and-link-of-interest"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
-                           <span class="pl-2">Add Web Links 5%</span>  </a>
+                           <span class="pl-2">Añadir enlaces web 5%</span>  </a>
                         </li>';
                   }
                   if ($EmpTbl->photos != '' && $EmpTbl->photos != null ) {
@@ -826,7 +826,7 @@
                     // add button of remaining profile section
                     $completenessFields .= '<li class="py-2">
                            <a href="#photos_dropzone_upload"><span> <i class="fa fa-plus" aria-hidden="true"></i></span>
-                           <span class="pl-2">Add Gallery 5%</span>  </a>
+                           <span class="pl-2">Añadir Galería 5%</span>  </a>
                         </li>';
                   }
                ?>
@@ -834,13 +834,13 @@
                   <div class="pro-list">
                      <ul class="list-unstyled">
                         <li class="text-center">
-                           <h5>Profile Completed at <?= $complete?>%</h5>
+                           <h5>Perfil completado al <?= $complete?>%</h5>
                         </li>
                         <li>
                            <div class="progress">
                             <div class="progress-bar" role="progressbar" aria-valuenow="70"
                             aria-valuemin="0" aria-valuemax="100" style="width:<?= $complete ?>%">
-                              <span class="sr-only"><?= $complete ?>% Complete</span>
+                              <span class="sr-only"><?= $complete ?>% Completar</span>
                             </div>
                            </div>
                         </li>
@@ -854,14 +854,14 @@
                   <div class="simplify-of-your-life-list-items">
                      <ul class="list-unstyled text-center">
                         <li>
-                           <h5>Simplify of Your life and that of Your Patients</h5>
+                           <h5>Simplifica tu vida y la de tus pacientes.</h5>
                         </li>
                         <li class="py-2"><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></li>
                         <li class="py-2"><a href="">Lorem ipsum dolor sit amet,.</a></li>
                         <li class="py-2"><a href="">Lorem ipsum dolor</a>  </li>
                         <li class="py-2"><a href="">Lorem ipsum dolor sit amet,</a></li>
                         <li>
-                           <button class="btn btn-primary py-2 my-2">Know More</button>
+                           <button class="btn btn-primary py-2 my-2">Saber más</button>
                         </li>
                      </ul>
                   </div>
@@ -870,7 +870,7 @@
                   <div class="statistics-show">
                      <ul class="list-unstyled">
                         <li>
-                           <h5>Statistics</h5>
+                           <h5>Estadística</h5>
                         </li>
                         <!-- <li><small>last 30 days</small></li> -->
                      </ul>
@@ -879,11 +879,11 @@
                            <li>
                               <h5><?= $EmpTbl->visitor_count ?></h5>
                            </li>
-                           <li><small>visits to your Profile</small></li>
+                           <li><small>visitas a tu perfil</small></li>
                         </ul>
                      </div>
                      <!-- <div class="statistics-know-more-button">
-                        <button class="btn btn-primary w-75">Know More</button>
+                        <button class="btn btn-primary w-75">Saber más</button>
                      </div> -->
                   </div>
                </div>
@@ -892,7 +892,7 @@
                      <ul class="list-unstyled">
                         <li>
                            <span><i class="fa fa-picture-o" aria-hidden="true"></i></span>
-                           <h5 class="d-inline-block pl-2">Support</h5>
+                           <h5 class="d-inline-block pl-2">Apoyo</h5>
                         </li>
                      </ul>
                      <div class="sidebar-support-desc text-left">
@@ -900,8 +900,8 @@
                      </div>
                      <div class="sidebar-support-text-area">
                       <form action="/frequently" method="get">
-                        <input type="text" class="form-control" placeholder="Write Your Question here" name="question" required>
-                        <button type="submit" class="btn btn-success mt-3">Search</button>
+                        <input type="text" class="form-control" placeholder="Escriba su pregunta aquí" name="question" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <button type="submit" class="btn btn-success mt-3">Buscar</button>
                       </form>
                      </div>
                   </div>
@@ -932,13 +932,13 @@
     Dropzone.options.myAwesomeDropzone = {
     maxFilesize: 5,
     maxFiles: 10,
-    dictResponseError: 'Server not Configured',
+    dictResponseError: 'Servidor no configurado',
     acceptedFiles: ".png,.jpg,.jpeg",
     init:function(){
       var self = this;
       // config
       self.options.addRemoveLinks = true;
-      self.options.dictRemoveFile = "Delete";
+      self.options.dictRemoveFile = "Borrar";
       //New file added
       self.on("addedfile", function (file) {
         // console.log('new file added ', file);
