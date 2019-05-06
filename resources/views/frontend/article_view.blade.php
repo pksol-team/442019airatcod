@@ -27,8 +27,10 @@
                      <div class="w-100 d-inline-block">
                         <?php $user = Article::with('users')->first(); ?>
                         <span class="float-right mr-4">
-                           <?php if (Auth::user()->id == $user->users->id): ?>
-                              <a href="/edit_article/{{ $article->id }}/{{ $user->users->id }}/{{ $user->users->hash_key }}"><button class="btn btn-success btn-sm">Editar artículo</button></a>
+                           <?php if (Auth::check()): ?>
+                              <?php if (Auth::user()->id == $user->users->id): ?>
+                                 <a href="/edit_article/{{ $article->id }}/{{ $user->users->id }}/{{ $user->users->hash_key }}"><button class="btn btn-success btn-sm">Editar artículo</button></a>
+                              <?php endif ?>
                            <?php endif ?>
                            - por el doctor 
                            <a href="/doctor_profile_view/{{ $article->user_id }}/{{ $user->users->hash_key }}">{{ $user->users->first_name }}</a>
