@@ -56,7 +56,11 @@ class IndexController extends Controller
 		$allSpecialitiesBottom = DB::table('specialities')->take(10)->get();
 		$allCities = DB::table('cities')->take(10)->get();
 		$allForecasts = DB::table('forecasts')->take(10)->get();
-		return view('frontend.index', compact('title', 'allSpecialitiesBottom', 'allCities', 'allForecasts'));
+
+		$allSpecialitiesSearch = DB::table('specialities')->get();
+		$allCitiesSearch = DB::table('cities')->get();
+		$allForecastsSearch = DB::table('forecasts')->take(10)->get();
+		return view('frontend.index', compact('title', 'allSpecialitiesBottom', 'allCities', 'allForecasts', 'allSpecialitiesSearch', 'allCitiesSearch', 'allForecastsSearch'));
 	}
 
 	// View city/specialty/forecast
@@ -1034,9 +1038,9 @@ class IndexController extends Controller
 		
 		if ($request->searchByInput != '') {
 			$allDoctorswithFilters->Where('first_name', 'LIKE', "%$inputKeywords%");
-			$allDoctorswithFilters->orWhere('city', 'LIKE', "%$inputKeywords%");
-			$allDoctorswithFilters->orWhere('sub_specialty', 'LIKE', "%$inputKeywords%");
-			$allDoctorswithFilters->orWhere('forecast', 'LIKE', "%$inputKeywords%");
+			// $allDoctorswithFilters->orWhere('city', 'LIKE', "%$inputKeywords%");
+			// $allDoctorswithFilters->orWhere('sub_specialty', 'LIKE', "%$inputKeywords%");
+			// $allDoctorswithFilters->orWhere('forecast', 'LIKE', "%$inputKeywords%");
 			$allDoctorswithFilters->orWhere('last_name', 'LIKE', "%$inputKeywords%");
 			
 		} else {

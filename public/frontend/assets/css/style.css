@@ -35,7 +35,7 @@ body a {
 }
 
 .carousel-caption {
-    top: 40% !important;
+    top: 25% !important;
     bottom: 50% !important;
 }
 
@@ -3328,6 +3328,11 @@ tbody.all_services_tbody tr {
 /*booking an appointment css end*/
 .select2-container .select2-selection--single {
     height: 47px;
+    width:100%;
+}
+
+span.select2.select2-container.select2-container--default {
+    width:100% !important;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
@@ -3366,7 +3371,7 @@ tbody.all_services_tbody tr {
 }
 
 .forecast-filter span.select2-container {
-    width: 260px !important;
+    width: 100% !important;
 }
 
 .searchByInput {
@@ -3422,4 +3427,11 @@ margin-bottom: 0;
 
 .posts-div .posts img{
     width: 90px;
+}
+.searchByInput_all_professional {
+    height: 47px;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    width:100%;
 }

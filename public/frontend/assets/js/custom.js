@@ -592,10 +592,11 @@ jQuery(document).ready(function($) {
     // Doctor page search
     $('.doctorsPageSearch').on('submit',  function(e) {
         e.preventDefault();
+        var inputSearch = $('.searchByInput_all_professional').val();
         var specialtySelect = $('.searchBySpecialty').val();
         var citySelect = $('.searchByCity').val();
         var forecastSelect = $('.searchByForecast').val();
-        if (specialtySelect == '' && citySelect == '' && forecastSelect == '') {
+        if (inputSearch == '' && specialtySelect == '' && citySelect == '' && forecastSelect == '') {
         } else {
             $(this)[0].submit();
         }

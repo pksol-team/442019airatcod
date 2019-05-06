@@ -44,7 +44,13 @@
                <div class="col-11 bg-grey filter_location">
                   <form class="form-inline doctorsPageSearch" action="" method="get">
                   <div class="row w-100">
-                     <div class="col-lg-4 col-md-4 col-sm-4 col-11 item-1">
+                     <div class="col-lg-3 col-md-3 col-sm-3 col-11 item-1">
+                        <div>
+                           <p>filtrar por nombre</p>
+                           <input class="searchByInput_all_professional" type="text" name="searchByInput" />
+                        </div>
+                     </div>
+                     <div class="col-lg-3 col-md-3 col-sm-3 col-11 item-1">
                         <div>
                            <p>Filtrar por especialidad</p>
                               <select class="js-example-basic-single searchBySpecialty" name="specialty">
@@ -57,7 +63,7 @@
                               </select>
                         </div>
                      </div>
-                     <div class="col-lg-3 col-md-3 col-sm-3 col-11 pr-0 pl-0 item-2">
+                     <div class="col-lg-3 col-md-2 col-sm-2 col-11 item-2">
                         <div>
                            <p>Filtrar por ubicación</p>
                            <?php if ($allCities): ?>
@@ -70,7 +76,7 @@
                               </select>
                         </div>
                      </div>
-                     <div class="col-lg-3 col-md-3 col-sm-3 col-11 pl-0 forecast-filter">
+                     <div class="col-lg-3 col-md-2 col-sm-2 col-11 pl-0 forecast-filter">
                         <div>
                            <p>Filtrar por previsión</p>
                            <?php if ($allForecasts): ?>
@@ -83,14 +89,13 @@
                               </select>
                         </div>
                      </div>
-                     <div class="col-lg-1 col-md-1 col-sm-1 col-11 pl-0 ml-5 text-right">
+                     <div class="col-12 text-center">
                         <div>
                            <p>&nbsp;</p>
-                           <button type="submit" class="btn btn-secondary">Buscar</button>
+                           <button type="submit" class="btn btn-dark btn-md">Buscar</button>
                         </div>
                      </div>
                   </div><!-- /.row -->
-                     <input type="hidden" value="" name="searchByInput" />
                   </form>
                </div><!-- /.col-10 -->
             </div>

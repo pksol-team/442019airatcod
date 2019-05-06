@@ -49,11 +49,65 @@
                   <h3>BUSCA TU PSICÓLOGO POR CIUDAD</h3>
                   <p>Elige el psicólogo que mas te guste</p>
                   <!-- Search form -->
-                  <div class="form-search text-center">
+                  <div class="w-100 text-center">
                      <div class="form-part">
-                        <form class="form-inline homePageSearch" action="/searchBySpecialty" method="get">
+                        <!-- <form class="form-inline homePageSearch" action="/searchBySpecialty" method="get">
                            <input class="searchByInput form-control" type="text" name="searchByInput" />
                            <button type="submit" class="btn bg-blue text-white">Buscar</button>
+                        </form> -->
+                        <form class="form-inline doctorsPageSearch" action="/searchBySpecialty" method="get">
+                        <div class="row w-100">
+                           <div class="col-12 mb-3">
+                              <div>
+                                 <p>filtrar por nombre</p>
+                                 <input class="searchByInput_all_professional" type="text" name="searchByInput" />
+                              </div>
+                           </div>
+                           <div class="col-lg-4 col-md-4 col-sm-4 col-11 item-1">
+                              <div>
+                                 <p>Filtrar por especialidad</p>
+                                    <select class="js-example-basic-single searchBySpecialty" name="specialty">
+                                      <option value="" hidden></option>
+                                      <?php if ($allSpecialitiesSearch): ?>
+                                       <?php foreach ($allSpecialitiesSearch as $key => $specialty): ?>
+                                            <option value="<?= $specialty->id; ?>"><?= $specialty->name; ?></option>
+                                       <?php endforeach ?>
+                                      <?php endif ?>
+                                    </select>
+                              </div>
+                           </div>
+                           <div class="col-lg-4 col-md-4 col-sm-4 col-11 item-2">
+                              <div>
+                                 <p>Filtrar por ubicación</p>
+                                 <?php if ($allCitiesSearch): ?>
+                                    <select class="js-example-basic-single searchByCity" name="city">
+                                      <option value="" hidden></option>
+                                    <?php foreach ($allCitiesSearch as $key => $city): ?>
+                                         <option value="<?= $city->name; ?>"><?= $city->name; ?></option>
+                                    <?php endforeach ?>
+                                 <?php endif ?>
+                                    </select>
+                              </div>
+                           </div>
+                           <div class="col-lg-4 col-md-4 col-sm-4 col-11 pl-0 forecast-filter">
+                              <div>
+                                 <p>Filtrar por previsión</p>
+                                 <?php if ($allForecastsSearch): ?>
+                                    <select class="js-example-basic-single searchByForecast" name="forecast">
+                                      <option value="" hidden></option>
+                                    <?php foreach ($allForecastsSearch as $key => $forecast): ?>
+                                         <option value="<?= $forecast->name; ?>"><?= $forecast->name; ?></option>
+                                    <?php endforeach ?>
+                                 <?php endif ?>
+                                    </select>
+                              </div>
+                           </div>
+                           <div class="col-12 text-center mt-5">
+                              <div>
+                                 <button type="submit" class="btn bg-blue text-white">Buscar</button>
+                              </div>
+                           </div>
+                        </div><!-- /.row -->
                         </form>
                      </div>
                   </div>
