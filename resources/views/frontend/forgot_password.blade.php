@@ -57,7 +57,7 @@
             <div class="support">
                <h3>Apoyo</h3>
                <p>Si tienes alguna duda, contacta con doctorolia.</p>
-               <a href="mailto:support-cl@doctorolia.com">support-cl@doctorolia.com</a>
+               <a href="mailto:psicologoschile@vibemar.com">psicologoschile@vibemar.com</a>
             </div>
          </div>
       </div>

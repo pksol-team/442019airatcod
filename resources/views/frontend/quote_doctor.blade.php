@@ -7,15 +7,19 @@
  <div class="container">
     <div class="pages-links">
        <ul class="list-unstyled">
+        <?php if ($EmpTbl != NULL): ?>
+          
           <?php if ($EmpTbl->type == 'patient'): ?>
             <li class="d-inline-block"><a href="/reservations">Citas</a></li>
             <li class="d-inline-block"><a href="/favourites">Favoritas</a></li>
             <li class="d-inline-block"><a href="/quote_doctor">Cotizar psicólogo</a></li>
 
           <?php else: ?>
-            <li class="d-inline-block"><a href="/doctor_full_profile/<?= $UserTbl->hash_key ?>">Perfil</a></li>
+            <li class="d-inline-block"><a href="/doctor_full_profile/<?= $EmpTbl->hash_key ?>">Perfil</a></li>
           <?php endif ?>
           <li class="d-inline-block active"><a href="/my_data">Mis datos</a></li>
+        
+        <?php endif ?>
        </ul>
     </div>
  </div>
@@ -38,32 +42,32 @@
    <div class="row">
       <div class="container">
          <div class="appointments-list bg-white table-responsive mb-5">
-        @if(session()->has('error'))
-            <div class="alert alert-danger">
-                {!! session()->get('error') !!}
-            </div>
-        @endif
-        @if(session()->has('message'))
-            <div class="alert alert-success">
-                {!! session()->get('message') !!}
-            </div>
-        @endif
+          @if(session()->has('error'))
+              <div class="alert alert-danger">
+                  {!! session()->get('error') !!}
+              </div>
+          @endif
+          @if(session()->has('message'))
+              <div class="alert alert-success">
+                  {!! session()->get('message') !!}
+              </div>
+          @endif
             <form action="/send_quote_email" method="POST">
-              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              <input autocomplete="off" type="hidden" name="_token" value="{{ csrf_token() }}">
                <label for="name">Nombre completo</label>
                <div class="form-group">
-                  <input type="text" class="form-control" value="{{ old('name') }}" name="name" placeholder="Introduzca su nombre">
+                  <input autocomplete="off" type="text" class="form-control" value="{{ old('name') }}" name="name" placeholder="Introduzca su nombre" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                </div>
-               <label for="contact">Contacto</label>
+               <label for="contact">Número de teléfono</label>
                <div class="form-group">
-                  <input type="number" class="form-control" value="{{ old('contact') }}" name="contact" placeholder="Ingrese su número de contacto" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                  <input autocomplete="off" type="number" class="form-control" value="{{ old('contact') }}" name="contact" placeholder="Ingrese su número de contacto" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                </div>
                <label for="email">correo electrónico</label>
                <div class="form-group">
-                  <input type="email" class="form-control" value="{{ old('email') }}" name="email" placeholder="Introduce tu correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                  <input autocomplete="off" type="email" class="form-control" value="{{ old('email') }}" name="email" placeholder="Introduce tu correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                </div>
-               <label for="forecast">Región</label>
-               <select class="form-control" name="forecast" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+               <label for="forecast">PREVISION DE SALUD</label>
+               <select class="form-control" name="forecast" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                    <option value="" hidden></option>
                     <?php if ($allForecasts): ?>
                           <?php foreach ($allForecasts as $key => $forecast): ?>
@@ -71,8 +75,8 @@
                           <?php endforeach ?>
                     <?php endif ?>
                </select>
-               <label for="city">Ciudad</label>
-	            <select class="form-control" name="city" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+               <label for="city">Región</label>
+	            <select class="form-control" name="city" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
 	                <option value="" hidden></option>
 	                 <?php if ($allCities): ?>
 	                       <?php foreach ($allCities as $key => $city): ?>
@@ -81,16 +85,15 @@
 	                 <?php endif ?>
 	            </select>
                <label for="specialty">Especialidad</label>
-               <select class="form-control" name="specialty" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
-                   <option value="" hidden></option>
+               <select class="specialty_quote form-control" name="specialty[]" multiple="multiple" required>
                     <?php if ($allSpecialities): ?>
-                          <?php foreach ($allSpecialities as $key => $specialty): ?>
-                               <option value="<?= $specialty->name; ?>"><?= $specialty->name; ?></option>
-                          <?php endforeach ?>
+                        <?php foreach ($allSpecialities as $key => $specialty): ?>
+                             <option value="<?= $specialty->name; ?>"><?= $specialty->name; ?></option>
+                        <?php endforeach ?>
                     <?php endif ?>
                </select>
                <label for="note">Nota</label>
-               <textarea class="form-control" name="note" id="" cols="20" rows="4" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required></textarea>
+               <textarea class="form-control" name="note" id="" cols="20" rows="4" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required></textarea>
                <br>
                <div class="quote-btn">
                   <button type="submit" class="btn btn-primary">Enviar</button>

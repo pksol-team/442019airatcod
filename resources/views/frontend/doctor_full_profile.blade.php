@@ -9,8 +9,6 @@
          <ul class="list-unstyled">
             <li class="d-inline-block active"><a href="">PERFIL</a></li>
             <li class="d-inline-block"><a href="<?= '/doctor_appointments/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>">CITA DE RESERVA</a></li>
-            <!-- <li class="d-inline-block"><a href="">STATISTICS</a></li> -->
-            <!-- <li class="d-inline-block"><a href="">ACCOUNT</a></li> -->
          </ul>
       </div>
    </div>
@@ -21,7 +19,9 @@
          <ul class="list-unstyled">
             <li class="d-inline-block active"><a href="" class="text-dark">PERFIL</a></li>
             <li class="d-inline-block"><a href="/my_data" class="text-dark">Mis datos</a></li>
-            <!-- <li class="d-inline-block"><a href="" class="text-dark">Opinions</a></li> -->
+            <?php if ($EmpTbl->profile == 'premium'): ?>
+              <li class="d-inline-block"><a href="<?= '/write_article/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>" class="text-dark">Escribe un artículo</a></li>
+            <?php endif ?>
             <li class="d-inline-block"><a href="<?= '/premium_profile/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>" class="text-dark">Perfil premium</a></li>
          </ul>
       </div>
@@ -228,11 +228,36 @@
                   </div>
                </div>
             </div>
+            <div class="row mb-4">
+              <div class="col-12">
+                <h4 class="border-bottom">MARCA PREVISIÓN DE SALUD QUE ACEPTAS
+                   <a href="" class="f-size modify_forecast">Modificar</a>
+                </h4>
+                <div class="row">
+                  <div class="col-12">
+                    <form action="" method="post" class="updateForecast <?= ($EmpTbl->forecast != NULL || $EmpTbl->forecast != '') ? 'd-none': NULL; ?>">
+                        <ul class="list-unstyled row text-center mb-3 updateForecastlist">
+                           <?php if ($allForecasts != NULL): ?>
+                              <?php foreach ($allForecasts as $key => $forecasts): ?>
+                                 <li class="d-inline-block col-lg-6 text-left">
+                                    <input class="fctallForecasts-modal mr-2" type="radio" name="forecast" value="{{ $forecasts->name }}" <?= ($EmpTbl->forecast == $forecasts->name) ? 'checked': NULL ; ?>/><h6 class="d-inline-block f-size">{{ $forecasts->name }}</h6>
+                                 </li>
+                              <?php endforeach ?>
+                           <?php endif ?>
+                        </ul>  
+                      <button type="button" class="btn btn-secondary" id="forecast_close">Cerrar</button>
+                      <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </form>
+                    <div class="forecastShowing <?= ($EmpTbl->forecast == NULL || $EmpTbl->forecast == '') ? 'd-none': NULL; ?>"><?= $EmpTbl->forecast ?></div>
+                  </div><!-- /.col-12 -->
+                </div><!-- /.row -->
+              </div><!-- /.col-12 -->
+            </div><!-- /.row -->
             <div class="row">
                <div class="col-lg-12">
                   <div class="doc-extract">
                      <div class="doc-extract-head" id="doc-extract-head">
-                        <h2 class="border-bottom ">Extraer
+                        <h2 class="border-bottom">Extraer
                            <a href="#" class="f-size modify_exract">Modificar</a>
                         </h2>
                           <p class="dralia_para_exract">
@@ -656,17 +681,17 @@
                                  <div class="col-lg-6 col-md-12 col-sm-6 col-12 valuation-module-review">
                                     <div class="review-area bg-green">
                                        <h6><?= $UserTbl->name ?></h6>
-                                       <div class="review-star">
-                                          <p>
-                                             <i class="fa fa-star star-color" aria-hidden="true"></i>
-                                             <i class="fa fa-star star-color" aria-hidden="true"></i>
-                                             <i class="fa fa-star star-color" aria-hidden="true"></i>
-                                             <i class="fa fa-star star-color" aria-hidden="true"></i>
-                                             <i class="fa fa-star star-color" aria-hidden="true"></i>
-                                          </p>
+                                       <div id="ratings" class="text-center">
+                                         <span class="ratingXL">
+                                         <?php 
+                                           $allReviews = DB::table('review_doctors')->where('doctor_id', $EmpTbl->id);
+                                           $ratings = $EmpTbl->reviews *20;
+                                         ?>
+                                           <span class="rating-avg-large" style="margin-top: 3px;margin-left: 2px;"><span style="width: <?= (int)$ratings ?>%;"></span></span>
+                                         </span>
                                        </div>
                                        <div class="total-review">
-                                          <p>20 revisión</p>
+                                          <p><?= $allReviews->count(); ?> revisión</p>
                                        </div>
                                        <div class="brand-footer">
                                           <img src="/frontend/assets/img/Original.png" alt="" class="w-100 bg-green-dark">

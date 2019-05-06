@@ -154,8 +154,8 @@ div#carouselExampleSlidesOnly .carousel-item img {
 }
 
 .img-holder img {
-    width: 50%;
-    border-radius: 50%
+    width: 100%;
+    /*border-radius: 50%*/
 }
 
 .testimonials {
@@ -174,7 +174,7 @@ div#carouselExampleSlidesOnly .carousel-item img {
 }
 
 .text-holder {
-    padding: 25px 0;
+    padding: 0 0 25px 0;
 }
 
 .name p {
@@ -2576,11 +2576,12 @@ li.edit-profile-form .dralia-form dl dd input, li.edit-profile-form .dralia-form
     text-decoration: none;
 }
 
-.doctor_view_main_page .rating-avg-large, .doctor_view_main_page .rating-avg-large>span, .all_professional_with_review .rating-avg-large, .all_professional_with_review .rating-avg-large>span, .doctor_view_review .rating-avg-large, .doctor_view_review .rating-avg-large>span {
+/****************************** Rating Stars ********************************/
+.rating-avg-large, .rating-avg-large>span {
     background: url("../img/star.png") repeat-x;
 }
 
-.doctor_view_main_page .rating-avg-large, .all_professional_with_review .rating-avg-large, .doctor_view_review .rating-avg-large {
+.rating-avg-large{
     display: inline-block;
     height: 25px;
     margin-top: 20px;
@@ -2591,13 +2592,13 @@ li.edit-profile-form .dralia-form dl dd input, li.edit-profile-form .dralia-form
     text-indent: -9999px;
 }
 
-.doctor_view_main_page .rating-avg-large>span, .all_professional_with_review .rating-avg-large>span, .doctor_view_review .rating-avg-large>span {
+.rating-avg-large>span {
     background-position: 0 -25px;
     display: block;
     height: 25px;
 }
 
-.doctor_view_main_page span.ratingXL, .all_professional_with_review span.ratingXL, .doctor_view_review span.ratingXL {
+span.ratingXL {
     background: transparent;
     border: 0;
     font-size: 100%;
@@ -2606,6 +2607,8 @@ li.edit-profile-form .dralia-form dl dd input, li.edit-profile-form .dralia-form
     padding: 0;
     vertical-align: baseline;
 }
+
+/****************************** Rating Stars ********************************/
 
 .doctor_view_main_page div#addr {
     text-align: right;
@@ -3384,4 +3387,39 @@ tbody.all_services_tbody tr {
     border-radius: 8px;
     margin-bottom: 40px;
     box-shadow: 0 1px 4px 0 rgba(62, 66, 71, .25);
+}
+
+.page-navigation ul.pagination li{
+    border: 1px solid #ddd;
+    padding: 3px 10px;
+    margin-right: 6px;
+}
+
+/*waleed*/
+
+.article_view .main-img {
+    /*height: 100%;*/
+}
+
+.article_view .main-img img {
+    width: 100%;
+    height: 100%;
+}
+
+.article_view .related-posts h4 {background-color: #009bde;color: #fff;padding: 10px 15px;font-size: 20px;border-top-left-radius: 5px;border-top-right-radius: 5px;
+margin-bottom: 0;
+}
+
+.article_view .related-posts i {
+    padding-right: 10px;
+    font-size: 15px;
+}
+
+.posts-div .posts {
+    border: 1px solid #d4d4d4;
+    margin-bottom: 15px;
+}
+
+.posts-div .posts img{
+    width: 90px;
 }

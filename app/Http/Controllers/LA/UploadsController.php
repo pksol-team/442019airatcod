@@ -190,7 +190,7 @@ class UploadsController extends Controller
 						"extension" => pathinfo($filename, PATHINFO_EXTENSION),
 						"caption" => "",
 						"hash" => "",
-						"public" => $public,
+						"public" => 1,
 						"user_id" => Auth::user()->id
 					]);
 					// apply unique random hash to file

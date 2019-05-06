@@ -59,19 +59,7 @@
             <div class="col-lg-7 my-5">
                <div class="about-patients">
                   <div class="patients-head">
-                     <h3 class="f-38 font-colr-green">Deja que los pacientes te encuentren</h3>
-                  </div>
-                  <div class="patients-sub-info">
-                     <p class="f-24">100.000 profesionales ya están en psicologos.<br> y tu </p>
-                  </div>
-                  <hr>
-                  <div class="row patients-sub-info-list-item">
-                     <div class="col-lg-3 patient-info-first-point-icon">
-                        <img src="/frontend/assets/img/eightyseven.PNG" alt="" class="w-100">
-                     </div>
-                     <div class="col-lg-9 patient-info-first-point my-4">
-                        <p>El 87% de los profesionales consideran que <strong> han obtenido nuevos pacientes </strong> gracias a psicologos. *</p>
-                     </div>
+                     <h3 class="f-38 font-colr-green">Empieza a llenar tu agenda con pacientes</h3>
                   </div>
                   <hr>
                   <div class="row patients-sub-info-sec-list-item">
@@ -166,22 +154,22 @@
                            <h5 class="d-inline-block">Profesional</h5>
                         </div>
                         <div class="pro-sec-info">
-                           <p>Para profesionales de la salud que visiten en una o varias consultas privadas o centros médicos.</p>
+                           <p>Si quieres formar parte de Piscologos Vibemar rellena el siguiente formulario.</p>
                         </div>
                         <div class="centro-professional pro-reg-sec">
                            <form action="/register_doctor_mid" method="post">
                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
                               <div class="doc-fname-label">
-                                 <label for="first_name">Nombre de pila</label>
-                                 <input type="text" class="form-control" name="first_name" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                                 <label for="first_name">Nombre</label>
+                                 <input type="text" class="form-control" name="first_name" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                               </div>
                               <div class="doc-sname-label">
-                                 <label for="last_name">Los apellidos</label>
-                                 <input type="text" class="form-control" name="last_name" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                                 <label for="last_name">Apellidos</label>
+                                 <input type="text" class="form-control" name="last_name" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                               </div>
                               <div class="doc-sname-label">
                                  <label for="city">Región</label>
-                                 <select class="form-control" name="city" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                                 <select class="form-control" name="city" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                                    <option value="" hidden></option>
                                     <?php if ($allCities): ?>
                                           <?php foreach ($allCities as $key => $city): ?>
@@ -189,18 +177,6 @@
                                           <?php endforeach ?>
                                     <?php endif ?>
                                  </select>
-                              </div>
-                              <div class="doc-sname-label">
-                                 <label for="forecast">Localidad</label>
-                                 <select class="form-control" name="forecast" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
-                                   <option value="" hidden></option>
-                                    <?php if ($allForecasts): ?>
-                                          <?php foreach ($allForecasts as $key => $forecast): ?>
-                                               <option value="<?= $forecast->name; ?>"><?= $forecast->name; ?></option>
-                                          <?php endforeach ?>
-                                    <?php endif ?>
-                                 </select>
-
                               </div>
                               <div class="doc-geneder-sec my-2">
                                  <div class="form-check-inline ml-3">
@@ -219,8 +195,9 @@
                               </div>
                            </form>
                            <div class="terms-conditions-doc-reg">
-                              <a href="/patient_register">No soy un profesional de la salud, regístrese como paciente </a>
-                               <p> <small> Un equipo de expertos valida todos los registros para <strong> garantizar la veracidad de la información.</strong></small></p>
+                            <a href="/patient_register">¿No eres psicologo? Registrate como paciente.</a>
+                            <p>garantizar la</p>
+                            <p> <small>Nuestro equipo revisará tu información para garantizar la veracidad de esta..</small></p>
                            </div>
                         </div>
                      </div>

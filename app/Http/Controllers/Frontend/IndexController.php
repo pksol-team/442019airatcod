@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Input;
 use Session;
 use Carbon\Carbon;
 use Auth;
@@ -22,9 +23,10 @@ use App\Role;
 use App\Models\ImageUpload;
 use App\Models\Tickets_reply;
 use App\Models\Ticket;
+use App\Models\Upload;
 use Mail;
 use Log;
-
+use File;
 
 
 class IndexController extends Controller
@@ -167,7 +169,7 @@ class IndexController extends Controller
 	    	});
 			return redirect()->back()->withInput()->with('message', 'Contraseña Restablecer enlace enviar a su correo electrónico Revise amablemente su correo electrónico');
 		}else {
-			return redirect()->back()->withInput()->with('error', 'This Email address is not registered <a href="/register">Registrar aquí </a>');
+			return redirect()->back()->withInput()->with('error', 'Esta dirección de email no está registrada <a href="/register">Registrar aquí </a>');
 		}
 		
 	}
@@ -326,7 +328,6 @@ class IndexController extends Controller
 		    'gender' => $gender,
 		    'dept' => "1",
 		    'city' => $city,
-		    'forecast' => $forecast,
 		    'address' => "",
 		    'about' => "",
 		    'date_birth' => date("Y-m-d"),
@@ -613,7 +614,182 @@ class IndexController extends Controller
 			return redirect('/');
 		}
 	}
+
+	// Write Article Premium Profile Only
+	public function write_article($id, $uniqid) {
+
+		if (Auth::check()) {
+	        $UserTbl = DB::table('users')->WHERE([['id', $id], ['hash_key', $uniqid]])->first();
+	        $EmpTbl = DB::table('employees')->WHERE([['id', $id], ['type', 'doctor'], ['profile', 'premium']])->first();
+			$title = 'Escribir articulo';
+	        if ($EmpTbl != NULL) {
+				return view('frontend.write_article', compact('title', 'UserTbl', 'EmpTbl'));
+	        } else {
+				return redirect('/');
+	        }
+
+		} else {
+			return redirect('/');
+		}
+	}
+
+	// add New Article
+	public function addNewArticle(Request $request)
+	{	
+		if (Auth::check()) {
+
+			if(Input::hasFile('image')) {
+				$file = Input::file('image');
+				$folder = storage_path('uploads');
+				$filename = $file->getClientOriginalName();
 	
+				$date_append = date("Y-m-d-His-");
+				$upload_success = Input::file('image')->move($folder, $date_append.$filename);
+				
+				if( $upload_success ) {
+	
+					$upload = Upload::create([
+						"name" => $filename,
+						"path" => $folder.DIRECTORY_SEPARATOR.$date_append.$filename,
+						"extension" => pathinfo($filename, PATHINFO_EXTENSION),
+						"caption" => "",
+						"hash" => "",
+						"public" => 1,
+						"user_id" => Auth::user()->id
+					]);
+
+					while(true) {
+						$hash = strtolower(str_random(20));
+						if(!Upload::where("hash", $hash)->count()) {
+							$upload->hash = $hash;
+							break;
+						}
+					}
+					$upload->save();
+				}
+			}
+
+			$userID = Auth::user()->id;
+			$newArticle = [
+		            'title' => $request->title,
+		            'short_description' => $request->short_description,
+		            'detail' => $request->detail,
+		            'user_id' => $userID,
+		            'image' => $upload->id,
+			    ];
+	        $done = DB::table('articles')->insert($newArticle);	
+			return redirect('/blog_article');
+        } else {
+			return redirect('/');
+		}
+	}
+
+	// edit Article Premium Profile Only
+	public function edit_article($article_id, $id, $uniqid) {
+
+		if (Auth::check()) {
+	        $UserTbl = DB::table('users')->WHERE([['id', $id], ['hash_key', $uniqid]])->first();
+	        $EmpTbl = DB::table('employees')->WHERE([['id', $id], ['type', 'doctor'], ['profile', 'premium']])->first();
+	        $article = DB::table('articles')->WHERE('id', $article_id)->first();
+			$title = 'Escribir articulo';
+	        if ($EmpTbl != NULL) {
+				return view('frontend.edit_article', compact('title', 'UserTbl', 'EmpTbl', 'article'));
+	        } else {
+				return redirect('/');
+	        }
+
+		} else {
+			return redirect('/');
+		}
+	}
+
+	// add New Article
+	public function updateArticle(Request $request)
+	{	
+		if (Auth::check()) {
+
+	        $article = DB::table('articles')->where('id', $request->article_id)->first();
+	        $uploadTable = DB::table('uploads')->where('id', $article->image)->first();
+
+			if(Input::hasFile('image')) {
+				$file = Input::file('image');
+				$folder = storage_path('uploads');
+				$filename = $file->getClientOriginalName();
+	
+				$date_append = date("Y-m-d-His-");
+				$upload_success = Input::file('image')->move($folder, $date_append.$filename);
+				
+				if( $upload_success ) {
+	
+					$upload = Upload::create([
+						"name" => $filename,
+						"path" => $folder.DIRECTORY_SEPARATOR.$date_append.$filename,
+						"extension" => pathinfo($filename, PATHINFO_EXTENSION),
+						"caption" => "",
+						"hash" => "",
+						"public" => 1,
+						"user_id" => Auth::user()->id
+					]);
+
+					while(true) {
+						$hash = strtolower(str_random(20));
+						if(!Upload::where("hash", $hash)->count()) {
+							$upload->hash = $hash;
+							break;
+						}
+					}
+					$upload->save();
+					$uploadID = $upload->id;
+
+					// Get old file name from path column
+					$string = $uploadTable->path;
+					$prefix = "uploads";
+					$index = strpos($string, $prefix) + strlen($prefix);
+					$result = substr($string, $index);
+
+					// remove old pic
+					$myFile = $folder.$result;
+					if(file_exists($myFile)){
+						unlink($myFile);
+				        DB::table('uploads')->where('id', $article->image)->delete();
+					}
+
+				}
+			} else {
+				$uploadID = $uploadTable->id;
+			}
+
+			$userID = Auth::user()->id;
+			$updateArticle = [
+		            'title' => $request->title,
+		            'short_description' => $request->short_description,
+		            'detail' => $request->detail,
+		            'image' => $uploadID,
+			    ];
+	        $done = DB::table('articles')->where('id', $request->article_id)->update($updateArticle);	
+			return redirect('/blog_article');
+        } else {
+			return redirect('/');
+		}
+	}
+
+	// Article/ Blog Listings
+	public function blog_article()
+	{
+		$title = 'ARTÍCULOS DE PSICÓLOGO';
+        $all_articles = DB::table('articles')->whereNull('deleted_at')->orderBy('id', 'DESC')->paginate(10);
+		return view('frontend.blog_article', compact('title', 'all_articles'));
+	}
+
+	// Article/ Blog detail Page
+	public function article_view($id)
+	{
+        $article = DB::table('articles')->where('id', $id)->whereNull('deleted_at')->first();
+		$title = $article->title;
+        $all_articles = DB::table('articles')->whereNull('deleted_at')->orderBy('id', 'DESC')->limit(10)->get();
+		return view('frontend.article_view', compact('title', 'article', 'all_articles'));
+	}
+
 	// Doctor Full Profile Edit
 	public function doctor_profile_full($uniqid)
 	{
@@ -622,9 +798,10 @@ class IndexController extends Controller
 	        $UserTbl = DB::table('users')->WHERE([['id', $userID], ['hash_key', $uniqid]])->first();
 	        $EmpTbl = DB::table('employees')->WHERE('id', $userID)->first();
 			$allSpecialities = DB::table('specialities')->get();
+			$allForecasts = DB::table('forecasts')->get();
 			$title = $EmpTbl->first_name;
 	        if ($UserTbl != NULL) {
-				return view('frontend.doctor_full_profile', compact('title', 'UserTbl', 'EmpTbl', 'allSpecialities'));
+				return view('frontend.doctor_full_profile', compact('title', 'UserTbl', 'EmpTbl', 'allSpecialities', 'allForecasts'));
 	        } else {
 				return redirect('/');
 	        }
@@ -900,10 +1077,10 @@ class IndexController extends Controller
 	public function contact_us_email(Request $request)
 	{
 		$admin = DB::table('employees')->where('type', 'admin')->first();
-		$reason = $request->reason;
 		$first_name = $request->first_name;
-		$last_name = $request->last_name;
 		$email = $request->email;
+		$telephone = $request->telephone;
+		$who_you = $request->who_you;
 		$comment = $request->comment;
 
     	$baseUrl = url('/');
@@ -916,10 +1093,10 @@ class IndexController extends Controller
 			    	</h4>
 			    	<p>
 			    		<ul style="list-style: none;">
-			    			<li>Razón: '.$reason.'</li>
 			    			<li>Nombre de pila: '.$first_name.'</li>
-			    			<li>apellido: '.$last_name.'</li>
 			    			<li>correo electrónico: '.$email.'</li>
+			    			<li>apellido: '.$telephone.'</li>
+			    			<li>Razón: '.$who_you.'</li>
 			    			<li>Comentario: '.$comment.'</li>
 			    		</ul>
 			    	</p>
@@ -1069,9 +1246,9 @@ class IndexController extends Controller
         }
 	}
 	// review add in database
+
 	public function review_add(Request $request)
 	{
-        
         $doctor_id = $request->doctor_id;
         $patient_id = $request->user_id;
         $facilities = $request->facilities;
@@ -1082,48 +1259,53 @@ class IndexController extends Controller
         $reason = $request->reason;
         $like = $request->like;
         $improved = $request->improved;
-        if ($patient_id != NULL) {
-	        if ($request->facilities != NULL && $request->puntuality != NULL && $request->attention != NULL && $request->recommendable != NULL) {
-	        	$review = [
-	        		'doctor_id' => $doctor_id,
-	        		'patient_id' => $patient_id,
-	        		'facilities' => $facilities,
-	        		'puntuality' => $puntuality,
-	        		'attention' => $attention,
-	        		'recommendable' => $recommendable,
-	        		'total' => $total,
-	        		'reason' => $reason,
-	        		'like' => $like,
-	        		'improved' => $improved,
-	        	];
-		        $reviewInserted = DB::table('review_doctors')->insert($review);
-		        // Insert review in doctor profile section
-		        $allReviews = DB::table('review_doctors')->where('doctor_id', $doctor_id);
-		        $allReviewsGet = $allReviews->get();
-
-		        if ($allReviewsGet != NULL) {
-                  $reviewss = 0;
-		          foreach ($allReviewsGet as $key => $reviewCount) {
-		            $reviewss = $reviewss + $reviewCount->total;
-		          }
-		          $frstCalc = $reviewss/$allReviews->count();
-		          $ratings = ($frstCalc/4);
-		        } else {
-		        	$ratings = 0;
-		        }
-		        $updateReview = [
-		        	'reviews' => $ratings
-		        ];
-
-		        $updatedDoctorReview = DB::table('employees')->where('id', $doctor_id)->update($updateReview);
-				return redirect('/thankyou_review/'.$doctor_id);
-	        } else {
-				return redirect()->back();
-	        }
+        if ($patient_id == $doctor_id) {
+			return redirect()->back()->withInput()->with('error', 'No tienes permiso para dar una reseña.');
         } else {
-			return redirect()->back();
+        	if ($patient_id != NULL) {
+		        if ($request->facilities != NULL && $request->puntuality != NULL && $request->attention != NULL && $request->recommendable != NULL) {
+		        	$review = [
+		        		'doctor_id' => $doctor_id,
+		        		'patient_id' => $patient_id,
+		        		'facilities' => $facilities,
+		        		'puntuality' => $puntuality,
+		        		'attention' => $attention,
+		        		'recommendable' => $recommendable,
+		        		'total' => $total,
+		        		'reason' => $reason,
+		        		'like' => $like,
+		        		'improved' => $improved,
+		        	];
+			        $reviewInserted = DB::table('review_doctors')->insert($review);
+			        // Insert review in doctor profile section
+			        $allReviews = DB::table('review_doctors')->where('doctor_id', $doctor_id);
+			        $allReviewsGet = $allReviews->get();
+
+			        if ($allReviewsGet != NULL) {
+	                  $reviewss = 0;
+			          foreach ($allReviewsGet as $key => $reviewCount) {
+			            $reviewss = $reviewss + $reviewCount->total;
+			          }
+			          $frstCalc = $reviewss/$allReviews->count();
+			          $ratings = ($frstCalc/4);
+			        } else {
+			        	$ratings = 0;
+			        }
+			        $updateReview = [
+			        	'reviews' => $ratings
+			        ];
+
+			        $updatedDoctorReview = DB::table('employees')->where('id', $doctor_id)->update($updateReview);
+					return redirect('/thankyou_review/'.$doctor_id);
+		        } else {
+					return redirect()->back()->with('error', '¡Uy! Algo salió mal..');;
+		        }
+	        } else {
+				return redirect()->back()->with('error', 'Por favor inicie sesión primero');
+	        }
         }
 	}
+
 
 	// View Thank You page after review
 	public function thankyou_review($hash_key)
@@ -1192,6 +1374,16 @@ class IndexController extends Controller
 			];
 	    $done = $user->update($updateSpecialty);
 	    return $totalSpecialties;
+	}
+
+	// Add/Update Forecast
+	public function addForecast(Request $request)
+	{
+		$updateForecast = [
+				'forecast' => $request->forecast
+			];
+	    $done = DB::table('employees')->where('id', $request->user_id)->update($updateForecast);
+	    return $done;
 	}
 
 	// Add & Remove Service
@@ -1329,76 +1521,80 @@ class IndexController extends Controller
 	// Quote Doctor form Page
 	public function quote_doctor()
 	{
-		if (Auth::check() && Auth::user()->type == 'patient') {
+		// if (Auth::check() && Auth::user()->type == 'patient') {
 			$title = 'Cita doctor';
-			$userID = Auth::user()->id;
-	        $EmpTbl = DB::table('employees')->where('id', $userID)->first();
+			if (Auth::check()) {
+				$userID = Auth::user()->id;
+		        $EmpTbl = DB::table('employees')->where('id', $userID)->first();
+			} else {
+				$EmpTbl = NULL;
+			}
 	        $allCities = DB::table('cities')->whereNull('deleted_at')->get();
 			$allSpecialities = DB::table('specialities')->whereNull('deleted_at')->get();
 			$allForecasts = DB::table('forecasts')->whereNull('deleted_at')->get();
-			return view('frontend.quote_doctor', compact('title', 'userID', 'EmpTbl', 'allCities', 'allSpecialities', 'allForecasts'));
-		} else {
-			return redirect('/');
-		}
+			return view('frontend.quote_doctor', compact('title', 'userID', 'allCities', 'EmpTbl', 'allSpecialities', 'allForecasts'));
+		// } else {
+		// 	return redirect('/userlogin')->with('error', 'Por favor, inicie sesión primero');
+		// }
 	}
 
 	// Send Emails to Doctors for quote
 	public function send_quote_email(Request $request)
 	{
-		if (Auth::check() && Auth::user()->type == 'patient') {
-			if ($request->name != '' && $request->contact != '' && $request->email != '' && $request->forecast != '' && $request->city != '' && $request->specialty != '' && $request->note != '') {
+		if ($request->name != '' && $request->contact != '' && $request->email != '' && $request->forecast != '' && $request->city != '' && $request->specialty != '' && $request->note != '') {
 
-				$name = $request->name;
-				$contact = $request->contact;
-				$email = $request->email;
-				$specialty = $request->specialty;
-				$city = $request->city;
-				$forecast = $request->forecast;
-				$note = $request->note;
-				$allDoctors = DB::table('employees')->where('type', 'doctor');
-				$allDoctors->where('city', 'LIKE', "%$city%");
-				$allDoctors->where('sub_specialty', 'LIKE', "%$specialty%");
-				$allDoctors->where('forecast', 'LIKE', "%$forecast%");
-				$findDoctors = $allDoctors->get();
-
-				if ($findDoctors) {
-					foreach ($findDoctors as $key => $findDoctor) {
-
-						if ($findDoctor->profile == 'basic') {
-							$explodedEmail = explode('@', $email);
-							$newEmail = substr($explodedEmail[0], 0, -4) . 'xxxx';
-							$explodedEmailDomain = explode('.', $explodedEmail[1]);
-							$domain = str_repeat("x", strlen($explodedEmailDomain[0]));
-							$email = $newEmail.'@'.$domain.'.'.$explodedEmailDomain[1];
-
-							$contact = substr($contact, 0, -4) . 'xxxx';
-
-							$specialty = 'xxx';
-
-							$note = 'xxxxxxx';
-						}
-						
-						//Updating Email content [Metakey]
-						$get_email_content = DB::table('email_templates')->where('options', 'Quote')->whereNull('deleted_at')->first();
-					    $content = $get_email_content->email_content;
-					    $subject = $get_email_content->subject;
-						
-						$content = str_replace('[email]', $email, $content);
-						$content = str_replace('[contact]', $contact, $content);
-						$content = str_replace('[specialty]', $specialty, $content);
-						$content = str_replace('[note]', $note, $content);
-						$data = array( 'email' => $findDoctor->email, 'subject' => $subject, 'message' => $content);
-						Mail::send([], $data, function ($m) use($data) {
-				           $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
-				    	});
-					}
+			$name = $request->name;
+			$contact = $request->contact;
+			$email = $request->email;
+			$specialty = $request->specialty;
+			$city = $request->city;
+			$forecast = $request->forecast;
+			$note = $request->note;
+			$allDoctors = DB::table('employees')->where('type', 'doctor');
+			$allDoctors->where('city', 'LIKE', "%$city%");
+			$allDoctors->where('forecast', 'LIKE', "%$forecast%");
+			if ($request->specialty) {
+				foreach ($request->specialty as $key => $specialty) {
+					$allDoctors->where('sub_specialty', 'LIKE', "%$specialty%");
 				}
-				return redirect()->back()->with('message', 'Nota: Explícanos quesituación tienes para que te responda el psicólogo más adecuado.<br> Hemos enviado tu cotización ¡Pronto te contactara el psicólogo más adecuado!');
-			} else {
-				return redirect()->back()->with('error', '¡Uy! Algo salió mal..');
 			}
+			$findDoctors = $allDoctors->get();
+
+			if ($findDoctors) {
+				foreach ($findDoctors as $key => $findDoctor) {
+
+					if ($findDoctor->profile == 'basic') {
+						$explodedEmail = explode('@', $email);
+						$newEmail = substr($explodedEmail[0], 0, -4) . 'xxxx';
+						$explodedEmailDomain = explode('.', $explodedEmail[1]);
+						$domain = str_repeat("x", strlen($explodedEmailDomain[0]));
+						$email = $newEmail.'@'.$domain.'.'.$explodedEmailDomain[1];
+
+						$contact = substr($contact, 0, -4) . 'xxxx';
+
+						$specialty = 'xxx';
+
+						$note = 'xxxxxxx';
+					}
+					
+					//Updating Email content [Metakey]
+					$get_email_content = DB::table('email_templates')->where('options', 'Quote')->whereNull('deleted_at')->first();
+				    $content = $get_email_content->email_content;
+				    $subject = $get_email_content->subject;
+					
+					$content = str_replace('[email]', $email, $content);
+					$content = str_replace('[contact]', $contact, $content);
+					$content = str_replace('[specialty]', $specialty, $content);
+					$content = str_replace('[note]', $note, $content);
+					$data = array( 'email' => $findDoctor->email, 'subject' => $subject, 'message' => $content);
+					Mail::send([], $data, function ($m) use($data) {
+			           $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+			    	});
+				}
+			}
+			return redirect()->back()->with('message', 'Nota: Explícanos quesituación tienes para que te responda el psicólogo más adecuado.<br> Hemos enviado tu cotización ¡Pronto te contactara el psicólogo más adecuado!');
 		} else {
-			return redirect('/');
+			return redirect()->back()->with('error', '¡Uy! Algo salió mal..');
 		}
 	}
 	
@@ -1541,195 +1737,565 @@ class IndexController extends Controller
     // ******************************************* Tickets End ***************************************** //
 
 
-    // Check Subscription on daily basis
+    /* ================== Flow Payment CronJob Start ================== */
     public function subscription_check()
     {
-        $all_Doctors = DB::table('employees')->where([['type', 'doctor'], ['profile', 'premium']])->get();
-            if ($all_Doctors) {
-                foreach ($all_Doctors as $key => $doctor) {
-                    $premiumEndDate = $doctor->premium_end_date;
+        $all_Doctors = DB::table('employees')->where([['type', 'doctor']])->get();
+        if ($all_Doctors) {
+            foreach ($all_Doctors as $key => $doctor) {
+                
+                $subscriptionID = $doctor->subscription_id;
+                $premiumStartDate = $doctor->premium_start_date;
+                $premiumEndDate = $doctor->premium_end_date;
+                $doctorID = $doctor->id;
+                $profile = $doctor->profile;
+                
+                if(!empty($subscriptionID)){
                     
-                    $then = $premiumEndDate;
-                    $now = time();
-                    //convert $then into a timestamp.
-                    $thenTimestamp = strtotime($then);
-                    //Get the difference in seconds.
-                    $difference = $thenTimestamp - $now;
-
-                    if ($difference < 0) {
-                        $all_Doctors = DB::table('employees')->where('id', $doctor->id)->update(['profile' => 'basic']);
+                    $response = $this->getSubscription($subscriptionID);
+                  
+                    if(!empty($response)){
+                        
+                        $subscriptionData = json_decode($response);    
+                        
+                        if(!empty($subscriptionData->invoices)) {
+                            
+                            $invoices = $subscriptionData->invoices;
+                            
+                            $totalPayment = count($invoices);
+                            
+                            $paymentStatus = $invoices[$totalPayment - 1]->status;
+                            // if the current duartion is paid
+                            if($paymentStatus == 1) {
+                                
+                                $fetchedData = DB::table('employees')->where('id', $doctorID)->first();
+                                
+                                $planID = $fetchedData->premium;
+                                
+                                $startDate = date("Y-m-d h:i:s");
+                                
+                                if($planID == 'yearly') {
+                                    
+                                    $endDate = date('Y-m-d h:i:s', strtotime($startDate. ' + 1 Year'));    
+                                    
+                                } else{
+                                    
+                                    $endDate = date('Y-m-d h:i:s', strtotime($startDate. ' + 6 Month'));    
+                                    
+                                }
+                                if(empty($premiumStartDate) || empty($premiumEndDate) || $profile == 'basic'){
+                                    
+                                      $dataUpdate = [
+                            		    'profile' => 'premium',
+                            		    'premium_start_date' => $startDate,
+                            		    'premium_end_date' => $endDate,
+                            		    'status' => 'cancelar suscripción'
+                            		  ];
+                                    $updated = DB::table('employees')->where('id', $doctorID)->update($dataUpdate);
+                                }else{
+                                    $invoices[$totalPayment - 1]->created;
+                                    $flowStartDate = explode(' ', $invoices[$totalPayment - 1]->created);
+                                    
+                                    $dbStartDate = explode(' ', $premiumStartDate);
+                                    
+                                    if($flowStartDate[0] != $dbStartDate[0]){
+                                        $dataUpdate = [
+                                		    'profile' => 'premium',
+                                		    'premium_start_date' => $startDate,
+                                		    'premium_end_date' => $endDate,
+                                		    'status' => 'cancelar suscripción'
+                            		    ];
+                            		  
+                            		    $updated = DB::table('employees')->where('id', $doctorID)->update($dataUpdate);
+                                    }
+                                    
+                                }
+                                
+                            } else {
+                            	// if the current duration is not paid 
+                                $data = [
+                        		    'profile' => 'basic',
+                        		    'premium_start_date' => null,
+                        		    'premium_end_date' => null,
+                        		    'status' => 'Pedido pendiente'
+                        		  ];
+                                DB::table('employees')->where('id', $doctorID)->update($data);
+                            }
+                        } else {
+                            $data = [
+                    		    'profile' => 'basic',
+                    		    'premium_start_date' => null,
+                    		    'premium_end_date' => null,
+                    		    'status' => 'Pedido pendiente'
+                    		  ];
+                            DB::table('employees')->where('id', $doctorID)->update($data);
+                        }
                     }
-
+                       
+                } else {
+                	
+                    if(!empty($premiumEndDate) || !empty($premiumStartDate)) {
+                        
+                        $endDate = strtotime($premiumEndDate);
+                        
+                        $now = time();
+                        
+                        if($endDate < $now || $endDate == $now){
+                            $data = [
+                    		    'profile' => 'basic',
+                    		    'premium_start_date' => null,
+                    		    'premium_end_date' => null,
+                    		    'status' => 'Pedido pendiente',
+                    		    'premium' => null
+                    		];
+                            DB::table('employees')->where('id', $doctorID)->update($data);
+                        }
+                    }
                 }
             }
+        }
+    }
+	
+	/* ================== Flow Payment Functions Start================== */
+	
+	public function createCustomer($package)
+    {  
+        Session::set('package', $package);
+        
+        $flowApi = new FlowController;
+
+        $url = $flowApi->apiURL.'/customer/create';
+
+        $params = array( 
+          "apiKey"      => $flowApi->apiKey,
+          "email"       => Auth::user()->email,
+          "externalId"  => uniqid(),
+          "name"        => Auth::user()->name,
+        );
+
+        $data = '';
+        foreach($params as $key => $value) {
+            $data .= '&' . $key . '=' . $value;
+        }
+
+        $data = substr($data, 1);
+        
+        $signature = hash_hmac('sha256', $data , $flowApi->secretKey);
+       
+
+        $url = $url . '?' . $data . '?s=' . $signature;
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_POST, TRUE);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data . '&s=' . $signature);
+            $response = curl_exec($ch);
+            if($response === false) {
+              $error = curl_error($ch);
+              throw new Exception($error, 1);
+            } 
+            $info = curl_getinfo($ch);
+            if(!in_array($info['http_code'], array('200', '400', '401'))) {
+              throw new Exception('Ocurrió un error inesperado. HTTP_CODE: '.$info['http_code'] , $info['http_code']);
+            }
+
+            $customerData = json_decode($response);
+
+            // save customerid in db to delete this customer when a customer unsubscribe
+            $id = $customerData->customerId;
+               
+            return redirect($this->registerCustomer($id));  
+            
+        } catch (Exception $e) {
+            return 'Error: ' . $e->getCode() . ' - ' . $e->getMessage();
+        }
     }
 
+    public function registerCustomer($customerID)
+    {
+        $flowApi = new FlowController;
 
+        $url = $flowApi->apiURL.'/customer/register';
 
+        $params = array( 
+          "apiKey"      => $flowApi->apiKey,
+          "customerId"       => $customerID,
+          "url_return"  => $flowApi->baseURL.'/registeredurl'
+        );
 
-	
+        $data = '';
+        foreach($params as $key => $value) {
+            $data .= '&' . $key . '=' . $value;
+        }
 
-	
+        $data = substr($data, 1);
+        
+        $signature = hash_hmac('sha256', $data , $flowApi->secretKey);
+        
 
-	
+        $url = $url . '?' . $data . '?s=' . $signature;
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_POST, TRUE);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data . '&s=' . $signature);
+            $response = curl_exec($ch);
+            if($response === false) {
+              $error = curl_error($ch);
+              throw new Exception($error, 1);
+            } 
+            $info = curl_getinfo($ch);
+            if(!in_array($info['http_code'], array('200', '400', '401'))) {
+              throw new Exception('Ocurrió un error inesperado. HTTP_CODE: '.$info['http_code'] , $info['http_code']);
+            }
+            
+            $data = json_decode($response);
 
-	
+            // url + "? token =" + token
+            return $data->url.'?token='.$data->token;
+                      
+            
+        } catch (Exception $e) {
+            return 'Error: ' . $e->getCode() . ' - ' . $e->getMessage();
+        }
+    }   
 
-	
+    public function registeredUrl(Request $request)
+    {
+        $token = $request['token'];
 
-	
+        $flowApi = new FlowController;
 
+        $url = $flowApi->apiURL.'/customer/getRegisterStatus';
 
+        $params = array( 
+          "apiKey"      => $flowApi->apiKey,
+          "token"       => $token
+        );
 
-	
-	
+        $data = '';
+        foreach($params as $key => $value) {
+            $data .= '&' . $key . '=' . $value;
+        }
 
-	
-	
+        $data = substr($data, 1);
+        
+        $signature = hash_hmac('sha256', $data , $flowApi->secretKey);
+        
 
+        $url = $url . '?' . $data . '&s=' . $signature;
+        
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $response = curl_exec($ch);
+            if($response === false) {
+              $error = curl_error($ch);
+              throw new Exception($error, 1);
+            } 
+            $info = curl_getinfo($ch);
+            if(!in_array($info['http_code'], array('200', '400', '401'))) {
+              throw new Exception('Ocurrió un error inesperado. HTTP_CODE: '.$info['http_code'] , $info['http_code']);
+            }
+            
+            $data = json_decode($response);
+            
+            if($data->status == 1){
+                
+                $responseData = $this->purchaseSubscription($data->customerId);
 
-	
+                $data = json_decode($responseData);
 
-	
+                $subscriptionID = $data->subscriptionId; // save in db we need this id when user want to unsubscribe
+                
+                $startDate = date("Y-m-d h:i:s");
+                
+                $planID = Session::get('package');
+                
+                $data = [
+        		    'premium' => $planID,
+        		    'subscription_id' => $subscriptionID,
+        		    'premium_start_date' => null,
+        		    'premium_end_date' => null
+        		  ];
+                DB::table('employees')->where('id', Auth::user()->id)->update($data);
+                
+                \Session::flash('message','Gracias por la suscripción');
 
-	
+                return redirect('/premium_profile/'.Auth::user()->id.'/'.Auth::user()->hash_key);
+                
+            }else{
+                \Session::flash('message','Pago cancelado');
 
-	
-	
+                return redirect('/premium_profile/'.Auth::user()->id.'/'.Auth::user()->hash_key);
+                
+            }
+                      
+            
+        } catch (Exception $e) {
+            return 'Error: ' . $e->getCode() . ' - ' . $e->getMessage();
+        }
+    }
 
-	
+    public function purchaseSubscription($customerID)
+    {       
+        $planID = Session::get('package');
 
+        $flowApi = new FlowController;
 
+        $url = $flowApi->apiURL.'/subscription/create';
 
+         $subscriptionParams = array( 
+            "apiKey"      => $flowApi->apiKey,
+            "customerId"  => $customerID ,           
+            "planId"       => $planID
+        );          
 
+          $data = '';
+          foreach($subscriptionParams as $key => $value) {
+              $data .= '&' . $key . '=' . $value;
+          }
 
+          $data = substr($data, 1);
+          
+          $signature = hash_hmac('sha256', $data , $flowApi->secretKey);
+         
 
+          $url = $url . '?' . $data . '?s=' . $signature;
+            try {
+              $ch = curl_init();
+              curl_setopt($ch, CURLOPT_URL, $url);
+              curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+              curl_setopt($ch, CURLOPT_POST, TRUE);
+              curl_setopt($ch, CURLOPT_POSTFIELDS, $data . '&s=' . $signature);
+              $response = curl_exec($ch);
+              if($response === false) {
+                $error = curl_error($ch);
+                throw new Exception($error, 1);
+              } 
+              $info = curl_getinfo($ch);
+              if(!in_array($info['http_code'], array('200', '400', '401'))) {
+                throw new Exception('Ocurrió un error inesperado. HTTP_CODE: '.$info['http_code'] , $info['http_code']);
+              }
 
+              return $response;
 
+            } catch (Exception $e) {
+              echo 'Error: ' . $e->getCode() . ' - ' . $e->getMessage();
+            }
+    }
+    
+     public function cancelSubscription()
+    {       
+        $fetchData = DB::table('employees')->where('id', Auth::user()->id)->first();
+        
+        $subscriptionID = $fetchData->subscription_id;
+        
+        if(!empty($subscriptionID)){
+          $flowApi = new FlowController;
 
+        $url = $flowApi->apiURL.'/subscription/cancel';
 
-	public function search($query)
-	{
-		$title = 'Ethical Hacking Course In Tamil';
-        $haveCourses = DB::table('all_courses')->WHERE([['status', '=' , 'Active'], ['name', 'like', '%'.$query.'%']])->orderBy('created_at', 'DESC')->paginate(9);
-        $haveCategories = DB::table('categories')->WHERE('parent_id', '!=', '[]')->orderBy('created_at', 'DESC')->get();
-		return view('frontend.index', compact('title', 'haveCourses', 'haveCategories'));
-	}
+         $subscriptionParams = array( 
+            "apiKey"      => $flowApi->apiKey,
+            "subscriptionId"  => $subscriptionID 
+        );       
 
-	
-	public function course_questions($course_id)
-	{		
+          $data = '';
+          foreach($subscriptionParams as $key => $value) {
+              $data .= '&' . $key . '=' . $value;
+          }
 
-		$title = 'F.A.Q';
-		if (Auth::check()) {
-	        $singleCourse = DB::table('all_courses')->WHERE('id', $course_id)->first();
-	        $allQuestions = DB::table('faq_questions')->WHERE('course_id', $course_id)->orderBy('id', 'DESC')->limit(10)->get();
+          $data = substr($data, 1);
+          
+          $signature = hash_hmac('sha256', $data , $flowApi->secretKey);
+         
 
-	        $purchased = explode(',', trim($singleCourse->purchased_by, "[]"));
-	        if ($purchased != '') {
-	           if (in_array('"'.Auth::user()->id.'"', $purchased))  {
-					return view('frontend.questions', compact('title', 'singleCourse', 'allQuestions'));
-				}
-				return redirect('/single_course/'.$course_id);
-			}
-		} else {
-			return redirect('/');
-		}
-	}
+          $url = $url . '?' . $data . '&s=' . $signature;
+            try {
+              $ch = curl_init();
+              curl_setopt($ch, CURLOPT_URL, $url);
+              curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+              curl_setopt($ch, CURLOPT_POST, TRUE);
+              curl_setopt($ch, CURLOPT_POSTFIELDS, $data . '&s=' . $signature);
+              $response = curl_exec($ch);
+              if($response === false) {
+                $error = curl_error($ch);
+                throw new Exception($error, 1);
+              } 
+              $info = curl_getinfo($ch);
+              if(!in_array($info['http_code'], array('200', '400', '401'))) {
+                throw new Exception('Ocurrió un error inesperado. HTTP_CODE: '.$info['http_code'] , $info['http_code']);
+              }              
 
-	public function questions_answer($course_id, $question_id)
-	{		
-		$title = 'Answers';
-		if (Auth::check()) {
-	        $singleCourse = DB::table('all_courses')->WHERE('id', $course_id)->first();
-	        $Question = DB::table('faq_questions')->WHERE('id', $question_id)->first();
-	        $AllAnswers = DB::table('faq_answers')->WHERE([['course_id', $course_id], ['question_id', $question_id]])->orderBy('created_at', 'DESC')->get();
-	        $purchased = explode(',', trim($singleCourse->purchased_by, "[]"));
-	        if ($purchased != '') {
-	        	if (in_array('"'.Auth::user()->id.'"', $purchased))  {
-					return view('frontend.answer', compact('title', 'singleCourse', 'AllAnswers', 'Question'));
-				}
-				return redirect('/single_course/'.$course_id);
-			}
-		} else {
-			return redirect('/');
-		}
-	}
+                $responseData = json_decode($response);
+                
+                $deleteClientData = $this->deleteClient($responseData->customerId);
+                  $data = [
+        		    'subscription_id' => '',
+        		    'status' => 'Pedido pendiente'
+    		      ];
+            
+                DB::table('employees')->where('id', Auth::user()->id)->update($data);
+                
+                \Session::flash('message','suscripción cancelada');
+    
+                return redirect('/premium_profile/'.Auth::user()->id.'/'.Auth::user()->hash_key);
+                
 
+            } catch (Exception $e) {
+              echo 'Error: ' . $e->getCode() . ' - ' . $e->getMessage();
+            }  
+        }else{
+            \Session::flash('message','Periodo de membresía no finalizado');
 
+            return redirect('/premium_profile/'.Auth::user()->id.'/'.Auth::user()->hash_key);
+        }
+        
+    }
 
-	public function ask_question(Request $request){	
+    public function deleteClient($customerID = false)
+    {
 
-		$UserImage = $request->user_image;
-		$current_time = Carbon::now()->toDateTimeString();
-		DB::table('faq_questions')->insert([
-			'course_id' => $request->course_id,
-			'user_id' => $request->user_id,
-			'title' => $request->question_title,
-			'created_at' => $current_time,
-			'question' => $request->question_ask,
-			'answer_count' => 0
-		]);
-		$getInsertedId = DB::getPdo()->lastInsertId();
+        if (!empty($customerID)) {
+           
+            $flowApi = new FlowController;
 
-		$current_comment = "
-			<div class='question-list-question--wrapper--1zMqr question-overview--question--244jE'>
-			    <div class='question-list-question--question-link--iEDXQ'>
-			       <div>
-			          <div>
-			            <img alt='".$request->user_name."' src='".$UserImage."' class='user-avatar user-avatar--image img-circle'>
-			          </div>
-			       </div>
-			       <div class='question-list-question--content--SEjFC question-overview--question-content--2M-k-'>
-			          <div class='question-list-question--title--4K-V_'>".$request->user_name."</div>
-			          <div class='question-list-question--body--2v0oT'><a href='/answer/".$request->course_id."/".$getInsertedId."'>".$request->question_title."</a></div>
-			       </div>
-			       <div>
-			          <div class='question-list-question--num-answers--2vE_g'>0</div>
-			          <div class='responses'>Responses</div>
-			       </div>
-			    </div>
-			</div>";
-      return $current_comment;
-	}
+            $url = $flowApi->apiURL.'/customer/delete';
 
-	public function write_answer(Request $request){	
+            $params = array( 
+              "apiKey"		=> $flowApi->apiKey,
+              "customerId"	=> $customerID
+            );
 
-        $Question = DB::table('faq_questions')->WHERE('id', $request->question_id)->first();
-        $newCount = (int)$Question->answer_count + 1;
-		$current_time = Carbon::now()->toDateTimeString();
-		DB::table('faq_answers')->insert([
-			'user_id' => $request->user_id,
-			'question_id' => $request->question_id,
-			'course_id' => $request->course_id,
-			'answer' => $request->answer_text,
-			'created_at' => $current_time
-		]);
-		$UpdateCount = ['answer_count' => $newCount];
-        $updates = DB::table('faq_questions')->where('id', $request->question_id)->update($UpdateCount);
-	}
+            $data = '';
+            foreach($params as $key => $value) {
+                $data .= '&' . $key . '=' . $value;
+            }
 
-	public function load_questions(Request $request){	
-	    $allQuestions = DB::table('faq_questions')->WHERE('course_id', $request->course_id)->orderBy('id', 'DESC')->offset($request->offset)->limit(10)->get();
-	    $newQuestions = "";
-	    if (!empty($allQuestions)) {
-		    foreach ($allQuestions as $key => $allQuestion) {
-		    	$User = DB::table('employees')->WHERE('id', $allQuestion->user_id)->first();
-		    	if ($User->image != 0) {
-                  $Image = DB::table('uploads')->WHERE('id', $User->image)->first();
-                    if ($Image) {
-                      $UserImage = "/files/$Image->hash/$Image->name";
-                    } else {
-                     $UserImage = "/frontend/images/defaultImage.jpg";
-                    }
-                } else {
-                     $UserImage = "/frontend/images/defaultImage.jpg";
-	            }
-	            $newQuestions .= "<div class='question-list-question--wrapper--1zMqr question-overview--question--244jE'><div class='question-list-question--question-link--iEDXQ'><div><div><img alt='".$User->name."' src='".$UserImage."' class='user-avatar user-avatar--image img-circle'></div></div><div class='question-list-question--content--SEjFC question-overview--question-content--2M-k-'><div class='question-list-question--title--4K-V_'>".$User->name."</div><div class='question-list-question--body--2v0oT'><a href='/answer/".$request->course_id."/".$allQuestion->id."'>".$allQuestion->title."</a></div></div><div><div class='question-list-question--num-answers--2vE_g'>".$allQuestion->answer_count."</div><div class='responses'>Responses</div></div></div></div>";
-		    }
-	    }
-	    return $newQuestions;
-	}
+            $data = substr($data, 1);
+            
+            $signature = hash_hmac('sha256', $data , $flowApi->secretKey);
+            
+
+            $url = $url . '?' . $data . '?s=' . $signature;
+            try {
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($ch, CURLOPT_POST, TRUE);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data . '&s=' . $signature);
+                $response = curl_exec($ch);
+                if($response === false) {
+                  $error = curl_error($ch);
+                  throw new Exception($error, 1);
+                } 
+                $info = curl_getinfo($ch);
+                if(!in_array($info['http_code'], array('200', '400', '401'))) {
+                  throw new Exception('Ocurrió un error inesperado. HTTP_CODE: '.$info['http_code'] , $info['http_code']);
+                }
+                
+                $this->unRegisterCustomerCreditCard($customerID);
+                
+            } catch (Exception $e) {
+                return 'Error: ' . $e->getCode() . ' - ' . $e->getMessage();
+            }
+        }
+    }
+
+    public function unRegisterCustomerCreditCard($customerID)
+    {
+        $flowApi = new FlowController;
+
+        $url = $flowApi->apiURL.'/customer/unRegister';
+
+        $params = array( 
+          "apiKey"      => $flowApi->apiKey,
+          "customerId"       => 'cus_gw0zcg0qf8'
+        );
+
+        $data = '';
+        foreach($params as $key => $value) {
+            $data .= '&' . $key . '=' . $value;
+        }
+
+        $data = substr($data, 1);
+        
+        $signature = hash_hmac('sha256', $data , $flowApi->secretKey);
+        
+
+        $url = $url . '?' . $data . '?s=' . $signature;
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_POST, TRUE);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data . '&s=' . $signature);
+            $response = curl_exec($ch);
+            if($response === false) {
+              $error = curl_error($ch);
+              throw new Exception($error, 1);
+            } 
+            $info = curl_getinfo($ch);
+            if(!in_array($info['http_code'], array('200', '400', '401'))) {
+              throw new Exception('Ocurrió un error inesperado. HTTP_CODE: '.$info['http_code'] , $info['http_code']);
+            }
+            
+            return $response;
+            
+        } catch (Exception $e) {
+            return 'Error: ' . $e->getCode() . ' - ' . $e->getMessage();
+        }
+    }
+    
+   public function getSubscription($subscriptionID)
+    {      
+    
+        $flowApi = new FlowController;
+
+        $url = $flowApi->apiURL.'/subscription/get';
+
+        $params = array( 
+          "apiKey"      => $flowApi->apiKey,
+          "subscriptionId"  => $subscriptionID       
+        );
+
+        $data = '';
+        foreach($params as $key => $value) {
+            $data .= '&' . $key . '=' . $value;
+        }
+
+        $data = substr($data, 1);
+        
+        $signature = hash_hmac('sha256', $data , $flowApi->secretKey);
+       
+
+        $url = $url . '?' . $data . '&s=' . $signature;
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $response = curl_exec($ch);
+            if($response === false) {
+              $error = curl_error($ch);
+              throw new Exception($error, 1);
+            } 
+            $info = curl_getinfo($ch);
+            if(!in_array($info['http_code'], array('200', '400', '401'))) {
+              throw new Exception('Ocurrió un error inesperado. HTTP_CODE: '.$info['http_code'] , $info['http_code']);
+            }
+
+            return $response;
+            
+        } catch (Exception $e) {
+            return 'Error: ' . $e->getCode() . ' - ' . $e->getMessage();
+        }
+    }
+    
+    /* ================== Flow Payment Functions End================== */
 
 
 }

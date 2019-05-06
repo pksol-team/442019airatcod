@@ -114,7 +114,7 @@ class EmployeesController extends Controller
 			if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != "null" && env('MAIL_USERNAME') != "") {
 				// Send mail to User his Password
 				Mail::send('emails.send_login_cred', ['user' => $user, 'password' => $password], function ($m) use ($user) {
-					$m->from('support-cl@doctorolia.com', 'psicologos vibemar');
+					$m->from('psicologoschile@vibemar.com', 'psicologos vibemar');
 					$m->to($user->email, $user->name)->subject('psicologos vibemar - Sus credenciales de inicio de sesión');
 				});
 			} else {

@@ -20,6 +20,7 @@
       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css">
       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
       <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"/>
+      <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
       <link rel="stylesheet" type="text/css" href="/frontend/assets/css/style.css">
    </head>
    <body>
@@ -68,7 +69,7 @@
                               <li class="d-inline-block float-left text-white"><a href="#">Sobre nosotros</a>|</li>
                               <li class="d-inline-block float-left text-white"><a href="/contact_us">Contacto </a>|</li>
                               <li class="d-inline-block float-left text-white"><a href="/frequently">Preguntas frecuentes </a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="#">Blog de salud </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="//blog_article">Blog de salud </a>|</li>
                               <li class="d-inline-block float-left text-white"><a href="#">Uso y política de privacidad</a></li>
                            </ul>
                         </div>
@@ -91,6 +92,7 @@
          <!-- footer-sec-bottom end -->
       </footer>
       <script src="/frontend/assets/js/jquery-3.3.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
       <script src="/frontend/assets/js/bootstrap.min.js"></script>
       <script src="/frontend/assets/js/yearpicker.js"></script>
       <script src="/frontend/assets/js/croppie.js"></script>
@@ -99,6 +101,8 @@
       <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
       <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+
       <script>
         $('#responsive').slick({
           dots: true,

@@ -1,5 +1,4 @@
 jQuery(document).ready(function($) {
-
     // hide time filds for off day
     $('.close_day_button').change(function () {
         if ($(this).prop('checked') == false) {
@@ -602,7 +601,67 @@ jQuery(document).ready(function($) {
         }
     });
 
+    //show forecast form
+    $('.modify_forecast').on('click',  function(e) {
+        e.preventDefault();
+        $('.updateForecast').removeClass('d-none');
+        $('.forecastShowing').addClass('d-none');
+    });
+
+    //hide forecast form
+    $('#forecast_close').on('click',  function(e) {
+        e.preventDefault();
+        $('.updateForecast').addClass('d-none');
+        $('.forecastShowing').removeClass('d-none');
+    });
+
+    // Add/update Forecast
+    $('.updateForecast').on('submit', function(e) {
+        e.preventDefault();
+        var radioValue = $("input[name='forecast']:checked").val();
+        var token = $('.csrf_token_profile').val();
+        var user_id = $('.user_id').val();
+        if (radioValue != undefined) {
+
+            $.ajax({
+                    type: 'POST',
+                    url:"/addForecast",
+                    data:{"_token": token, "forecast": radioValue, "user_id": user_id},
+                })
+                .done(function(response) {
+                    $('.updateForecast').addClass('d-none');
+                    $('.forecastShowing').text(radioValue).removeClass('d-none');
+                });
+            
+        } else {
+            alert('Seleccione cualquier pronóstico');
+        }
+    });
+
     // select 2
     $('.js-example-basic-single').select2();
+    $('.specialty_quote').select2();
+    $('.summernote_detail').summernote({
+        height: 300,
+        popover: {
+        image: [],
+        link: [],
+        air: []
+        }
+        });
+
+    // Summer Note empty error show
+
+    $('.addNewArticle').on('submit', function(e) {
+      
+      if($('.summernote_detail').summernote('isEmpty')) {
+        alert('El contenido está vacío, llénalo!');
+
+        // cancel submit
+        e.preventDefault();
+      }
+      else {
+      }
+    })
     
 });

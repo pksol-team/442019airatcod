@@ -1,0 +1,9 @@
+[18-Apr-2019 12:05:49 UTC] PHP Warning:  Uncaught ErrorException: require(/home2/clickhos/public_html/doctoralia/storage/framework/views/../../lib/FlowApi.class.php): failed to open stream: No such file or directory in /home2/clickhos/public_html/doctoralia/storage/framework/views/3e68cc4f0ac3993871e88be77d27e017c55f0e72.php:6
+Stack trace:
+#0 /home2/clickhos/public_html/doctoralia/storage/framework/views/3e68cc4f0ac3993871e88be77d27e017c55f0e72.php(6): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'require(/home2/...', '/home2/clickhos...', 6, Array)
+#1 /home2/clickhos/public_html/doctoralia/storage/framework/views/3e68cc4f0ac3993871e88be77d27e017c55f0e72.php(6): require()
+#2 /home2/clickhos/public_html/doctoralia/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(42): include('/home2/clickhos...')
+#3 /home2/clickhos/public_html/doctoralia/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(59): Illuminate\View\Engines\PhpEngine->evaluatePath('/home2/clickhos...', Array)
+#4 /home2/clickhos/publi in /home2/clickhos/public_html/doctoralia/storage/framework/views/3e68cc4f0ac3993871e88be77d27e017c55f0e72.php on line 6
+[18-Apr-2019 12:05:49 UTC] PHP Fatal error:  Illuminate\View\Engines\PhpEngine::main(): Failed opening required '/home2/clickhos/public_html/doctoralia/storage/framework/views/../../lib/FlowApi.class.php' (include_path='.:/opt/cpanel/ea-php70/root/usr/share/pear') in /home2/clickhos/public_html/doctoralia/storage/framework/views/3e68cc4f0ac3993871e88be77d27e017c55f0e72.php on line 6
+[20-Apr-2019 05:24:38 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Frontend\Controller' not found in /home2/clickhos/public_html/doctoralia/app/Http/Controllers/Frontend/FlowController.php on line 14

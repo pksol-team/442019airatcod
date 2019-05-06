@@ -17,6 +17,9 @@
          <ul class="list-unstyled">
             <li class="d-inline-block active"><a href="/doctor_full_profile/<?= $UserTbl->hash_key ?>" class="text-dark">PERFIL</a></li>
             <li class="d-inline-block"><a href="/my_data" class="text-dark">Mis datos</a></li>
+            <?php if ($EmpTbl->profile == 'premium'): ?>
+              <li class="d-inline-block"><a href="<?= '/write_article/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>" class="text-dark">Escribe un artículo</a></li>
+            <?php endif ?>
             <li class="d-inline-block">Perfil premium</li>
          </ul>
       </div>
@@ -98,20 +101,39 @@
          </div>
       </div>
       <!-- row -->
-      <?php if ($EmpTbl->profile == 'basic'): ?>
+         @if(session()->has('message'))
+    	    <div class="alert alert-success">
+    	        {!! session()->get('message') !!}
+    	    </div>
+       	@endif
+      <?php if ( $EmpTbl->subscription_id == ''): ?>
          <!-- choose-your-premium-plan -->
          <div class="choose-your-premium-plan text-center">
             <div class="choose-your-plan-area ">
                <ul class="list-unstyled">
                   <li>
-                     <span style="color: #4CAF51;">Por sólo $ 25,990</span>
+                     <span style="color: #4CAF51;">Por sólo $ 131079.83</span>
                   </li>
-                  <li class="my-2"><button class="btn btn-primary">Elige plan premium</button>
+                  <li class="my-2"><a href="/subscribe/monthly6"><button class="btn btn-primary">Elija el plan Premium por 6 meses</button></a>
+                  <li>
+                     <span style="color: #4CAF51;">Por sólo $ 335.880</span>
+                  </li>
+                  <li class="my-2"><a href="/subscribe/yearly"><button class="btn btn-primary">Elija plan premium por 1 año </button></a>
                   </li>
                </ul>
             </div>
          </div>
          <!--choose-your-premium-plan-end  -->
+      <?php else: ?>
+      <!-- CANCEL-your-premium-plan -->
+         <div class="choose-your-premium-plan text-center">
+            <div class="choose-your-plan-area ">
+               <ul class="list-unstyled">
+                  <li class="my-2"><a onclick="return confirm('¿Estás seguro de que quieres cancelar la suscripción?');" href="<?= ($EmpTbl->status != 'Pedido pendiente')? '/unsubscribe' : '#'?>"><button class="btn btn-primary"><?= $EmpTbl->status?></button></a>
+                  </li>
+               </ul>
+            </div>
+         </div>
       <?php endif ?>
 
       <!-- compare your current -->
@@ -124,8 +146,8 @@
                <thead>
                   <tr>
                      <th>Visibility in psicologos</th>
-                     <th class="text-center">Basic <?= ($EmpTbl->profile == 'basic') ? '<br> Current profile' : NULL; ?></th>
-                     <th class="text-center">Premium <?= ($EmpTbl->profile == 'premium') ? '<br> Current profile' : NULL; ?> </th>
+                     <th class="text-center">Basic <?= ($EmpTbl->profile == 'basic') ? '<br> Perfil actual' : NULL; ?></th>
+                     <th class="text-center">Premium <?= ($EmpTbl->profile == 'premium') ? '<br> Perfil actual' : NULL; ?> </th>
                   </tr>
                </thead>
                <tbody class="table-body">
@@ -328,19 +350,6 @@
                   </div>
                </div>
             </div>
-            <?php if ($EmpTbl->profile == 'basic'): ?>
-               <div class="premium-pro-buy">
-                  <div class="premium-pro-button">
-                     <ul class="list-unstyled">
-                        <li>
-                           <span style="color: #4CAF51;">Por sólo $ 25,990</span>
-                        </li>
-                        <li><button class="btn btn-primary my-3">Elige plan premium</button>
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-            <?php endif ?>
          </div>
          <!-- premium-profile-page-content -->
       </div>

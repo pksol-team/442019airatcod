@@ -17,11 +17,11 @@
          <div class="header-nav w-100">
             <div class="container">
                <div class="brand float-left w-25">
-                  <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - Doctaria"></a>
+                  <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - Psicologos"></a>
                </div>
                <div class="nav-items float-right w-75">
                   <div class=" nav-links float-right">
-                     <a href="#" class="text-white">¿Es un profesional de la salud?</a>
+                     <a href="/quote_doctor" class="text-white">Pregunta al psicólogo</a>
                      <?php if (Auth::check() != true): ?>
                      <button class="btn bg-green"><a href="/register_doctor_init" class="text-white">Registrarme</a></button>
                      <button class="btn bg-blue text-white"><a href="/userlogin" class="text-white">Iniciar sesión</a></button>
@@ -32,6 +32,7 @@
                            <button class="btn bg-blue text-white"><a href="/doctor_full_profile/<?= $user->hash_key; ?>" class="text-white"><?php echo $user->name; ?></a></button>
                         <?php endif ?>
                      <?php endif ?>
+                     <!-- <button class="btn bg-blue text-white"><a href="/quote_doctor" class="text-white">Cotizar psicólogo</a></button> -->
                   </div>
                </div>
             </div>
@@ -45,8 +46,8 @@
             <div class="carousel-item active">
                <img class="d-block w-100" src="/frontend/assets/img/slider.jpg" alt="First slide">
                <div class="carousel-caption d-md-block ">
-                  <h3>Estás en buenas manos.</h3>
-                  <p>Elige tu médico  y reserva tu cita</p>
+                  <h3>BUSCA TU PSICÓLOGO POR CIUDAD</h3>
+                  <p>Elige el psicólogo que mas te guste</p>
                   <!-- Search form -->
                   <div class="form-search text-center">
                      <div class="form-part">
@@ -58,36 +59,7 @@
                   </div>
                </div>
             </div>
-            <!-- <div class="carousel-item ">
-               <img class="d-block w-100" src="/frontend/assets/img/slider.jpg" alt="First slide">
-               <div class="carousel-caption d-md-block ">
-                  <h3>Estás en buenas manos.</h3>
-                  <p>Elige tu médico, consulta las opiniones y reserva tu cita</p>
-                  <div class="form-search text-center">
-                     <div class="form-part">
-                        <form class="form-inline">
-                           <input class="form-control form-control-sm  search-input" type="text" placeholder="Search" aria-label="Search">
-                           <button class="btn bg-blue text-white"><a href="#" class="text-white ">Search</a></button>
-                        </form>
-                     </div>
-                  </div>
-               </div>
-            </div> -->
-            <!-- <div class="carousel-item">
-               <img class="d-block w-100" src="/frontend/assets/img/slider.jpg" alt="First slide">
-               <div class="carousel-caption d-md-block ">
-                  <h3>Estás en buenas manos.</h3>
-                  <p>Elige tu médico, consulta las opiniones y reserva tu cita</p>
-                  <div class="form-search text-center">
-                     <div class="form-part">
-                        <form class="form-inline">
-                           <input class="form-control form-control-sm  search-input" type="text" placeholder="Search" aria-label="Search">
-                           <button class="btn bg-blue text-white"><a href="#" class="text-white ">Search</a></button>
-                        </form>
-                     </div>
-                  </div>
-               </div>
-            </div> -->
+            
          </div>
       </div>
       <!-- Carousel-end -->
@@ -95,11 +67,11 @@
       <section>
          <div class="row align-items-center bg-blue">
             <div class="col-lg-6 h-100 reserva-content order-2 order-lg-1 py-lg-0 py-5">
-               <h2 class="text-white">Reserva City Hoy</h2>
+               <h2 class="text-white">Encuentra a los mejores psicólogos en Vibemar</h2>
                <hr class="border_bottom">
-               <p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi dolorem tempore magni, vel quidem odit labore itaque nam, rem saepe ducimus, dolore. Dolores voluptatibus corporis, tenetur. Cumque voluptates debitis iusto.</p>
+               <p class="text-white">Pide hora en línea, revisa las opiniones de los profresionales, hazle preguntas, cotiza las mejores opciones</p>
                <div class="reserva-button">
-                  <button class="btn text-white bg-green">Reserva</button>
+                  <a href="/all_professional"><button class="btn text-white bg-green">Reservar hora</button></a>
                </div>
             </div>
             <div class="reserva-image col-lg-6 pr-0 pl-0 order-1 order-lg-2">
@@ -108,71 +80,25 @@
          </div>
       </section>
       <!-- reserva-section ends -->
-      <!-- Doctoralia Section -->
-      <section class="doctoralia-section">
-         <div class="container">
-            <div class="row doctoralia">
-               <div class="col-lg-4 col-md-4 col-sm-4 doctoralia-first-col">
-                  <h2>Doctorolia En aplasou</h2>
-                  <hr class="doctoralia-border_bottom">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt perspiciatis tenetur voluptas corporis, exercitationem amet! Illo rem impedit sed cumque ab iste, quod eveniet, odio quibusdam a tempora voluptates aspernatur.</p>
-               </div>
-               <div class="col-lg-4 col-md-4 col-sm-4 doctoralia-sec-col">
-                  <!-- <div class="col-sm-4 float-left">
-                     </div> -->
-                  <i class="fa fa-phone" aria-hidden="true"></i>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-               </div>
-               <div class="col-lg-4 col-md-4 col-sm-4 doctoralia-third-col">
-                  <i class="fa fa-envelope" aria-hidden="true"></i>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-               </div>
-            </div>
-         </div>
-      </section>
-      <!-- Doctoralia Section Ends -->
-      <!-- Centro section -->
-      <section>
-         <div class="row align-items-center bg-green-light">
-            <div class="reserva-image col-lg-6 pr-0 pl-0 order-1 order-lg-2">
-               <img src="/frontend/assets/img/centro medico (2).jpg" alt="" class="img-fluid h-100">
-            </div>
-            <div class="col-lg-6 h-100 reserva-content order-2 order-lg-1 py-lg-0 py-5">
-               <h2 class="text-white">Reserva City Hoy</h2>
-               <hr class="border_bottom">
-               <p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi dolorem tempore magni, vel quidem odit labore itaque nam, rem saepe ducimus, dolore. Dolores voluptatibus corporis, tenetur. Cumque voluptates debitis iusto.</p>
-               <div class="reserva-button">
-                  <button class="btn text-white bg-green">Reserva</button>
-               </div>
-            </div>
-         </div>
-      </section>
-      <!-- centro-section ends -->
       <!-- Testimonials -->
       <section class="testimonial-area">
          <div class="container">
             <div class="testimonial-upper-div">
-               <div class="testimonial-head text-center">
-                  <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h2>
-                  <hr class="testimonial-border_bottom">
-               </div>
-               <div class="testimonial-sub-text text-center">
-                  <p>veo lo que hemos becho por otros</p>
-               </div>
+               <div class="testimonial-head text-center"></div>
+               <div class="testimonial-sub-text text-center"></div>
             </div>
             <div class="row testimonials">
                <!--Start single item-->
                <div class="col-sm-4">
                   <div class="single-testimonial-item text-center">
                      <div class="img-holder">
-                        <img src="/frontend/assets/img/atip.png" alt="Awesome Image">
+                        <a href="/blog_article"><img src="/frontend/assets/img/picture1.png" alt="ARTICULOS DE NUESTROS PSICÓLOGOS"></a>
                      </div>
                      <div class="text-holder">
-                        <h3>Nicol Dreams</h3>
-                        <p>Ladies, meet your new hero. Men</p>
+                        <h5>ARTICULOS DE NUESTROS PSICÓLOGOS</h5>
                      </div>
                      <div class="name">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum cumque animi eos itaque, labore</p>
+                        <p>Acá podrás leer artículos muy interesantes realizados por los propios psicólogos de nuestro portal</p>
                      </div>
                   </div>
                </div>
@@ -181,14 +107,13 @@
                <div class="col-sm-4">
                   <div class="single-testimonial-item text-center">
                      <div class="img-holder">
-                        <img src="/frontend/assets/img/atip.png" alt="Awesome Image">
+                        <a href="/frequently"><img src="/frontend/assets/img/picture2.png" alt="PREGUNTA A NUESTROS PSICÓLOGOS"></a>
                      </div>
                      <div class="text-holder">
-                        <h3>Nicol Dreams</h3>
-                        <p>Ladies, meet your new hero. Men</p>
+                        <h5>PREGUNTA A NUESTROS PSICÓLOGOS</h5>
                      </div>
                      <div class="name">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum cumque animi eos itaque, labore</p>
+                        <p>¿Tienes dudas de tratamientos o necesitas saber algo? pregúntale a nuestros psicólogos Vibemar</p>
                      </div>
                   </div>
                </div>
@@ -197,14 +122,10 @@
                <div class="col-sm-4">
                   <div class="single-testimonial-item text-center">
                      <div class="img-holder">
-                        <img src="/frontend/assets/img/atip.png" alt="Awesome Image">
+                        <a href="/contact_us#contact_id_us"><img src="/frontend/assets/img/picture3.png" alt="CONTÁCTANOS"></a>
                      </div>
                      <div class="text-holder">
-                        <h3>Nicol Dreams</h3>
-                        <p>Ladies, meet your new hero. Men</p>
-                     </div>
-                     <div class="name">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum cumque animi eos itaque, labore</p>
+                        <h5>CONTÁCTANOS</h5>
                      </div>
                   </div>
                </div>
@@ -234,7 +155,7 @@
                   </div>
                   <div class="col-lg-4">
                      <ul class="link-pages list-unstyled">
-                        <li class="p-1"><b>Por ciudad</b></li>
+                        <li class="p-1"><b>Por región</b></li>
                         <?php if ($allCities): ?>
                            <?php foreach ($allCities as $key => $allCity): ?>
                               <li class="p-1"><a href="/all_professional?specialty=&city=<?= $allCity->name; ?>&forecast=&searchByInput=" class="text-white"><?= $allCity->name; ?></a></li>
@@ -268,7 +189,7 @@
                               <li class="d-inline-block float-left text-white"><a href="#">Sobre nosotros</a>|</li>
                               <li class="d-inline-block float-left text-white"><a href="/contact_us">Contacto </a>|</li>
                               <li class="d-inline-block float-left text-white"><a href="/frequently">Preguntas frecuentes </a>|</li>
-                              <li class="d-inline-block float-left text-white"><a href="#">Blog de salud </a>|</li>
+                              <li class="d-inline-block float-left text-white"><a href="/blog_article">Blog de salud </a>|</li>
                               <li class="d-inline-block float-left text-white"><a href="#">Uso y política de privacidad</a></li>
                            </ul>
                         </div>

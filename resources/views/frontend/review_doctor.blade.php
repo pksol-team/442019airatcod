@@ -36,6 +36,11 @@
                <h4>Tu opinión sobre <?= $EmpTbl->first_name; ?></h4>
             </div>
             <div class="professional-content bg-white">
+            @if(session()->has('error'))
+                <div class="alert alert-danger">
+                    {!! session()->get('error') !!}
+                </div>
+            @endif
             <div class="feedback">
                <div class="row">
                   <div id="comment" class="col-lg-12 text-center">
@@ -52,7 +57,7 @@
                         	<div class="row mb-3">
                         		<div class="col-lg-12">
 		                           <label for="location" class="mr-4">Qué lugar visitaste</label>
-                                 <input type="text" name="location" class="reason_input" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required />
+                                 <input type="text" name="location" class="reason_input" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required />
 		                           </select>
                         		</div><!-- /.col-lg-12 -->
                         	</div><!-- /.row -->
@@ -64,7 +69,7 @@
                         			   <input type="radio" id="facilites-star4" name="facilities" value="4" /><label for="facilites-star4" title="Good">4 stars</label>
                         			   <input type="radio" id="facilites-star3" name="facilities" value="3" /><label for="facilites-star3" title="Regular">3 stars</label>
                         			   <input type="radio" id="facilites-star2" name="facilities" value="2" /><label for="facilites-star2" title="Bad">2 stars</label>
-                        			   <input type="radio" id="facilites-star1" name="facilities" value="1" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required/><label for="facilites-star1" title="Very bad">1 star</label>
+                        			   <input type="radio" id="facilites-star1" name="facilities" checked value="1" required/><label for="facilites-star1" title="Very bad">1 star</label>
                         			</div>
                         		</div><!-- /.col-lg-12 -->
                         		<div class="col-lg-12 puntuality-col text-left">
@@ -74,7 +79,7 @@
                         			   <input type="radio" id="puntuality-star4" name="puntuality" value="4" /><label for="puntuality-star4" title="Good">4 stars</label>
                         			   <input type="radio" id="puntuality-star3" name="puntuality" value="3" /><label for="puntuality-star3" title="Regular">3 stars</label>
                         			   <input type="radio" id="puntuality-star2" name="puntuality" value="2" /><label for="puntuality-star2" title="Bad">2 stars</label>
-                        			   <input type="radio" id="puntuality-star1" name="puntuality" value="1" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required/><label for="puntuality-star1" title="Very bad">1 star</label>
+                        			   <input type="radio" id="puntuality-star1" name="puntuality" checked value="1" required/><label for="puntuality-star1" title="Very bad">1 star</label>
                         			</div>
                         		</div>
                         		<div class="col-lg-12 attention-col text-left">
@@ -84,7 +89,7 @@
                         			   <input type="radio" id="attention-star4" name="attention" value="4" /><label for="attention-star4" title="Good">4 stars</label>
                         			   <input type="radio" id="attention-star3" name="attention" value="3" /><label for="attention-star3" title="Regular">3 stars</label>
                         			   <input type="radio" id="attention-star2" name="attention" value="2" /><label for="attention-star2" title="Bad">2 stars</label>
-                        			   <input type="radio" id="attention-star1" name="attention" value="1" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required/><label for="attention-star1" title="Very bad">1 star</label>
+                        			   <input type="radio" id="attention-star1" name="attention" checked value="1" required/><label for="attention-star1" title="Very bad">1 star</label>
                         			</div>
                         		</div>
                         		<div class="col-lg-12 recommendable-col text-left">
@@ -94,7 +99,7 @@
                         			   <input type="radio" id="recommendable-star4" name="recommendable" value="4" /><label for="recommendable-star4" title="Good">4 stars</label>
                         			   <input type="radio" id="recommendable-star3" name="recommendable" value="3" /><label for="recommendable-star3" title="Regular">3 stars</label>
                         			   <input type="radio" id="recommendable-star2" name="recommendable" value="2" /><label for="recommendable-star2" title="Bad">2 stars</label>
-                        			   <input type="radio" id="recommendable-star1" name="recommendable" value="1" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required/><label for="recommendable-star1" title="Very bad">1 star</label>
+                        			   <input type="radio" id="recommendable-star1" name="recommendable" checked value="1" required/><label for="recommendable-star1" title="Very bad">1 star</label>
                         			</div>
                         		</div>
                         	</div><!-- /.row -->

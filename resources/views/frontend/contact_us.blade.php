@@ -128,8 +128,8 @@
             <div class="class-social-list-icon">
                <ul class="list-unstyled">
                   <li>
-                     <a href="{{ route('facebook.login') }}" class="btn btn-block btn-social btn-twitter">
-                     <span class="fa fa-facebook fb-icon-color"></span> Sign in with Facebook
+                     <a href="https://www.facebook.com/Psic%C3%B3logos-Vibemar-173345823568953/?ref=search&__tn__=%2Cd%2CP-R&eid=ARAAkjXHyb4CgDeGrkwy_ZWgwsuk8PhQDdbnabyc66gzv-HE0p1P2Zr8dgdDaZHQJh520ELPZz6FRVDm" class="btn btn-block btn-social btn-twitter">
+                     <span class="fa fa-facebook fb-icon-color"></span> Psicólogos Vibemar en Facebook
                      </a>
                   </li>
                </ul>
@@ -138,7 +138,7 @@
       </div>
       <hr>
       <div class="row my-5">
-         <div class="col-lg-12">
+         <div class="col-lg-12" id="contact_id_us">
             <div class="do-you-want-to-contact-us">
                <span><i class="fa fa-envelope"></i></span>
                <p class="d-inline-block"><strong>¡Hola! ¿Quieres contactar con nosotros? Seleccione el motivo en el menú desplegable y le responderemos lo antes posible.</strong></p>
@@ -149,23 +149,11 @@
             </div>
             <div class="row">
                <div class="col-lg-8 offset-md-2">
-                  <form action="contact_us_email" method="post">
+                  <form action="/contact_us_email" method="post">
                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                     <div class="row for-contact-label">
-                        <div class="col-lg-4 text-right">
-                           <label for="reason">Razón para contactar</label>
-                        </div>
-                        <div class="col-lg-8">
-                           <select class="form-control w-25" id="sel1" name="reason" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
-                              <option value="Press">Press</option>
-                              <option value="Support">Support</option>
-                              <option value="Business">Business</option>
-                           </select>
-                        </div>
-                     </div>
                      <div class="row for-contact-label my-2">
                         <div class="col-lg-4 text-right">
-                           <label for="first_name">Nombre de pila</label>
+                           <label for="first_name">NOMBRE</label>
                         </div>
                         <div class="col-lg-8">
                            <input type="text" class="w-100 form-control" name="first_name" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
@@ -173,15 +161,7 @@
                      </div>
                      <div class="row for-contact-label my-2">
                         <div class="col-lg-4 text-right">
-                           <label for="last_name">Nombre sur</label>
-                        </div>
-                        <div class="col-lg-8">
-                           <input type="text" class="w-100 form-control" name="last_name" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
-                        </div>
-                     </div>
-                     <div class="row for-contact-label my-2">
-                        <div class="col-lg-4 text-right">
-                           <label for="email">correo electrónico</label>
+                           <label for="email">MAIL</label>
                         </div>
                         <div class="col-lg-8">
                            <input type="email" class="w-100 form-control" name="email" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
@@ -189,7 +169,23 @@
                      </div>
                      <div class="row for-contact-label my-2">
                         <div class="col-lg-4 text-right">
-                           <label for="comment">Comentario</label>
+                           <label for="telephone">TELÉFONO</label>
+                        </div>
+                        <div class="col-lg-8">
+                           <input type="text" class="w-100 form-control" name="telephone" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        </div>
+                     </div>
+                     <div class="row for-contact-label my-2">
+                        <div class="col-lg-4 text-right">
+                           <label for="who_you">PACIENTE O PSICÓLOGO</label>
+                        </div>
+                        <div class="col-lg-8">
+                           <input type="text" class="w-100 form-control" name="who_you" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        </div>
+                     </div>
+                     <div class="row for-contact-label my-2">
+                        <div class="col-lg-4 text-right">
+                           <label for="comment">DEJA TUS COMENTARIOS</label>
                         </div>
                         <div class="col-lg-8">
                            <textarea id="" cols="30" rows="10" class="form-control" name="comment" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required></textarea>

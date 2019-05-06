@@ -68,7 +68,7 @@ class FacebookController extends Controller
 	    		$user = [
 	                'name' => $user->name,
 	                'email' => $user->email,
-		            'password' => NULL,
+		            'password' => bcrypt(''),
 	                'context_id' => $getInsertedId,
 	                'type' => "patient",
 				    'confirm_email' => uniqid(time()).uniqid(),
@@ -82,16 +82,18 @@ class FacebookController extends Controller
 	    				'user_id' => $getInsertedId,
 	    			];
 	    			DB::table('role_user')->insert($role);
+	    			Auth::loginUsingId($getInsertedId);
+	    			return redirect('/');
 	    		}
 	    	}
 
 		} else {
-			if ($checkUser->type == 'doctor') {
-		    	return redirect('/userlogin')->with('error', 'Entrar con facebook es solo para pacientes');
-			} else {
-				Auth::loginUsingId($user->id);
+			// if ($checkUser->type == 'doctor') {
+		 //    	return redirect('/userlogin')->with('error', 'Entrar con facebook es solo para pacientes');
+			// } else {
+				Auth::loginUsingId($checkUser->id);
 				return redirect('/');
-			}
+			// }
 		}
     		
     	return redirect('/userlogin')->with('error', '¡Uy! Algo salió mal..');

@@ -89,6 +89,8 @@ Route::get('thankyou_review/{id}','Frontend\IndexController@thankyou_review');
 Route::post('remove_specialty','Frontend\IndexController@remove_specialty');
 // Add Specialty with ajax
 Route::post('addSpecialty','Frontend\IndexController@addSpecialty');
+// Add Forecast with ajax
+Route::post('addForecast','Frontend\IndexController@addForecast');
 // Add Services
 Route::post('addService','Frontend\IndexController@addService');
 // View Appointment Page
@@ -103,6 +105,19 @@ Route::get('doctor_appointments/{id}/{hash_key}/','Frontend\IndexController@doct
 Route::get('searchBySpecialty','Frontend\IndexController@searchBySpecialty');
 // view Premium Profile
 Route::get('premium_profile/{id}/{hash_key}','Frontend\IndexController@premium_profile');
+// Write Article
+Route::get('write_article/{id}/{hash_key}','Frontend\IndexController@write_article');
+// add New Article
+Route::post('/addNewArticle', 'Frontend\IndexController@addNewArticle');
+// Edit Article
+Route::get('edit_article/{article_id}/{id}/{hash_key}','Frontend\IndexController@edit_article');
+// Update New Article
+Route::post('/updateArticle', 'Frontend\IndexController@updateArticle');
+// article / blog Listing
+Route::get('/blog_article','Frontend\IndexController@blog_article');
+// view article in detail
+Route::get('/{id}/article_view','Frontend\IndexController@article_view');
+
 // view F.A.Q
 Route::get('frequently','Frontend\IndexController@frequently');
 // view Tickets
@@ -119,6 +134,24 @@ Route::post('/add_ticket_data', 'Frontend\IndexController@ticket_data_add');
 Route::post('/add_reply', 'Frontend\IndexController@add_reply');
 // Check Subscription on Daily basis
 Route::get('/subscription_check', 'Frontend\IndexController@subscription_check');
+
+
+
+
+/* ================== Flow Payment Routes ================== */
+
+// subscription
+Route::get('/subscribe/{package}', 'Frontend\IndexController@createCustomer');
+// Register customer card
+Route::post('/registeredurl', 'Frontend\IndexController@registeredUrl');
+// Unsubscribe
+Route::get('/unsubscribe', 'Frontend\IndexController@cancelSubscription');
+
+
+
+
+
+
 
 
 
@@ -257,4 +290,9 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
 	/* ================== Email_Templates ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/email_templates', 'LA\Email_TemplatesController');
 	Route::get(config('laraadmin.adminRoute') . '/email_template_dt_ajax', 'LA\Email_TemplatesController@dtajax');
+
+
+	/* ================== Articles ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/articles', 'LA\ArticlesController');
+	Route::get(config('laraadmin.adminRoute') . '/article_dt_ajax', 'LA\ArticlesController@dtajax');
 });
