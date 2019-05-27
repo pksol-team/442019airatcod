@@ -11,9 +11,6 @@
             </div>
             <div class="login-points">
                <ul class="list-unstyled">
-                  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-                  </fb:login-button>
-
                   <div id="status">
                   </div>
                   <li><i class="fa fa-arrow-right" aria-hidden="true"></i>Solo pacientes:<a href="{{ route('facebook.login') }}" class="pl-2">Iniciar sesión con Facebook</a></li>
@@ -38,7 +35,7 @@
                         <label for="email" class="email">correo electrónico</label>
                      </div>
                      <div class="col-lg-10 col-md-10 col-sm-4 col-10 login_input-sec">
-                        <input value="{{ old('email') }}" name="email" type="email" id="exampleInputEmail1" aria-describedby="emailHelp" class="form-control element-block" placeholder="Ingrese correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input value="{{ old('email') }}" name="email" type="email" id="exampleInputEmail1" aria-describedby="emailHelp" class="form-control element-block" placeholder="Ingrese correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                      </div>
                   </div>
                   <div class="row">
@@ -46,7 +43,7 @@
                         <label for="password" class="mt-2 pt-2">contraseña</label>
                      </div>
                      <div class="col-lg-10 col-md-10 col-sm-4 col-10 login_input-sec">
-                        <input title="6 characters Minimum" minlength="4" name="password" type="password" id="exampleInputPassword1" class="form-control mt-2 w-50" aria-describedby="emailHelp" placeholder="Introducir la contraseña" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input title="6 characters Minimum" minlength="4" name="password" type="password" id="exampleInputPassword1" class="form-control mt-2 w-50" aria-describedby="emailHelp" placeholder="Introducir la contraseña" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                      </div>
                   </div>
                   <div class="row">

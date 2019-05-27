@@ -27,13 +27,13 @@
                <div class="form-group">
                   <label for="sel1">Día</label>
                   <select class="form-control" name="day">
-                     <option value="lunes">lunes</option>
-                     <option value="martes">martes</option>
-                     <option value="miércoles">miércoles</option>
-                     <option value="jueves">jueves</option>
-                     <option value="viernes">viernes</option>
-                     <option value="sábado">sábado</option>
-                     <option value="domingo">domingo</option>
+                     <option value="Monday">lunes</option>
+                     <option value="Tuesday">martes</option>
+                     <option value="Wednesday">miércoles</option>
+                     <option value="Thursday">jueves</option>
+                     <option value="Friday">viernes</option>
+                     <option value="Saturday">sábado</option>
+                     <option value="Sunday">domingo</option>
                   </select>
                </div>
             </div>
@@ -103,7 +103,7 @@
             <div class="col-lg-4">
                <div class="form-group">
                   <label for="sel1">Location</label>
-                  <input type="text" class="form-control location" placeholder="Ingresar Ubicación" name="location" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required />
+                  <input type="text" class="form-control location" placeholder="Ingresar Ubicación" name="location" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required />
                </div>
             </div>
          </div>

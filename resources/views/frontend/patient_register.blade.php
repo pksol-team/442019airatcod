@@ -30,7 +30,7 @@
                         <label for="email" class="email">correo electrónico</label>
                      </div>
                      <div class="col-lg-10 col-md-10 col-sm-4 col-12 registry-emai-sec login_input-sec">
-                        <input type="email" class="form-control" value="{{ old('email') }}" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input type="email" class="form-control" value="{{ old('email') }}" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                         <small class="float-left">Le enviaremos un correo electrónico de confirmación a esta dirección.</small>
                      </div>
                   </div>
@@ -39,7 +39,7 @@
                         <label for="password" class="mt-2 pt-2">contraseña</label>
                      </div>
                      <div class="col-lg-10 col-md-10 col-sm-4 col-12 registry-pass-input login_input-sec">
-                        <input type="password" name="password" class="form-control mt-2 w-50" id="exampleInputPassword1"  placeholder="Introducir la contraseña" minlength="6" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input type="password" name="password" class="form-control mt-2 w-50" id="exampleInputPassword1"  placeholder="Introducir la contraseña" minlength="6" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                         <small class="float-left">Para iniciar sesión en psicologos</small>
                      </div>
                   </div>
@@ -48,7 +48,7 @@
                         <label for="password" class="mt-2 pt-2">Confirmar contraseña</label>
                      </div>
                      <div class="col-lg-10 col-md-10 col-sm-4 col-12 registry-confirm-pas-input  login_input-sec">
-                        <input minlength="6" type="password" name="confirm_password" class="form-control mt-2 w-50" id="exampleInputPassword2" placeholder="Confirmar contraseña" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input minlength="6" type="password" name="confirm_password" class="form-control mt-2 w-50" id="exampleInputPassword2" placeholder="Confirmar contraseña" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                      </div>
                   </div>
                   <div class="row">

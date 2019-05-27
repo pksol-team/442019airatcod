@@ -2,6 +2,61 @@
 @extends('frontend.template.layout')
 @section('title') <?= $title; ?> @stop
 @section('content')
+
+<!-- ******************************** Popup for subscribe *********************************** -->
+<input type="hidden" name="myModal_popup_check" class="myModal_popup_check" value="{{ $EmpTbl->profile }}">
+<div id="myModal_popup" class="popup modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fa fa-check-circle"></i> Modal Header</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div><!-- End Modal Header -->
+      <div class="modal-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio ducimus quaerat dolor, quae, eos hic?</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio ducimus quaerat dolor, quae, eos hic? </p>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <table class="table">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th class="normal" scope="col">Basic</th>
+              <th class="premium" scope="col">Premium</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Lorem ipsum dolor.</th>
+              <td class="times"><i class="fa fa-times-circle"></i></td>
+              <td class="check"><i class="fa fa-check-circle"></i></td>
+            </tr>
+            <tr>
+              <th scope="row">Lorem ipsum dolor.</th>
+              <td class="times"><i class="fa fa-times-circle"></i></td>
+              <td class="check"><i class="fa fa-check-circle"></i></td>
+            </tr>
+            <tr>
+              <th scope="row">Lorem ipsum dolor.</th>
+              <td class="times"><i class="fa fa-times-circle"></i></td>
+              <td class="check"><i class="fa fa-check-circle"></i></td>
+            </tr>
+          </tbody>
+        </table>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </div><!-- End Modal Body -->
+      <div class="modal-footer">
+        <a href="<?= '/premium_profile/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>"><button type="button" class="btn btn-default">Subscribe</button></a>
+      </div><!-- End Modal Footer -->
+    </div><!-- End Modal Content -->
+  </div><!-- End Modal Dialog -->
+</div><!-- End My Modal -->
+
+<!-- ******************************** Popup for subscribe *********************************** -->
 <!-- pages-links -->
 <div class="row page-link-nav">
    <div class="container">
@@ -107,6 +162,7 @@
                               <a href="#" class="modify_bio">Modificar</a>
                            </li>
                            <li class="RUT_number_li">
+                              <p class="p-0 m-0"><small>Número de teléfono: <span class="phone_number_default"><?= $EmpTbl->mobile ?></span></small></p>
                               <p><small>Rut number: <span class="RUT_number_default"><?= $EmpTbl->RUT_number ?></span></small></p>
                            </li>
                            <li class="specialty_li">
@@ -196,7 +252,7 @@
                                        <label for="Name">Nombre<span class="field-required"> *</span></label>
                                     </dt>
                                     <dd>
-                                       <input type="text" maxlength="50" id="Name" name="Name" value="<?= $EmpTbl->first_name ?>"  oninvalid="this.setCustomValidity('Por favor rellene este campo')" required disabled>
+                                       <input type="text" maxlength="50" id="Name" name="Name" value="<?= $EmpTbl->first_name; ?>"  oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required disabled>
                                     </dd>
                                  </dl>
                                  <dl>
@@ -204,7 +260,15 @@
                                        <label for="LastName">Apellidos<span class="field-required"> *</span></label>
                                     </dt>
                                     <dd>
-                                       <input type="text" maxlength="50" id="LastName" name="LastName" value="<?= $EmpTbl->last_name ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required disabled>
+                                       <input type="text" maxlength="50" id="LastName" name="LastName" value="<?= $EmpTbl->last_name; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required disabled>
+                                    </dd>
+                                 </dl>
+                                 <dl class="mb-4">
+                                    <dt>
+                                       <label for="mobile">Número de teléfono</label>
+                                    </dt>
+                                    <dd>
+                                       <input type="text" maxlength="20" id="mobile" name="mobile" value="<?= $EmpTbl->mobile; ?>" required>
                                     </dd>
                                  </dl>
                                  <dl class="mb-4">
@@ -212,7 +276,7 @@
                                        <label for="RUT_number">Número RUT</label>
                                     </dt>
                                     <dd>
-                                       <input type="text" maxlength="20" id="RUT_number" name="RUT_number" value="<?= $EmpTbl->RUT_number ?>">
+                                       <input type="text" maxlength="20" id="RUT_number" name="RUT_number" value="<?= $EmpTbl->RUT_number; ?>">
                                     </dd>
                                  </dl>
                                  <footer class="text-right">
@@ -268,8 +332,8 @@
                         <form action="/updateExract" method="post" class="dralia-form-exract dralia-ajax-form" style="display: none;">
                            <dl>
                               <dd>
-				                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                 <input type="hidden" name="user_id" value="{{ $EmpTbl->id }}">
+				                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="user_id" value="{{ $EmpTbl->id }}">
                                 <textarea style="resize: none" class="form-control dralia_exract_text" cols="20" rows="2" maxlength="250" id="Extract" name="Extract"><?= $EmpTbl->exract ?></textarea>
                               </dd>
                            </dl>
@@ -364,7 +428,7 @@
                               <!-- <p class="f-size">Type the diseases or disorders</p> -->
                               <form method="post" class="updateServiceForm">
                                 <div>Servicio</div>
-                                <input type="text" name="data[service][]" id="addService" class="form-control mb-3 addService" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required/>
+                                <input type="text" name="data[service][]" id="addService" class="form-control mb-3 addService" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required/>
                                 <div>Tarifa</div>
                                 <input type="number" name="data[rate][]" id="addRate" class="form-control mb-3 addRate"/>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -631,13 +695,13 @@
                                </thead>
                                <tbody>
                                   <tr>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('lunes', $EmpTbl->id); ?></td>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('martes', $EmpTbl->id); ?></td>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('miércoles', $EmpTbl->id); ?></td>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('jueves', $EmpTbl->id); ?></td>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('viernes', $EmpTbl->id); ?></td>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('sábado', $EmpTbl->id); ?></td>
-                                     <td><?php echo IndexController::getTimingDoctorProfile('domingo', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Monday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Tuesday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Wednesday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Thursday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Friday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Saturday', $EmpTbl->id); ?></td>
+                                     <td><?php echo IndexController::getTimingDoctorProfile('Sunday', $EmpTbl->id); ?></td>
                                   </tr>
                                </tbody>
                             </table>
@@ -925,7 +989,7 @@
                      </div>
                      <div class="sidebar-support-text-area">
                       <form action="/frequently" method="get">
-                        <input type="text" class="form-control" placeholder="Escriba su pregunta aquí" name="question" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input type="text" class="form-control" placeholder="Escriba su pregunta aquí" name="question" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                         <button type="submit" class="btn btn-success mt-3">Buscar</button>
                       </form>
                      </div>

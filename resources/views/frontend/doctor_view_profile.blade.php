@@ -39,7 +39,7 @@
                      </p>
                   </div>
                   <div id="doctor-reg-num" class="col-lg-12">
-                     <p>RUT: <?= $EmpTbl->RUT_number ?></p>
+                     <p class="p-0 m-0">RUT: <?= $EmpTbl->RUT_number; ?></p>
                   </div>
                   <div id="book-button" class="row">
                      <div id="button1">
@@ -49,10 +49,12 @@
                      <!-- <div id="button2">
                         <a href=""><i class="fa fa-envelope mr-2" aria-hidden="true"></i> Send Message</a>
                      </div> -->
+                      <?php if ($EmpTbl->profile == 'premium'): ?>
                      <div id="button3">
                         <a href="/" class="see_phone_profile"><i class="fa fa-phone mr-2" aria-hidden="true"></i> Ver telefono</a>
                         <a class="d-none phone_number_show" href="tel:<?= $EmpTbl->mobile; ?>"><i class="fa fa-phone mr-2"></i> <?= $EmpTbl->mobile; ?></a>
                      </div>
+                      <?php endif ?>
                   </div>
                </div>
             </div>
@@ -125,51 +127,71 @@
 <section class="booking doctor_view_main_page">
    <div class="container">
       <div class="row" id="timingsOfDoctor">
-         <div id="main-heading" class="col-lg-12">
+         <div id="main-heading" class="col-lg-9">
             <h1 id="booking_section_view">Cita de reserva</h1>
          </div>
-         <div id="sep" class="col-lg-12"></div>
-         <div id="addre" class="col-lg-12">
-            <!-- <div class="row" >
-               <div class="col-lg-12">
-                  <h3>Address of the query</h3>
-               </div>
-               <div class="col-lg-12">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe dicta nobis sed molestiae aliquam, cum cumque corporis assumenda esse tempore!</p>
-               </div>
-            </div> -->
-         </div>
-         <div class="row">
-            <div class="col-lg-12">
-               <h3>¿Qué día y hora va bien?</h3>
-            </div>
-         </div>
-         <div class="row">
-            <div id="table-day" class="col-lg-9">
-               <table class="table table-bordered">
-                  <thead>
-                     <tr>
-                        <th>lunes</th>
-                        <th>martes</th>
-                        <th>miércoles</th>
-                        <th>jueves</th>
-                        <th>viernes</th>
-                        <th>sábado</th>
-                        <th>domingo</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr>
-                      <td><?php echo IndexController::getTimingDoctor('lunes', $EmpTbl->id); ?></td>
-                      <td><?php echo IndexController::getTimingDoctor('martes', $EmpTbl->id); ?></td>
-                      <td><?php echo IndexController::getTimingDoctor('miércoles', $EmpTbl->id); ?></td>
-                      <td><?php echo IndexController::getTimingDoctor('jueves', $EmpTbl->id); ?></td>
-                      <td><?php echo IndexController::getTimingDoctor('viernes', $EmpTbl->id); ?></td>
-                      <td><?php echo IndexController::getTimingDoctor('sábado', $EmpTbl->id); ?></td>
-                      <td><?php echo IndexController::getTimingDoctor('domingo', $EmpTbl->id); ?></td>
-                     </tr>
-                  </tbody>
-               </table>
+          <div class="col-lg-9">
+             <p>Selecciona la hora que prefieras. Recibirás un email de confirmación tras finalizar la reserva.</p>
+          </div>
+          <?php 
+            $days = [
+              '0' => 'Sunday',
+              '1' => 'Monday',
+              '2' => 'Tuesday',
+              '3' => 'Wednesday',
+              '4' => 'Thursday',
+              '5' => 'Friday',
+              '6' => 'Saturday'
+            ];
+          ?>
+            <div class="col-md-9 all_professional_details">
+              <section class="regular slider slick_slider">
+                  <div>
+                    <span><small>hoy <br /><?= date("d M") ?></small></span>
+                  </div>
+                  <div>
+                    <span><small>Mañana <br /><?= date("d M", strtotime(' + 1 days')) ?></small></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 2 days')) ]; ?><br /><?= date("d M", strtotime(' + 2 days')) ?></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 3 days')) ]; ?><br /><?= date("d M", strtotime(' + 3 days')) ?></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 4 days')) ]; ?><br /><?= date("d M", strtotime(' + 4 days')) ?></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 5 days')) ]; ?><br /><?= date("d M", strtotime(' + 5 days')) ?></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 6 days')) ]; ?><br /><?= date("d M", strtotime(' + 6 days')) ?></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 7 days')) ]; ?><br /><?= date("d M", strtotime(' + 7 days')) ?></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 8 days')) ]; ?><br /><?= date("d M", strtotime(' + 8 days')) ?></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 9 days')) ]; ?><br /><?= date("d M", strtotime(' + 9 days')) ?></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 10 days')) ]; ?><br /><?= date("d M", strtotime(' + 10 days')) ?></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 11 days')) ]; ?><br /><?= date("d M", strtotime(' + 11 days')) ?></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 12 days')) ]; ?><br /><?= date("d M", strtotime(' + 12 days')) ?></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 13 days')) ]; ?><br /><?= date("d M", strtotime(' + 13 days')) ?></span>
+                  </div>
+                  <div>
+                    <span><?= $days[date("w", strtotime(' + 14 days')) ]; ?><br /><?= date("d M", strtotime(' + 14 days')) ?></span>
+                  </div>
+                </section>
             </div>
             <div class="col-lg-3">
                <aside>
@@ -179,7 +201,55 @@
                   </div>
                </aside>
             </div>
-         </div>
+            <div class="col-lg-9 all_professional_details">
+              <section class="regular slider slick_slider doctor_slick detail-body">
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 0 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 0 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 1 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 1 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 2 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 2 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 3 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 3 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 4 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 4 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 5 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 5 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 6 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 6 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 7 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 7 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 8 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 8 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 9 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 9 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 10 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 10 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 11 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 11 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 12 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 12 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 13 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 13 days'))); ?>
+                  </div>
+                  <div>
+                    <?= IndexController::getTimingDoctor($days[date("w", strtotime(' + 14 days'))], $EmpTbl->id, date('Y-m-d', strtotime(' + 14 days'))); ?>
+                  </div>
+                </section>
+            </div><!-- /.col-lg-9 -->
       </div>
    </div>
 </section>
@@ -212,7 +282,12 @@
             <i class="icon"></i>
             <h3>Sobre mi</h3>
             <div id="doctor-reg-num" class="col-lg-12">
-               <p>RUT: <?= $EmpTbl->RUT_number ?></p>
+              <p>RUT: <?= $EmpTbl->RUT_number; ?></p>
+              <p>
+                <?php if ($EmpTbl->profile == 'premium'): ?>
+                  Número de teléfono: <?= $EmpTbl->mobile; ?>
+                <?php endif ?>
+              </p>
             </div>
             <div>
                <p>&nbsp;</p>

@@ -62,7 +62,7 @@
 		<li class="active"><a role="tab" data-toggle="tab" class="active" href="#tab-info" data-target="#tab-info"><i class="fa fa-bars"></i> Información general</a></li>
 		<!-- <li class=""><a role="tab" data-toggle="tab" href="#tab-timeline" data-target="#tab-timeline"><i class="fa fa-clock-o"></i> Timeline</a></li> -->
 		@if($employee->id == Auth::user()->id || Entrust::hasRole("SUPER_ADMIN"))
-			<li class=""><a role="tab" data-toggle="tab" href="#tab-account-settings" data-target="#tab-account-settings"><i class="fa fa-key"></i> Configuraciones de la cuenta</a></li>
+			<!-- <li class=""><a role="tab" data-toggle="tab" href="#tab-account-settings" data-target="#tab-account-settings"><i class="fa fa-key"></i> Configuraciones de la cuenta</a></li> -->
 		@endif
 	</ul>
 
@@ -79,6 +79,9 @@
 						@la_display($module, 'gender')
 						@la_display($module, 'mobile')
 						@la_display($module, 'email')
+						@la_display($module, 'type')
+						@la_display($module, 'profile')
+						@la_display($module, 'premium_end_date')
 						@la_display($module, 'city')
 						@la_display($module, 'address')
 						@la_display($module, 'about')

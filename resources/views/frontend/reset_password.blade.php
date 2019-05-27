@@ -28,7 +28,7 @@
                         <label for="password" class="mt-2 pt-2">Nueva contraseña</label>
                      </div>
                      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10 login_input-sec">
-                        <input title="6 characters Minimum" minlength="4" name="password" type="password" id="exampleInputPassword" class="exampleInputPassword form-control mt-2 w-70" placeholder="Introduzca nueva contraseña" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input title="6 characters Minimum" minlength="4" name="password" type="password" id="exampleInputPassword" class="exampleInputPassword form-control mt-2 w-70" placeholder="Introduzca nueva contraseña" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                      </div>
                   </div>
                   <div class="row">
@@ -36,7 +36,7 @@
                         <label for="confirm_password" class="mt-2 pt-2">Confirmar contraseña</label>
                      </div>
                      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10 login_input-sec">
-                        <input title="6 characters Minimum" minlength="4" name="confirm_password" type="password" id="exampleInputConfirmPassword" class="exampleInputConfirmPassword form-control mt-2 w-70" placeholder="Ingresar Confirmar Contraseña" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input title="6 characters Minimum" minlength="4" name="confirm_password" type="password" id="exampleInputConfirmPassword" class="exampleInputConfirmPassword form-control mt-2 w-70" placeholder="Ingresar Confirmar Contraseña" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                      </div>
                   </div>
                   <div class="row">

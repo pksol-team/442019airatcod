@@ -3434,4 +3434,194 @@ margin-bottom: 0;
     border: 1px solid #aaa;
     border-radius: 4px;
     width:100%;
+    padding-left: 15px;
+}
+
+/******************************** Popup for subscribe ***********************************/
+.popup .modal-header h5 i {
+    color: green;
+}
+.popup .modal-dialog {
+    max-width: 640px;
+    margin: 1.75rem auto;
+}
+.popup .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: #51cee31c;
+    border: 2px #e1c7c7 solid;
+}
+.popup .premium {
+    background-color: #0476ebe3;
+    color: #fff;
+    text-align: center;
+    font-weight: normal;
+}
+.popup .normal {
+    color: #8f9396;
+    font-weight: normal;
+}
+.popup .table td, .popup  .table th {
+    text-align: center;
+    border: 2px #dee2e6 solid;
+    font-weight: normal;
+}
+.popup .check i {
+    color: orange;
+    font-size: 20px;
+}
+.popup .times i {
+    color:  #8f9396;
+    font-size: 20px;
+}
+.popup .modal-footer button {
+    background-color: #0476ebe3;
+    width: 100px;
+    color: #fff;
+    border-color: #0476ebe3;
+}
+.popup .modal-footer button:hover {
+    background-color: transparent;
+    color: #0476ebe3;
+    transition: 0.2s;
+    border-color: #0476ebe3;
+}
+/******************************** End Popup for subscribe ***********************************/
+
+.all_professional_details .detail-header {
+  background-color: #fff;
+  margin-top: 0px;
+  padding: 10px 15px;
+}
+
+.all_professional_details .author {
+  color: cornflowerblue;
+}
+
+.all_professional_details .detail-body img {
+  width: 100%;
+  float: left;
+  height: 200px;
+}
+
+.all_professional_details .detail-body {
+  background-color: #fff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  padding: 20px 12px;
+}
+
+.all_professional_details .profile-image {
+  display: block;
+  float: left;
+}
+
+.all_professional_details .profile-details {
+  display: block;
+  float: right;
+}
+
+.all_professional_details .profile-details a {
+  text-decoration: none;
+}
+
+.all_professional_details .profile-details a h5 i {
+  color: green;
+}
+
+.all_professional_details .profile-details p {
+  font-size: 15px;
+  color: grey;
+}
+
+.all_professional_details .lists p {
+  line-height: 10px;
+  color: black !important;
+}
+
+.all_professional_details .lists p span {
+  float: right;
+  color: grey;
+}
+
+.all_professional_details span.show-para:hover {
+  cursor: pointer;
+}
+
+.all_professional_details span.show-para {
+  color: #007bff;
+}
+
+.all_professional_details blockquote.full-des span.hide {
+  display: inline;
+}
+
+.all_professional_details .slider {
+  width: 85%;
+  margin: 0px auto;
+}
+
+.all_professional_details .slick-slide {
+  margin: 0px 20px;
+}
+
+.all_professional_details .slick-slide img {
+  width: 100%;
+}
+
+.all_professional_details .slick-prev:before, .slick-next:before {
+  color: black;
+}
+
+.all_professional_details .slick-slide {
+  transition: all ease-in-out .3s;
+  opacity: 1;
+}
+
+.all_professional_details .slick-active {
+  opacity: 1;
+}
+
+.all_professional_details .slick-current {
+  opacity: 1;
+}
+
+.all_professional_details .detail-body button.slick-prev.slick-arrow {
+  visibility: hidden;
+}
+
+.all_professional_details .detail-body button.slick-next.slick-arrow {
+  visibility: hidden;
+}
+
+.all_professional_details .slick-slide p {
+  margin-top: 10px;
+}
+
+.all_professional_details .detail-header h5 {
+  margin-top: 12px;
+}
+
+.all_professional_details .sticky {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  border-top: 0;
+  width: 88%;
+  -webkit-box-shadow: 3px 11px 8px -14px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 3px 11px 8px -14px rgba(0, 0, 0, 0.75);
+  box-shadow: 3px 11px 8px -14px rgba(0, 0, 0, 0.75);
+}
+
+.all_professional_details .slick-dots {
+    display: none !important;
+}
+.all_professional_details .doctor_slick p.doctortime{
+    height: 30px;
+    text-align: center;
+    background-color: #1699dd1a;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }

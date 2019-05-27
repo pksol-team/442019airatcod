@@ -2,6 +2,7 @@
 @extends('frontend.template.layout')
 @section('title') <?= $title; ?> @stop
 @section('content')
+
 <!-- pages-links -->
 <div class="row page-link-nav">
    <div class="container">
@@ -9,7 +10,7 @@
          <ul class="list-unstyled">
             <li class="d-inline-block active"><a href="<?= '/doctor_full_profile/'.$EmpTbl->hash_key ?>">PERFIL</a></li>
             <li class="d-inline-block"><a href="">CITA DE RESERVA</a></li>
-            <li class="d-inline-block"><a href="/quote_doctor">Cotizar psicólogo</a></li>
+            <!-- <li class="d-inline-block"><a href="/quote_doctor">Cotizar psicólogo</a></li> -->
 
             <!-- <li class="d-inline-block"><a href="">STATISTICS</a></li> -->
             <!-- <li class="d-inline-block"><a href="">ACCOUNT</a></li> -->
@@ -21,10 +22,10 @@
    <div class="container">
       <div class="pages-links text-gray-dark">
          <ul class="list-unstyled">
-            <li class="d-inline-block active"><a href="" class="text-dark">PERFIL</a></li>
+            <li class="d-inline-block active"><a href="<?= '/doctor_full_profile/'.$EmpTbl->hash_key ?>" class="text-dark">PERFIL</a></li>
             <li class="d-inline-block"><a href="/my_data" class="text-dark">Mis datos</a></li>
             <!-- <li class="d-inline-block"><a href="" class="text-dark">Opinions</a></li> -->
-            <li class="d-inline-block"><a href="" class="text-dark">Perfil premium</a></li>
+            <li class="d-inline-block"><a href="<?= '/premium_profile/'.$EmpTbl->id.'/'.$EmpTbl->hash_key ?>" class="text-dark">Perfil premium</a></li>
          </ul>
       </div>
    </div>

@@ -19,7 +19,7 @@
          <div class="container row">
             <div class="col-lg-4">
               <div class="brand">
-                <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - psicologos"></a>
+                <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
               </div>
             </div>
             <div class="col-lg-4">
@@ -84,6 +84,7 @@
                   <input type="hidden" name="last_name" value="<?= $inputFields['last_name'] ?>">
                   <input type="hidden" name="city" value="<?= $inputFields['city'] ?>">
                   <input type="hidden" name="forecast" value="<?= $inputFields['forecast'] ?>">
+                  <input type="hidden" name="address" value="<?= $inputFields['address'] ?>">
                   <input type="hidden" value="<?= $inputFields['gender'] ?>" name="gender">
                   <input type="hidden" value="<?= $inputFields['specialty'].',' ?>" name="specialty">
                   <input type="hidden" value="<?= $inputFields['sub_specialty']; ?>" name="sub_specialty">
@@ -92,7 +93,7 @@
                         <label for="" class="email text-right">Número RUT</label>
                      </div>
                      <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input-sec">
-                        <input type="text" class="form-control" id="RUT_number" name="RUT_number" value="{{ old('RUT_number') }}" placeholder="Entrar Número RUT" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input type="text" class="form-control" id="RUT_number" name="RUT_number" value="{{ old('RUT_number') }}" placeholder="Entrar Número RUT" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                         <p class="textHelp f-size">Es <strong>imprescindible</strong> para que podamos validar su registro</p>
                      </div>
                   </div>
@@ -101,7 +102,7 @@
                         <label for="" class="mt-2 pt-2 text-right">Su teléfono celular con prefijo local</label>
                      </div>
                      <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input-sec">
-                        <input type="text" class="form-control mt-2 w-50" id="exampleInputcontact" name="contact" value="{{ old('contact') }}" placeholder="Entrar en contacto" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input type="text" class="form-control mt-2 w-50" id="exampleInputcontact" name="contact" value="{{ old('contact') }}" placeholder="Entrar en contacto" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                         <p class="textHelp f-size"><strong>9 DÍGITOS</strong>. No será visible. Sólo será utilizado por el departamento de soporte de Doctoralia.</p>
                      </div>
                   </div>
@@ -110,7 +111,7 @@
                         <label for="" class="mt-2 pt-2 text-right">correo electrónico</label>
                      </div>
                      <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input_email-sec">
-                        <input type="email" class="form-control mt-2 w-100" id="email" name="email" value="{{ old('email') }}" placeholder="Ingrese correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input type="email" class="form-control mt-2 w-100" id="email" name="email" value="{{ old('email') }}" placeholder="Ingrese correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                         <p class="textHelp f-size text-left">Enviaremos un email de confirmación a esta dirección</p>
                      </div>
                   </div>
@@ -119,7 +120,7 @@
                         <label for="" class="mt-2 pt-2 text-right">Contraseña</label>
                      </div>
                      <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input_email-sec">
-                        <input type="password" class="form-control mt-2 w-50" id="password" name="password" placeholder="Introducir la contraseña" minlength="6" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input type="password" class="form-control mt-2 w-50" id="password" name="password" placeholder="Introducir la contraseña" minlength="6" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                         <p class="textHelp f-size text-left">Para iniciar sesión en Doctoralia</p>
                      </div>
                   </div>
@@ -128,7 +129,7 @@
                         <label for="password" class="mt-2 pt-2 text-right">Confirme contraseña</label>
                      </div>
                      <div class="col-lg-7 col-md-10 col-sm-8 col-9 login_input_email-sec">
-                        <input type="password" class="form-control mt-2 w-50" id="confirm_password" name="confirm_password" placeholder="Introduzca la contraseña de confirmación" minlength="6" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input type="password" class="form-control mt-2 w-50" id="confirm_password" name="confirm_password" placeholder="Introduzca la contraseña de confirmación" minlength="6" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                      </div>
                   </div>
                   <div class="row">
@@ -150,7 +151,7 @@
                   <div class="acceptance">
                      <div class="first-terms-cond text-left">
                         <label>
-	                        <input type="checkbox" name="" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+	                        <input type="checkbox" name="" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
 	                        <span>Acepto las <a href="#">condiciones de uso</a> la <a href="#">política de privacidad</a> y el tratamiento de mis datos</span>
                         </label>
                      </div>
@@ -199,7 +200,7 @@
                         </div>
                      </div>
                      <div class="brand float-right w-25 order-1">
-                        <a href="#"><img src="/frontend/assets/img/Original.png" alt=""></a>
+                        <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                      </div>
                   </div>
                </div>

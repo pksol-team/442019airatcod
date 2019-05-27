@@ -243,6 +243,7 @@ class IndexController extends Controller
 				'last_name' => $request->last_name,
 				'city' => $request->city,
 				'forecast' => $request->forecast,
+				'address' => $request->address,
 				'gender' => $request->gender
 			];
 			return view('frontend.register_mid', compact('title', 'inputFields', 'allSpecialities'));
@@ -260,6 +261,7 @@ class IndexController extends Controller
 				'last_name' => $request->last_name,
 				'city' => $request->city,
 				'forecast' => $request->forecast,
+				'address' => $request->address,
 				'gender' => $request->gender,
 				'specialty' => $request->specialty,
 				'sub_specialty' => $request->specialtyName
@@ -290,6 +292,7 @@ class IndexController extends Controller
 		if ($first_name != NULL) {
 			$type = 'doctor';
 			$profile = 'basic';
+			$address = $request->input('address');
 			$city = $request->input('city');
 			$forecast = $request->input('forecast');
 			if ($validator->fails()) {
@@ -298,6 +301,7 @@ class IndexController extends Controller
 		} else {
 			$type = 'patient';
 			$profile = '';
+			$address = '';
 			if ($email == '' || $confirm_password == '' || $request->input('password') == '' || $confirm_password != $request->input('password')) {
 				return redirect()->back()->withInput()->with('error', '¡Uy! Algo salió mal..');
 			}
@@ -332,7 +336,7 @@ class IndexController extends Controller
 		    'gender' => $gender,
 		    'dept' => "1",
 		    'city' => $city,
-		    'address' => "",
+		    'address' => $address,
 		    'about' => "",
 		    'date_birth' => date("Y-m-d"),
 		    'date_hire' => date("Y-m-d"),
@@ -536,6 +540,7 @@ class IndexController extends Controller
 		$email = $request->input('email');
 		$password = $request->input('password');
 		$isapre = $request->input('isapre');
+		$address = $request->input('address');
 		$subscribe_notifications = $request->input('notification');
 
 		$rulesEmp = Module::validateRules("Employees", $request);
@@ -554,6 +559,7 @@ class IndexController extends Controller
 		    'email' => $email,
 		    'postal_code' => $postal_code,
 		    'isapre' => $isapre,
+		    'address' => $address,
 		  ];
 
 	        $UpdateEmployee = DB::table('employees')->where('id', $userID)->update($employee);
@@ -840,6 +846,7 @@ class IndexController extends Controller
 
 		$updateBio = [
 	            'gender' => $request->gender,
+	            'mobile' => $request->mobile,
 	            'RUT_number' => $request->RUT_number
 		    ];
         $done = DB::table('employees')->where('id', $request->user_id)->update($updateBio);	
@@ -997,6 +1004,12 @@ class IndexController extends Controller
 			$to_time = $request->to_time;
 			$to_AM_PM = $request->to_AM_PM;
 			$location = $request->location;
+
+			$haveTime = DB::table('consulting_time')->where([['doctor_id' , $user_id], ['day', $day], ['from_time', $from_time], ['from_AM_PM', $from_AM_PM]])->first();
+
+			if ($haveTime != NULL) {
+				return redirect()->back()->with('error', 'La hora y el día seleccionados ya existen.');
+			}
 			
 			$updateConsulting = [
 	            'doctor_id' => $user_id,
@@ -1005,7 +1018,8 @@ class IndexController extends Controller
 	            'from_AM_PM' => $from_AM_PM,
 	            'to_time' => $to_time,
 	            'to_AM_PM' => $to_AM_PM,
-	            'location' => $location
+	            'location' => $location,
+	            'created_at' => Carbon::now()
 		    ];
 
 			if ($status != NULL) {
@@ -1039,7 +1053,7 @@ class IndexController extends Controller
 		if ($request->searchByInput != '') {
 			$allDoctorswithFilters->Where('first_name', 'LIKE', "%$inputKeywords%");
 			// $allDoctorswithFilters->orWhere('city', 'LIKE', "%$inputKeywords%");
-			// $allDoctorswithFilters->orWhere('sub_specialty', 'LIKE', "%$inputKeywords%");
+			$allDoctorswithFilters->orWhere('sub_specialty', 'LIKE', "%$inputKeywords%");
 			// $allDoctorswithFilters->orWhere('forecast', 'LIKE', "%$inputKeywords%");
 			$allDoctorswithFilters->orWhere('last_name', 'LIKE', "%$inputKeywords%");
 			
@@ -1158,7 +1172,7 @@ class IndexController extends Controller
 	}
 
 	// return doctor Schedule
-	public static function getTimingDoctor($day, $id) {
+	public static function getTimingDoctor($day, $id, $date) {
 		$allTimings = DB::table('consulting_time')->WHERE('day', $day)->WHERE('doctor_id', $id)->get();
         $EmpTbl = DB::table('employees')->WHERE('id', $id)->first();
 		$times = '';
@@ -1167,7 +1181,12 @@ class IndexController extends Controller
 				if ($allTiming->status == 'off') {
 					continue;
 				} else {
-					$times .= '<p class="mb-1"><a href="/book_appointment/'.$EmpTbl->id.'/'.$EmpTbl->hash_key.'/'.$allTiming->id.'">'.$allTiming->from_time.' '.$allTiming->from_AM_PM.'</a></p>';
+					$alreadyBooked = DB::table('appointments')->WHERE([['day', $allTiming->day], ['doctor_id', $id], ['from_time', $allTiming->from_time], ['from_AM_PM', $allTiming->from_AM_PM], ['appointment_date', 'LIKE', '%' . $date . '%']])->first();
+					if ($alreadyBooked) {
+						$times .= '<p class="doctortime"><del>'.$allTiming->from_time.' '.$allTiming->from_AM_PM.'</del></p>';
+					} else {
+						$times .= '<p class="doctortime"><a href="/book_appointment/'.$EmpTbl->id.'/'.$EmpTbl->hash_key.'/'.$date.'/'.$allTiming->id.'">'.$allTiming->from_time.' '.$allTiming->from_AM_PM.'</a></p>';
+					}
 				}
 			}
 		}
@@ -1401,7 +1420,7 @@ class IndexController extends Controller
 	}
 
 	// Book Appointment form page
-	public function book_appointment($userid, $hash_key, $timeid)
+	public function book_appointment($user_id, $hash_key, $date, $timeid)
 	{
 		if (Auth::check()) {
 			$userID = Auth::user()->id;
@@ -1409,12 +1428,12 @@ class IndexController extends Controller
 	    } else {
 	    	$loginUser = NULL;
 	    }
-
-		$doctor = DB::table('employees')->where([['id', $userid],['hash_key', $hash_key]])->first();
-		$consultantTime = DB::table('consulting_time')->where([['id', $timeid],['doctor_id', $userid]])->first();
+	    $appointment_date = $date;
+		$doctor = DB::table('employees')->where([['id', $user_id],['hash_key', $hash_key]])->first();
+		$consultantTime = DB::table('consulting_time')->where([['id', $timeid],['doctor_id', $user_id]])->first();
 		if ($doctor) {
 			$title = 'Book Appointment';
-			return view('frontend.book_appointment', compact('title', 'loginUser', 'doctor', 'consultantTime'));
+			return view('frontend.book_appointment', compact('title', 'loginUser', 'doctor', 'consultantTime', 'appointment_date'));
 		} else {
 			return redirect('/');
 		}

@@ -94,7 +94,7 @@ Route::post('addForecast','Frontend\IndexController@addForecast');
 // Add Services
 Route::post('addService','Frontend\IndexController@addService');
 // View Appointment Page
-Route::get('book_appointment/{userid}/{hash_key}/{timeid}','Frontend\IndexController@book_appointment');
+Route::get('book_appointment/{userid}/{hash_key}/{date}/{timeid}','Frontend\IndexController@book_appointment');
 // Booked appointment by patient
 Route::post('booked_appointment','Frontend\IndexController@booked_appointment');
 // Delete appointment by patient

@@ -156,7 +156,7 @@
                            <label for="first_name">NOMBRE</label>
                         </div>
                         <div class="col-lg-8">
-                           <input type="text" class="w-100 form-control" name="first_name" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                           <input type="text" class="w-100 form-control" name="first_name" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                         </div>
                      </div>
                      <div class="row for-contact-label my-2">
@@ -164,7 +164,7 @@
                            <label for="email">MAIL</label>
                         </div>
                         <div class="col-lg-8">
-                           <input type="email" class="w-100 form-control" name="email" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                           <input type="email" class="w-100 form-control" name="email" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                         </div>
                      </div>
                      <div class="row for-contact-label my-2">
@@ -172,7 +172,7 @@
                            <label for="telephone">TELÉFONO</label>
                         </div>
                         <div class="col-lg-8">
-                           <input type="text" class="w-100 form-control" name="telephone" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                           <input type="text" class="w-100 form-control" name="telephone" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                         </div>
                      </div>
                      <div class="row for-contact-label my-2">
@@ -180,7 +180,7 @@
                            <label for="who_you">PACIENTE O PSICÓLOGO</label>
                         </div>
                         <div class="col-lg-8">
-                           <input type="text" class="w-100 form-control" name="who_you" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                           <input type="text" class="w-100 form-control" name="who_you" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                         </div>
                      </div>
                      <div class="row for-contact-label my-2">
@@ -188,7 +188,7 @@
                            <label for="comment">DEJA TUS COMENTARIOS</label>
                         </div>
                         <div class="col-lg-8">
-                           <textarea id="" cols="30" rows="10" class="form-control" name="comment" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required></textarea>
+                           <textarea id="" cols="30" rows="10" class="form-control" name="comment" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required></textarea>
                         </div>
                      </div>
                      <div class="row for-contact-label my-2">

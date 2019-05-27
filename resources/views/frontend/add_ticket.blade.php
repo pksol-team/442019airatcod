@@ -23,15 +23,15 @@
 	            <div class="mb-5">
 	                <div class="">
 	                    <label>Tu nombre</label>
-	                    <input class="form-control" type="text" name="name" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+	                    <input class="form-control" type="text" name="name" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
 	                </div>
 	            	<div class="">
 	            	    <label>Título</label>
-	            	    <input class="form-control" type="text" name="ticket_title" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+	            	    <input class="form-control" type="text" name="ticket_title" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
 	            	</div>
 	                <div class="">
 	                    <label>Descripción</label>								
-	                    <textarea name="ticket_description" class="form-control" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required></textarea>
+	                    <textarea name="ticket_description" class="form-control" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required></textarea>
 	                </div>
 	                <button type="submit" class="btn btn-success mt-4">Enviar Boleto</button>
 	            </div>

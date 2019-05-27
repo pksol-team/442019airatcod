@@ -1,10 +1,10 @@
 @extends("la.layouts.app")
 
-@section("contentheader_title", "Doctoras")
-@section("contentheader_description", "Doctoras listado")
-@section("section", "Doctoras")
+@section("contentheader_title", "Psychologists")
+@section("contentheader_description", "Psychologists listado")
+@section("section", "Psychologists")
 @section("sub_section", "listado")
-@section("htmlheader_title", "Doctoras listado")
+@section("htmlheader_title", "Psychologists listado")
 
 @section("headerElems")
 @la_access("Employees", "create")

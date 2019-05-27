@@ -33,7 +33,7 @@
                         <label for="email" class="email">correo electrónico</label>
                      </div>
                      <div class="col-lg-10 col-md-10 col-sm-4 col-10 login_input-sec">
-                        <input value="{{ old('email') }}" name="email" type="email" id="exampleInputEmail1" aria-describedby="emailHelp" class="form-control element-block" placeholder="Ingrese correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                        <input value="{{ old('email') }}" name="email" type="email" id="exampleInputEmail1" aria-describedby="emailHelp" class="form-control element-block" placeholder="Ingrese correo electrónico" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                      </div>
                   </div>
                   <div class="row">

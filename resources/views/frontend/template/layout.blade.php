@@ -30,7 +30,7 @@
            <div class="login-header w-100">
               <div class="container">
                  <div class="brand float-left w-25">
-                    <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - Doctaria"></a>
+                    <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                  </div>
                  <div class="login-header-items float-right w-75">
                     <div class="login-header-links float-right">
@@ -40,7 +40,7 @@
                           <li class="d-inline-block float-left text-white"><button class="btn bg-blue"><a href="/userlogin" class="text-white">Iniciar sesión</a></button></li>
                           <?php endif ?>
                           <?php if (Auth::check() == true): ?>
-                          <li class="d-inline-block float-left text-white"><?php echo $user->name; ?> |</li>
+                          <li class="d-inline-block float-left text-white"><a href="/my_data"><?php echo $user->name; ?></a> |</li>
                           <li class="d-inline-block float-left text-white"><a href="/">Ir a la página de inicio</a>|</li>
                           <li class="d-inline-block float-left text-white"><a href="/logout" onclick="return confirm('¿Seguro que quieres cerrar sesión?')" >Cerrar sesión</a></li>
                           <?php endif ?>
@@ -75,7 +75,7 @@
                         </div>
                      </div>
                      <div class="brand float-right w-25 order-1">
-                        <a href="#"><img src="/frontend/assets/img/Original.png" alt=""></a>
+                        <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                      </div>
                   </div>
                </div>

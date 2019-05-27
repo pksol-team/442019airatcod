@@ -45,7 +45,7 @@
                      <label for="title">título</label>
                   </div>
                   <div class="col-lg-10">
-                     <input type="text" class="w-100 form-control" name="title" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                     <input type="text" class="w-100 form-control" name="title" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                   </div>
                </div>
                <div class="row for-contact-label my-2">
@@ -53,7 +53,7 @@
                      <label for="short_description">Breve descripción</label>
                   </div>
                   <div class="col-lg-10">
-                     <input type="text" class="w-100 form-control" name="short_description" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                     <input type="text" class="w-100 form-control" name="short_description" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                   </div>
                </div>
                <div class="row for-contact-label my-2">

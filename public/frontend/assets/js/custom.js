@@ -1,4 +1,9 @@
 jQuery(document).ready(function($) {
+    // show premium subscribe popup for basic doctors 
+    if ($('.myModal_popup_check').val() == 'basic') {
+        $('#myModal_popup').modal('show');
+    }
+
     // hide time filds for off day
     $('.close_day_button').change(function () {
         if ($(this).prop('checked') == false) {
@@ -217,7 +222,8 @@ jQuery(document).ready(function($) {
             })
             .done(function(response) {
                 hideBioSection();
-                $('.RUT_number_default').text(commentData[3]['value']);
+                $('.RUT_number_default').text(commentData[4]['value']);
+                $('.phone_number_default').text(commentData[3]['value']);
             });
 
     });
@@ -583,10 +589,13 @@ jQuery(document).ready(function($) {
     // home Page Search form submit empty
     $('.homePageSearch').on('submit',  function(e) {
         e.preventDefault();
-        var specialtySelect = $('.searchByInput').val();
-        if (specialtySelect != '') {
+        var inputSearch = $('.searchByInput_all_professional').val();
+        var citySelect = $('.searchByCity').val();
+        if (inputSearch == '' && citySelect == null) {
+        } else {
             $(this)[0].submit();
         }
+
     });
 
     // Doctor page search
@@ -664,5 +673,57 @@ jQuery(document).ready(function($) {
       else {
       }
     })
-    
+
+  $(".slick_slider").slick({
+    dots: false,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 4
+  });
+// slick slider for all_professionals page
+  $(".new").slick({
+    dots: true,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 3
+  });
+
+
+// slick slider for all_professionals page
+  $( document ).on( "click", "button.slick-prev", function() {
+      if (!$(this).hasClass('p')) {
+          $( "button.slick-prev" ).addClass('p');
+          $(this).removeClass('p');
+          $( ".p" ).trigger( "click" );
+      }
+   });
+    // slick slider for all_professionals page
+  $( document ).on( "click", "button.slick-next", function() {
+      if (!$(this).hasClass('n')) {
+          $( "button.slick-next" ).addClass('n');
+          $(this).removeClass('n');
+          $( ".n" ).trigger( "click" );
+      }
+   });
+
+  // show less or more text for all_professionals page
+  $('.show-para').on('click',  function(e) {
+    var $this = $(this);
+    $this.parent().toggleClass('full-des');
+    if ($this.text() == 'ver más') {
+        $this.text('ver menos');
+    } else {
+        $this.text('ver más');
+    }
+  });
+
+});
+
+// sticky header for all_prefessionals page
+$(window).scroll(function() {
+   if ($(this).scrollTop() > 600){
+      $('.detail-header').addClass("sticky");
+   } else {
+      $('.detail-header').removeClass("sticky");
+   }
 });

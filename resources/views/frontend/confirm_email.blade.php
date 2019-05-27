@@ -18,7 +18,7 @@
             <div class="container row">
                <div class="col-lg-4">
                  <div class="brand">
-                   <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - psicologos"></a>
+                   <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                  </div>
                </div>
                <div class="col-lg-4">
@@ -110,7 +110,7 @@
                   </div>
                </div>
                <div class="brand float-right w-25 order-1">
-                  <a href="#"><img src="/frontend/assets/img/Original.png" alt=""></a>
+                  <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                </div>
             </div>
          </div>

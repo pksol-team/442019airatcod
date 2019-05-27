@@ -29,7 +29,7 @@ class EmployeesController extends Controller
 {
 	public $show_action = true;
 	public $view_col = 'first_name';
-	public $listing_cols = ['id', 'first_name', 'mobile', 'email'];
+	public $listing_cols = ['id', 'first_name', 'profile', 'type', 'email', 'premium_end_date'];
 	
 	public function __construct() {
 		
@@ -52,7 +52,7 @@ class EmployeesController extends Controller
 	public function index()
 	{
 		$module = Module::get('Employees');
-		
+
 		if(Module::hasAccess($module->id)) {
 			return View('la.employees.index', [
 				'show_actions' => $this->show_action,
@@ -262,7 +262,7 @@ class EmployeesController extends Controller
 	 */
 	public function dtajax()
 	{
-		$values = DB::table('employees')->select($this->listing_cols)->where('type', 'doctor')->whereNull('deleted_at');
+		$values = DB::table('employees')->select($this->listing_cols)->where('type', '!=', 'admin')->whereNull('deleted_at');
 		$out = Datatables::of($values)->make();
 		$data = $out->getData();
 

@@ -1,6 +1,7 @@
 @extends('frontend.template.layout')
 @section('title') <?= $title; ?> @stop
 @section('content')
+
 <!-- pages-links -->
 <div class="row page-link-nav">
  <div class="container">
@@ -14,7 +15,7 @@
           <?php else: ?>
             <li class="d-inline-block"><a href="/doctor_full_profile/<?= $UserTbl->hash_key ?>">Perfil</a></li>
           <?php endif ?>
-          <li class="d-inline-block active"><a href="/my_data">Mes données</a></li>
+          <li class="d-inline-block active"><a href="/my_data">mis datos</a></li>
        </ul>
     </div>
  </div>
@@ -24,7 +25,7 @@
  <div class="row quotes-sec">
     <div class="container">
        <div class="quotes-head text-center">
-          <h3>Mes données</h3>
+          <h3>mis datos</h3>
        </div>
     </div>
  </div>
@@ -45,38 +46,38 @@
          @endif
              <div class="row">
                 <div class="col-sm-6 form-group">
-                   <label>Prénom</label>
-                   <input type="text" placeholder="Entrez le prénom ici .." class="form-control" name="first_name" value="<?= $EmpTbl->first_name; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                   <label>primer nombre</label>
+                   <input type="text" placeholder="Escribe el primer nombre aquí .." class="form-control" name="first_name" value="<?= $EmpTbl->first_name; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                 </div>
                 <div class="col-sm-6 form-group">
                    <label>Nom de famille</label>
-                   <input type="text" placeholder="Entrez le nom de famille ici .." class="form-control" name="last_name" value="<?= $EmpTbl->last_name; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                   <input type="text" placeholder="Introduce el apellido aquí .." class="form-control" name="last_name" value="<?= $EmpTbl->last_name; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                 </div>
              </div>
              <div class="row">
                 <div class="col-sm-6 form-group">
-                   <label>Mobile</label>
-                   <input type="text" placeholder="Entrez le numéro de téléphone ici .." class="form-control" name="mobile" value="<?= $EmpTbl->mobile; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                   <label>Móvil</label>
+                   <input type="text" placeholder="Ingrese el número de teléfono aquí .." class="form-control" name="mobile" value="<?= $EmpTbl->mobile; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                 </div>
                 <div class="col-sm-6 form-group">
-                   <label>code postal</label>
-                   <input type="text" placeholder="Entrez le code postal ici .." class="form-control" name="postal_code" value="<?= $EmpTbl->postal_code; ?>" >
+                   <label>código postal</label>
+                   <input type="text" placeholder="Introduce el código postal aquí .." class="form-control" name="postal_code" value="<?= $EmpTbl->postal_code; ?>" >
                 </div>
              </div>
              <div class="row">
                 <div class="col-sm-6 form-group">
-                   <label>adresse électronique</label>
-                   <input type="email" placeholder="Entrez email ici .." class="form-control" name="email" value="<?= $EmpTbl->email; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                   <label>Dirección de correo electrónico</label>
+                   <input type="email" placeholder="Introduce el correo electrónico aquí .." class="form-control" name="email" value="<?= $EmpTbl->email; ?>" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                 </div>
                 <div class="col-sm-6 form-group">
                    <label>Mot de passe (laissez le champ vide si vous ne voulez pas le changer)</label>
-                   <input type="password" name="password" placeholder="Entrez le mot de passe ici .." class="type_password form-control">
+                   <input type="password" name="password" placeholder="Ingrese la contraseña aquí .." class="type_password form-control">
                 </div>
              </div>
              <div class="row">
                 <div class="col-sm-6">
                    <label>Isapre</label>
-                   <input type="text" name="isapre" placeholder="Privé sans prévisions" value="<?= $EmpTbl->isapre; ?>" class="form-control">
+                   <input type="text" name="isapre" placeholder="Privado sin previsiones" value="<?= $EmpTbl->isapre; ?>" class="form-control">
                    <div class="checkbox-my-data">	
                       <span class="d-block">
                         <input type="checkbox" name="notification" <?= ($EmpTbl->notification == 'on') ? 'checked' : NULL ; ?> >
@@ -85,10 +86,16 @@
                       
                    </div>
                 </div>
-                <div class="col-sm-6 form-group submit-button">
-                   <button type="submit" class="btn text-white bg-green">actualizar</button>
+                <div class="col-sm-6 form-group">
+                   <label>Mot de passe (laissez le champ vide si vous ne voulez pas le changer)</label>
+                   <textarea name="address" placeholder="Ingrese su dirección aquí .." class="type_address form-control"><?= $EmpTbl->address; ?></textarea>
                 </div>
              </div>
+             <div class="row">
+               <div class="col-sm-6 form-group submit-button">
+                   <button type="submit" class="btn text-white bg-green">actualizar</button>
+                </div>
+             </div><!-- /.row -->
           </div>
        </form>
     </div>

@@ -19,7 +19,7 @@
                <div class="container row">
                   <div class="col-lg-4">
                     <div class="brand">
-                      <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - psicologos"></a>
+                      <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                     </div>
                   </div>
                   <div class="col-lg-4">
@@ -64,6 +64,7 @@
                <input type="hidden" name="last_name" value="<?= $inputFields['last_name'] ?>">
                <input type="hidden" name="city" value="<?= $inputFields['city'] ?>">
                <input type="hidden" name="forecast" value="<?= $inputFields['forecast'] ?>">
+               <input type="hidden" name="address" value="<?= $inputFields['address'] ?>">
                <input type="hidden" value="<?= $inputFields['gender'] ?>" name="gender">
                <input type="hidden" name="specialty" class="specialty_array">
                <input type="hidden" name="specialtyName" class="specialtyName">
@@ -111,7 +112,7 @@
                         </div>
                      </div>
                      <div class="brand float-right w-25 order-1">
-                        <a href="#"><img src="/frontend/assets/img/Original.png" alt=""></a>
+                        <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                      </div>
                   </div>
                </div>

@@ -62,7 +62,7 @@
                <i class="fa fa-picture-o" aria-hidden="true"></i>  
             </div>
             <div class="pro-page-column-sec-text">
-               <p>>Encontraras mas</p>
+               <p>Encontraras mas</p>
             </div>
             <div class="pro-page-sec-desc">
                <div class="pro">
@@ -83,7 +83,7 @@
                <i class="fa fa-picture-o" aria-hidden="true"></i>  
             </div>
             <div class="pro-page-column-third-text">
-               <p>>Encontraras mas</p>
+               <p>Encontraras mas</p>
             </div>
             <div class="pro-page-third-desc">
                <div class="pro">

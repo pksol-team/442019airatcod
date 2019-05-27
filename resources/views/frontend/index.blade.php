@@ -17,7 +17,7 @@
          <div class="header-nav w-100">
             <div class="container">
                <div class="brand float-left w-25">
-                  <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - Psicologos"></a>
+                  <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                </div>
                <div class="nav-items float-right w-75">
                   <div class=" nav-links float-right">
@@ -55,33 +55,18 @@
                            <input class="searchByInput form-control" type="text" name="searchByInput" />
                            <button type="submit" class="btn bg-blue text-white">Buscar</button>
                         </form> -->
-                        <form class="form-inline doctorsPageSearch" action="/searchBySpecialty" method="get">
+                        <form class="form-inline homePageSearch" action="/searchBySpecialty" method="get">
                         <div class="row w-100">
-                           <div class="col-12 mb-3">
+                           <div class="col-5 mb-3">
                               <div>
-                                 <p>filtrar por nombre</p>
-                                 <input class="searchByInput_all_professional" type="text" name="searchByInput" />
-                              </div>
-                           </div>
-                           <div class="col-lg-4 col-md-4 col-sm-4 col-11 item-1">
-                              <div>
-                                 <p>Filtrar por especialidad</p>
-                                    <select class="js-example-basic-single searchBySpecialty" name="specialty">
-                                      <option value="" hidden></option>
-                                      <?php if ($allSpecialitiesSearch): ?>
-                                       <?php foreach ($allSpecialitiesSearch as $key => $specialty): ?>
-                                            <option value="<?= $specialty->id; ?>"><?= $specialty->name; ?></option>
-                                       <?php endforeach ?>
-                                      <?php endif ?>
-                                    </select>
+                                 <input class="searchByInput_all_professional" type="text" name="searchByInput" placeholder="especialidad o apellido" />
                               </div>
                            </div>
                            <div class="col-lg-4 col-md-4 col-sm-4 col-11 item-2">
                               <div>
-                                 <p>Filtrar por ubicación</p>
                                  <?php if ($allCitiesSearch): ?>
                                     <select class="js-example-basic-single searchByCity" name="city">
-                                      <option value="" hidden></option>
+                                      <option value="" hidden disabled selected>ciudad o comuna</option>
                                     <?php foreach ($allCitiesSearch as $key => $city): ?>
                                          <option value="<?= $city->name; ?>"><?= $city->name; ?></option>
                                     <?php endforeach ?>
@@ -89,22 +74,9 @@
                                     </select>
                               </div>
                            </div>
-                           <div class="col-lg-4 col-md-4 col-sm-4 col-11 pl-0 forecast-filter">
+                           <div class="col-2 text-center mt-1">
                               <div>
-                                 <p>Filtrar por previsión</p>
-                                 <?php if ($allForecastsSearch): ?>
-                                    <select class="js-example-basic-single searchByForecast" name="forecast">
-                                      <option value="" hidden></option>
-                                    <?php foreach ($allForecastsSearch as $key => $forecast): ?>
-                                         <option value="<?= $forecast->name; ?>"><?= $forecast->name; ?></option>
-                                    <?php endforeach ?>
-                                 <?php endif ?>
-                                    </select>
-                              </div>
-                           </div>
-                           <div class="col-12 text-center mt-5">
-                              <div>
-                                 <button type="submit" class="btn bg-blue text-white">Buscar</button>
+                                 <button type="submit" class="btn bg-blue text-white"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
                               </div>
                            </div>
                         </div><!-- /.row -->
@@ -249,7 +221,7 @@
                         </div>
                      </div>
                      <div class="brand float-right w-25 order-1">
-                        <a href="#"><img src="/frontend/assets/img/Original.png" alt=""></a>
+                        <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                      </div>
                   </div>
                </div>

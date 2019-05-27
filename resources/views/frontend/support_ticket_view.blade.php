@@ -47,7 +47,7 @@
                <form id="contact-form" class="form-horizontal" method="POST" action="/add_reply">
                   {{ csrf_field() }}
                   <label class="ml-1">Escribe tu respuesta</label>
-                  <textarea class="chat-textarea form-control" rows="5" cols="5" name="message" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required></textarea>
+                  <textarea class="chat-textarea form-control" rows="5" cols="5" name="message" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required></textarea>
                   <input type="hidden" name="user_id" value="{{ Auth::user()->id}}">
                   <input type="hidden" name="reply_date" value="{{ date('Y-m-d h:i:s') }}">
                   <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">

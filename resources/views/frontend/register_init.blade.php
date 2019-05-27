@@ -18,7 +18,7 @@
                <div class="container row">
                   <div class="col-lg-4">
                     <div class="brand">
-                      <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - psicologos"></a>
+                      <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                     </div>
                   </div>
                   <div class="col-lg-4">
@@ -178,6 +178,10 @@
                                     <?php endif ?>
                                  </select>
                               </div>
+                              <div class="doc-sname-label">
+                                 <label for="address">dirección</label>
+                                 <input type="text" class="form-control" name="address" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
+                              </div>
                               <div class="doc-geneder-sec my-2">
                                  <div class="form-check-inline ml-3">
                                     <label class="form-check-label">
@@ -300,7 +304,7 @@
                         </div>
                      </div>
                      <div class="brand float-right w-25 order-1">
-                        <a href="#"><img src="/frontend/assets/img/Original.png" alt=""></a>
+                        <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                      </div>
                   </div>
                </div>

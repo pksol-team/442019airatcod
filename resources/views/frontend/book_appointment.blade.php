@@ -10,9 +10,10 @@
          <h3 class="text-left align-middle">Cita de reserva</h3>
          <p>Vas a programar una cita para el <strong><?= $consultantTime->day ?>, 
             <?php 
-               $date = new DateTime();
-               $date->modify($consultantTime->day);
-               echo $date->format('F d, Y'); ?>
+            $alreadyBooked = DB::table('appointments')->WHERE([['day', $consultantTime->day], ['doctor_id', $doctor->id], ['from_time', $consultantTime->from_time], ['from_AM_PM', $consultantTime->from_AM_PM], ['appointment_date', 'LIKE', '%' . $appointment_date . '%']])->first();
+            if ($alreadyBooked) {
+            }
+            echo date('F d, Y', strtotime($appointment_date)); ?>
           at <?= $consultantTime->from_time.' '.$consultantTime->from_AM_PM ?></strong></p>
       </div>
    </div>
@@ -21,49 +22,21 @@
          <form method="post" action="/booked_appointment">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="doctor_id" value="<?= $doctor->id ?>">
-            <input type="hidden" name="appointment_date" value="<?= $date->format('Y-m-d'); ?>">
+            <input type="hidden" name="appointment_date" value="<?= $appointment_date; ?>">
             <input type="hidden" name="day" value="<?= $consultantTime->day ?>">
             <input type="hidden" name="from_time" value="<?= $consultantTime->from_time ?>">
             <input type="hidden" name="from_AM_PM" value="<?= $consultantTime->from_AM_PM ?>">
             <input type="hidden" name="location" value="<?= $consultantTime->location ?>">
             <input type="hidden" name="patient_id" value="<?= (Auth::user()) ? Auth::user()->id: 0; ?>">
-            <?php echo $date->format('Y-m-d'); ?>
             <div class="row">
                <div class="col-lg-12 express-booking">
                   <ul class="list-unstyled">
+                     <?php if (!Auth::check()): ?>
                      <li class="sub-valid"><i class="fa fa-info bgg-green text-white express-acc" aria-hidden="true"></i>Reserva Express con su <a href="/userlogin" class="pr-2">psicologos Cuenta</a>or<a href="{{ route('facebook.login') }}" class="pl-2">Facebook</a></li>
+                     <?php endif ?>
                   </ul>
                </div>
             </div>
-            <!-- <div class="row my-3">
-               <div class="col-lg-4 text-right">
-                  <label for="" class="text-right">Who is the appointment for?</label>
-               </div>
-               <div class="col-lg-6">
-                  <input type="radio" id="noCheck"> <span class="pr-3">For me</span>
-                  <input type="radio" class="pl-3"> <span>For another person</span>
-               </div>
-            </div> -->
-            <!-- display on radio button checked -->
-            <!-- <div class="displayonradio-checked" id="ifYes" style="display:none">
-               <div class="row my-3">
-                  <div class="col-lg-4 text-right">
-                     <label for="" class="text-right">Your Name</label>
-                  </div>
-                  <div class="col-lg-6">
-                     <input type="text" class="form-control border-dark w-75">
-                  </div>
-               </div>
-               <div class="row my-3">
-                  <div class="col-lg-4 text-right">
-                     <label for="" class="text-right">Your Last Name</label>
-                  </div>
-                  <div class="col-lg-6">
-                     <input type="text" class="form-control border-dark w-100">
-                  </div>
-               </div>
-            </div> -->
-            <!-- display on radio button checked -->
             @if(session()->has('error'))
                 <div class="alert alert-danger">
                     {!! session()->get('error') !!}
@@ -83,7 +56,7 @@
                   <label for="first_name" class="text-right">Tu nombre *</label>
                </div>
                <div class="col-lg-6">
-                  <input name="first_name" value="<?= ($loginUser != NULL) ? $loginUser->first_name : old('first_name'); ?>" type="text" class="form-control border-dark w-75" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                  <input name="first_name" value="<?= ($loginUser != NULL) ? $loginUser->first_name : old('first_name'); ?>" type="text" class="form-control border-dark w-75" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                </div>
             </div>
             <div class="row my-3">
@@ -91,7 +64,7 @@
                   <label for="last_name" class="text-right">Tu apellido *</label>
                </div>
                <div class="col-lg-6">
-                  <input name="last_name" value="<?= ($loginUser != NULL) ? $loginUser->last_name : old('last_name'); ?>" type="text" class="form-control border-dark w-100" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                  <input name="last_name" value="<?= ($loginUser != NULL) ? $loginUser->last_name : old('last_name'); ?>" type="text" class="form-control border-dark w-100" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                </div>
             </div>
             <div class="row my-3">
@@ -99,7 +72,7 @@
                   <label for="email" class="text-right">Tu correo electrónico *</label>
                </div>
                <div class="col-lg-6">
-                  <input name="email" type="text" value="<?= ($loginUser != NULL) ? $loginUser->email : old('email'); ?>" class="form-control border-dark w-75" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                  <input name="email" type="text" value="<?= ($loginUser != NULL) ? $loginUser->email : old('email'); ?>" class="form-control border-dark w-75" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                </div>
             </div>
             <div class="row my-3">
@@ -107,7 +80,7 @@
                   <label for="mobile" class="text-right">Tu celular *</label>
                </div>
                <div class="col-lg-6">
-                  <input name="mobile" type="text" value="<?= ($loginUser != NULL) ? $loginUser->mobile : old('mobile'); ?>" class="form-control border-dark w-50" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                  <input name="mobile" type="text" value="<?= ($loginUser != NULL) ? $loginUser->mobile : old('mobile'); ?>" class="form-control border-dark w-50" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                   <p><small>Verifique sus datos para asegurarse de que puedan contactarlo.</small></p>
                </div>
             </div>
@@ -138,7 +111,7 @@
             <div class="acceptance">
                <div class="first-terms-cond text-left">
                   <label>
-                     <input type="checkbox" name="terms" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required>
+                     <input type="checkbox" name="terms" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required>
                   <span>Acepto las <a href="#">condiciones de uso</a> la <a href="#">política de privacidad</a> y el tratamiento de mis datos
                   </span>
                   </label>
@@ -184,7 +157,7 @@
                <div class="appointment-date">
                   <p class="mb-0 title-color">CITA</p>
                   <p class="f-12"><span><i class="fa fa-calendar pr-2"></i></span><?= $consultantTime->day ?>, 
-                  <?= $date->format('F d, Y'); ?>
+                  <?php echo date('F d, Y', strtotime($appointment_date));  ?>
                    at <?= $consultantTime->from_time.' '.$consultantTime->from_AM_PM ?></p>
                </div>
             </div>

@@ -18,7 +18,7 @@
             <div class="container row">
                <div class="col-lg-4">
                  <div class="brand">
-                   <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - psicologos"></a>
+                   <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                  </div>
                </div>
                <div class="col-lg-4">
@@ -79,7 +79,7 @@
                      <form action="/update_email" method="post">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="id" value="{{ $NewUser->id }}">
-                        <input type="email" name="email" class="form-control email mb-4" value="{{ old('email') }}" oninvalid="this.setCustomValidity('Por favor rellene este campo')" required />
+                        <input type="email" name="email" class="form-control email mb-4" value="{{ old('email') }}" oninvalid="this.setCustomValidity('Por favor rellene este campo')" oninput="setCustomValidity('')" required />
                         <button class="btn btn-info" type="submit">Cambiar e-mail</button>
                         &nbsp; O &nbsp;
                         <a href="/userlogin"><button class="btn btn-info" type="button">Iniciar sesión</button></a>
@@ -117,7 +117,7 @@
                   </div>
                </div>
                <div class="brand float-right w-25 order-1">
-                  <a href="#"><img src="/frontend/assets/img/Original.png" alt=""></a>
+                  <a href="/"><img src="/frontend/assets/img/Original.png" alt="Logo - PSICOLOGOS VIBEMAR"></a>
                </div>
             </div>
          </div>
