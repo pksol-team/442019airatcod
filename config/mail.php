@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'psicologoschile@vibemar.com', 'name' => 'doctorolia'],
+    'from' => ['address' => 'psicologoschile@vibemar.com', 'name' => 'Vibemar'],
 
     /*
     |--------------------------------------------------------------------------
