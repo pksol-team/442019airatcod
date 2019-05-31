@@ -10,7 +10,7 @@
          <ul class="list-unstyled">
             <li class="d-inline-block active"><a href="<?= '/doctor_full_profile/'.$EmpTbl->hash_key ?>">PERFIL</a></li>
             <li class="d-inline-block"><a href="">CITA DE RESERVA</a></li>
-            <!-- <li class="d-inline-block"><a href="/quote_doctor">Cotizar psicólogo</a></li> -->
+            <!-- <li class="d-inline-block"><a href="/questions-responses">Cotizar psicólogo</a></li> -->
 
             <!-- <li class="d-inline-block"><a href="">STATISTICS</a></li> -->
             <!-- <li class="d-inline-block"><a href="">ACCOUNT</a></li> -->

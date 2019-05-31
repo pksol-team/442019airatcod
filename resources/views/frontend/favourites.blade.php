@@ -8,7 +8,7 @@
          <ul class="list-unstyled">
             <li class="d-inline-block"><a href="/reservations">Citas</a></li>
             <li class="d-inline-block active"><a href="/favourites">Favoritas</a></li>
-            <li class="d-inline-block"><a href="/quote_doctor">Cotizar psicólogo</a></li>
+            <li class="d-inline-block"><a href="/questions-responses">Cotizar psicólogo</a></li>
             <li class="d-inline-block"><a href="/my_data">Mis datos</a></li>
          </ul>
       </div>

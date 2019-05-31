@@ -21,7 +21,7 @@
                </div>
                <div class="nav-items float-right w-75">
                   <div class=" nav-links float-right">
-                     <a href="/quote_doctor" class="text-white">Pregunta al psicólogo</a>
+                     <a href="/questions-responses" class="text-white">Pregunta al psicólogo</a>
                      <?php if (Auth::check() != true): ?>
                      <button class="btn bg-green"><a href="/register_doctor_init" class="text-white">Registrarme</a></button>
                      <button class="btn bg-blue text-white"><a href="/userlogin" class="text-white">Iniciar sesión</a></button>
@@ -32,7 +32,6 @@
                            <button class="btn bg-blue text-white"><a href="/doctor_full_profile/<?= $user->hash_key; ?>" class="text-white"><?php echo $user->name; ?></a></button>
                         <?php endif ?>
                      <?php endif ?>
-                     <!-- <button class="btn bg-blue text-white"><a href="/quote_doctor" class="text-white">Cotizar psicólogo</a></button> -->
                   </div>
                </div>
             </div>

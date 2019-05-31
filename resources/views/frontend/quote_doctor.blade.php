@@ -12,7 +12,7 @@
           <?php if ($EmpTbl->type == 'patient'): ?>
             <li class="d-inline-block"><a href="/reservations">Citas</a></li>
             <li class="d-inline-block"><a href="/favourites">Favoritas</a></li>
-            <li class="d-inline-block"><a href="/quote_doctor">Cotizar psicólogo</a></li>
+            <li class="d-inline-block"><a href="/questions-responses">Cotizar psicólogo</a></li>
 
           <?php else: ?>
             <li class="d-inline-block"><a href="/doctor_full_profile/<?= $EmpTbl->hash_key ?>">Perfil</a></li>
