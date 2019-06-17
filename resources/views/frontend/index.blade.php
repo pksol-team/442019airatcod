@@ -5,7 +5,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title>@yield('title')</title>
+      <title><?= $title ?></title>
       <link rel="stylesheet" href="/frontend/assets/css/bootstrap.min.css">
       <link rel="stylesheet" href="/frontend/assets/css/select2.min.css"/>
       <link rel="stylesheet" href="/frontend/assets/css/font-awesome.min.css">
@@ -21,7 +21,8 @@
                </div>
                <div class="nav-items float-right w-75">
                   <div class=" nav-links float-right">
-                     <a href="/questions-responses" class="text-white">Pregunta al psicólogo</a>
+                     <a href="/ask_expert" class="text-white">Pregunta al psicólogo</a>
+
                      <?php if (Auth::check() != true): ?>
                      <button class="btn bg-green"><a href="/register_doctor_init" class="text-white">Registrarme</a></button>
                      <button class="btn bg-blue text-white"><a href="/userlogin" class="text-white">Iniciar sesión</a></button>

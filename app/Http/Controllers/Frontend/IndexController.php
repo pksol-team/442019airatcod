@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Session;
 use Carbon\Carbon;
@@ -24,9 +25,13 @@ use App\Models\ImageUpload;
 use App\Models\Tickets_reply;
 use App\Models\Ticket;
 use App\Models\Upload;
+use App\Models\Speciality;
+use App\Models\Patient_Question;
+use App\Models\Expert_Answer;
 use Mail;
 use Log;
 use File;
+use URL;
 
 
 class IndexController extends Controller
@@ -52,7 +57,7 @@ class IndexController extends Controller
 	// View Home Page
 	public function index()
 	{
-		$title = 'Home-psicologos';
+		$title = 'casa - psicologos';
 		$allSpecialitiesBottom = DB::table('specialities')->take(10)->get();
 		$allCities = DB::table('cities')->take(10)->get();
 		$allForecasts = DB::table('forecasts')->take(10)->get();
@@ -124,7 +129,12 @@ class IndexController extends Controller
 			$passwordchecked = $userGet->password;
 			if (Hash::check($password, $passwordchecked)) {
 				Auth::attempt(['email' => $email, 'password' => $password]);
-				return redirect('/');
+				if (session()->has('url.intended')) {
+					return redirect()->intended();
+				} else {
+					$request->session()->forget('url.intended');
+					return redirect('/');
+				}
 			}
 			else{
 				return redirect()->back()->withInput()->with('error', '¡La contraseña del usuario no coincide! si no tienes tu cuenta  <a href="/register">Registrar aquí </a>');
@@ -1122,10 +1132,11 @@ class IndexController extends Controller
 		    	';
         
         //Updating Email content [Metakey]
+    	$adminEmail = $admin->email;
         $content = $msg_template;
         $subject = 'Contacto';
 
-		$data = array( 'email' => $admin->email, 'subject' => $subject, 'message' => $content);
+		$data = array( 'email' => $adminEmail, 'subject' => $subject, 'message' => $content);
 		Mail::send([], $data, function ($m) use($data) {
            $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
     	});
@@ -1321,7 +1332,7 @@ class IndexController extends Controller
 			        $updatedDoctorReview = DB::table('employees')->where('id', $doctor_id)->update($updateReview);
 					return redirect('/thankyou_review/'.$doctor_id);
 		        } else {
-					return redirect()->back()->with('error', '¡Uy! Algo salió mal..');;
+					return redirect()->back()->with('error', '¡Uy! Algo salió mal..');
 		        }
 	        } else {
 				return redirect()->back()->with('error', 'Por favor inicie sesión primero');
@@ -1465,6 +1476,8 @@ class IndexController extends Controller
 
 			    $baseUrl = url('/');
 
+			    $getDoctorEmail = $getDoctor->email;
+
 	        	$msg_template = '
 					<div style="text-align: left;padding-left: 20px;padding-top: 50px;padding-bottom: 30px;">
 						<h3>Reserva de cita<br></h3>
@@ -1496,16 +1509,17 @@ class IndexController extends Controller
 						</h4>
 					</div>
 	        	';
+	        	$requestEmail = $request->email;
         	    $subject = 'Reserva de cita';
         	    $content = $msg_template;
         	    $contentPatient = $msg_templatePatient;
 
-        		$data = array( 'email' => $getDoctor->email, 'subject' => $subject, 'message' => $content);
+        		$data = array( 'email' => $getDoctorEmail, 'subject' => $subject, 'message' => $content);
         		Mail::send([], $data, function ($m) use($data) {
                    $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
             	});
 
-            	$dataPatient = array( 'email' => $request->email, 'subject' => $subject, 'message' => $contentPatient);
+            	$dataPatient = array( 'email' => $requestEmail, 'subject' => $subject, 'message' => $contentPatient);
         		Mail::send([], $dataPatient, function ($m) use($dataPatient) {
                    $m->to($dataPatient['email'])->subject($dataPatient['subject'])->setBody($dataPatient['message'], 'text/html');
             	});
@@ -1546,16 +1560,14 @@ class IndexController extends Controller
 	{
 		// if (Auth::check() && Auth::user()->type == 'patient') {
 			$title = 'Cita doctor';
+			$EmpTbl = NULL;
 			if (Auth::check()) {
-				$userID = Auth::user()->id;
-		        $EmpTbl = DB::table('employees')->where('id', $userID)->first();
-			} else {
-				$EmpTbl = NULL;
+		        $EmpTbl = DB::table('employees')->where('id', Auth::user()->id)->first();
 			}
 	        $allCities = DB::table('cities')->whereNull('deleted_at')->get();
 			$allSpecialities = DB::table('specialities')->whereNull('deleted_at')->get();
 			$allForecasts = DB::table('forecasts')->whereNull('deleted_at')->get();
-			return view('frontend.quote_doctor', compact('title', 'userID', 'allCities', 'EmpTbl', 'allSpecialities', 'allForecasts'));
+			return view('frontend.quote_doctor', compact('title', 'allCities', 'EmpTbl', 'allSpecialities', 'allForecasts'));
 		// } else {
 		// 	return redirect('/userlogin')->with('error', 'Por favor, inicie sesión primero');
 		// }
@@ -1601,6 +1613,7 @@ class IndexController extends Controller
 					}
 					
 					//Updating Email content [Metakey]
+					$findDoctorEmail = $findDoctor->email;
 					$get_email_content = DB::table('email_templates')->where('options', 'Quote')->whereNull('deleted_at')->first();
 				    $content = $get_email_content->email_content;
 				    $subject = $get_email_content->subject;
@@ -1609,7 +1622,7 @@ class IndexController extends Controller
 					$content = str_replace('[contact]', $contact, $content);
 					$content = str_replace('[specialty]', $specialty, $content);
 					$content = str_replace('[note]', $note, $content);
-					$data = array( 'email' => $findDoctor->email, 'subject' => $subject, 'message' => $content);
+					$data = array( 'email' => $findDoctorEmail, 'subject' => $subject, 'message' => $content);
 					Mail::send([], $data, function ($m) use($data) {
 			           $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
 			    	});
@@ -1757,7 +1770,252 @@ class IndexController extends Controller
 		}
     } 
 
+
     // ******************************************* Tickets End ***************************************** //
+
+   
+
+
+
+
+
+
+    // View Ask Expert Page
+    public function ask_expert()
+    {
+		$title = 'pregunte experto - psicologos';
+		$allSpecialties = Speciality::whereNull('deleted_at')->get();
+
+    	$questionCount = DB::table('patient_questions')->where('status', 'active')->count();
+    	$answerCount = DB::table('expert_answers')->where('status', 'active')->count();
+    	$expertCount = DB::table('expert_answers')->where('status', 'active')->groupBy('user_id')->get();
+    	$questionsWithAnswer = DB::table('patient_questions')
+            ->join('expert_answers', 'patient_questions.id', '=', 'expert_answers.question_id')
+            ->join('employees', 'expert_answers.user_id', '=', 'employees.id')
+	    	->select('expert_answers.*', 'patient_questions.*', 'employees.*', 'patient_questions.id AS Q_id' , DB::raw("count(expert_answers.id) as answer_count"))
+	    	->where([['patient_questions.status', 'active'], ['expert_answers.status', 'active'], ['expert_answers.created_at', '>', Carbon::now()->subDays(31)]])
+            ->groupBy('expert_answers.question_id')
+            ->orderBy('answer_count', 'DESC')
+            ->limit(3)->get();
+
+    	$activeExperts = DB::table('expert_answers')
+            ->join('employees', 'expert_answers.user_id', '=', 'employees.id')
+	    	->select('expert_answers.*', 'employees.*', DB::raw("count(expert_answers.user_id) as answer_count"))
+	    	->where([['expert_answers.created_at', '>', Carbon::now()->subDays(31)]])
+            ->groupBy('expert_answers.user_id')
+            ->orderBy('answer_count', 'DESC')
+            ->limit(3)->get();
+
+    	return view('frontend.ask_expert', compact('title', 'allSpecialties', 'questionsWithAnswer', 'activeExperts', 'questionCount', 'answerCount', 'expertCount'));
+    }
+
+    // add New Question
+	public function realizarpregunta(Request $request)
+	{	
+    	if (Auth::check()) {
+			$user = Auth::user();
+			$authEmail = $user->email;
+			$question = $request->doctor_question_ask_;
+			$specialty = $request->specialty;
+			$email = $request->doctor_question_ask_form_email;
+			$newQuestion = [
+	            'user_id' => $user->id,
+	            'question' => $question,
+	            'specialty' => $specialty,
+	            'email' => $email,
+	            'status' => 'deactive',
+	            'created_at' => Carbon::now(),
+		    ];
+
+		 //    $allDoctors = DB::table('employees')->where('type', 'doctor');
+			// $allDoctors->where('sub_specialty', 'LIKE', "%$specialty%");
+		 //    $findDoctors = $allDoctors->get();
+		    $done = DB::table('patient_questions')->insert($newQuestion);
+		    if ($done) {
+	    	    $content = '
+	    	    <div style="background: #ddd;display: block;width: 90%;padding: 50px;">
+					<div style="padding: 26px;margin-right: auto;margin-left: auto;background: #fff;font-weight: 600;">
+						<p>Querido '.$user->name.',</p>
+						<p>Gracias por publicar una pregunta en nuestro  <a href="'.URL::to('/ask_expert').'">foro de salud </a>. </p>
+
+						<p>Revisaremos la pregunta para asegurarnos de que cumple con nuestros estándares de publicación. Una vez que su pregunta haya sido aprobada, se publicará en nuestro foro y usted comenzará a recibir respuestas de médicos calificados. Te avisaremos cuando eso suceda. </p>
+
+						<p>Mantenerse sano! </p>
+
+						<p>Atentamente, </p>
+						<p>Equipo Psicologos</p>
+					</div>
+				</div>
+				';
+	    	    $subject = 'Mensajes de los usuarios';
+	    		$data = array( 'email' => $email, 'subject' => $subject, 'message' => $content);
+	    		Mail::send([], $data, function ($m) use($data) {
+	               $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+	        	});
+				
+		    	if ($authEmail != $email) {
+    				$data = array( 'email' => $authEmail, 'subject' => $subject, 'message' => $content);
+    				Mail::send([], $data, function ($m) use($data) {
+    		           $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+    		    	});
+		    	}
+
+		    	$getAdmin = DB::table('employees')->where('type', 'admin')->first();
+
+	    	    if ($getAdmin) {
+
+    	    		// Updating Email content [Metakey]
+    	    		// $get_email_content = DB::table('email_templates')->where('options', 'Ask Expert')->whereNull('deleted_at')->first();
+    	    	    // $content = $get_email_content->email_content;
+    	    		// $content = str_replace('[email]', $email, $content);
+	    	    	$questionURL = '/admin/patient_questions/'.$done.'/edit';
+	    	    	$adminEmail = $getAdmin->email;
+    	    	    $content = '
+    	    	    <div style="background: #ddd;display: block;width: 90%;padding: 50px;">
+    					<div style="padding: 26px;margin-right: auto;margin-left: auto;background: #fff;font-weight: 600;">
+    						<p>Hola,</p>
+    						<p>'.$authEmail.' ha preguntado</p>
+
+    						<p>Revise la pregunta y actívela cuando cumpla con nuestros estándares de publicación.</p>
+    						
+    						<p>Aquí está el enlace de la pregunta.</p>
+
+    						<a href="'.URL::to($questionURL).'"> '.URL::to($questionURL).'</a>
+
+    						<p>Atentamente, </p>
+							<p>Equipo Psicologos</p>
+    					</div>
+    				</div>
+    				';
+    				
+    	    	    $subject = 'Mensajes de los usuarios';
+    	    		
+    	    		$data = array( 'email' => $adminEmail, 'subject' => $subject, 'message' => $content);
+    	    		Mail::send([], $data, function ($m) use($data) {
+    	               $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+    	        	});
+	    	    }
+
+
+	    		
+		    } else {
+				return redirect()->back()->with('error', '¡Uy! Algo salió mal..');
+		    }
+			return redirect('/question_access');
+        } else {
+			Session::put('url.intended', 'ask_expert');
+			return redirect('/userlogin');
+		}
+	}
+
+	// Questions Sent Successfully Page
+    public function question_access()
+    {
+		$title = 'Pregunta enviada';
+    	return view('frontend.question_sent', compact('title'));
+    }
+
+    // all Questions page
+    public function all_questions()
+    {
+		$title = 'todas las preguntas -psicologos';
+
+		$questionCount = DB::table('patient_questions')->where('status', 'active')->count();
+    	$answerCount = DB::table('expert_answers')->where('status', 'active')->count();
+    	$questionsWithAnswer = Patient_Question::where('status', 'active')->orderBy('id', 'DESC')->paginate(8);
+
+    	return view('frontend.all_questions', compact('title', 'questionsWithAnswer', 'questionCount', 'answerCount'));
+    }
+
+    //  Questions Detail page
+    public function question_detail($question_id, $slug)
+    {
+		$singleQuestion = Patient_Question::where([['id', $question_id], ['status', 'active']])->first();
+		if ($singleQuestion) {
+	    	$question = str_replace('-',' ', $slug);
+	    	$EmpTbl = NULL;
+	    	if (Auth::check()) {
+	        	$EmpTbl = DB::table('employees')->WHERE([['id', Auth::user()->id], ['type', 'doctor'], ['profile', 'premium']])->first();
+	    	}
+			$title = 'Descripción de la pregunta -psicologos';
+
+			$allSpecialties = Speciality::whereNull('deleted_at')->get();
+
+			$relatedQuestions = Patient_Question::where([['id', '!=', $question_id], ['status', 'active'], ['specialty', $singleQuestion->specialty]])->get();
+
+	    	return view('frontend.question_view', compact('title', 'allSpecialties', 'singleQuestion', 'relatedQuestions', 'EmpTbl'));
+		} else {
+			return redirect('/ask_expert');
+		}
+    }
+
+    // Question Reply by premium Doctor
+
+	public function question_reply_premium(Request $request)
+	{	
+    	if (Auth::check()) {
+			$user_id = Auth::user()->id;
+			$question_id = $request->question_id;
+			$asked_by = $request->asked_by;
+			$premium_reply = $request->premium_reply;
+		    $askedByUser = DB::table('employees')->where('id', $asked_by)->first();
+		    $questionTable = DB::table('patient_questions')->where('id', $question_id)->first();
+			$questionAnswer = [
+	            'user_id' => $user_id,
+	            'asked_by' => $asked_by,
+	            'question_id' => $question_id,
+	            'answer' => $premium_reply,
+	            'status' => 'active',
+	            'created_at' => Carbon::now(),
+		    ];
+		    $done = Expert_Answer::insert($questionAnswer);
+		    if ($done) {
+    	    	$questionURL = '/ask_expert/todo/'.$question_id.'/'.str_slug($questionTable->question, "-");
+    	    	$askedByUserEmail = $askedByUser->email;
+	    	    $content = '
+	    	    <div style="background: #ddd;display: block;width: 90%;padding: 50px;">
+					<div style="padding: 26px;margin-right: auto;margin-left: auto;background: #fff;font-weight: 600;">
+						<p>Querido '.$askedByUser->first_name.',</p>
+
+						<p>Se ha recibido una respuesta para su pregunta en el <a href="'.URL::to('/ask_expert').'">foro de salud </a>. </p>
+						
+						<p>Puedes ir a tu respuesta visitando este enlace: </p>
+						<p> <a href="'.URL::to($questionURL).'">'.URL::to($questionURL).' </a></p>
+						
+						<p>Mantenerse sano! </p>
+						<p>Atentamente, </p>
+						<p>Equipo Psicologos</p>
+					</div>
+				</div>
+				';
+				
+	    	    $subject = 'Respuesta recibida';
+	    		
+	    		$data = array( 'email' => $askedByUserEmail, 'subject' => $subject, 'message' => $content);
+	    		Mail::send([], $data, function ($m) use($data) {
+	               $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+	        	});
+
+	        	if ($questionTable->email != $askedByUser->email) {
+	        		$questionByEmail = $questionTable->email;
+
+    				$data = array( 'email' => $questionByEmail, 'subject' => $subject, 'message' => $content);
+    				Mail::send([], $data, function ($m) use($data) {
+    		           $m->to($data['email'])->subject($data['subject'])->setBody($data['message'], 'text/html');
+    		    	});
+		    	}
+				return redirect()->back()->withInput()->with('message', 'Gracias por su respuesta');
+		    } else {
+				return redirect()->back()->with('error', '¡Uy! Algo salió mal..');
+		    }
+        } else {
+			Session::put('url.intended', 'ask_expert');
+			return redirect('/userlogin');
+		}
+	}
+
+    
+
 
 
     /* ================== Flow Payment CronJob Start ================== */

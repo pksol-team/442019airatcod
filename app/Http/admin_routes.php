@@ -135,6 +135,26 @@ Route::post('/add_reply', 'Frontend\IndexController@add_reply');
 // Check Subscription on Daily basis
 Route::get('/subscription_check', 'Frontend\IndexController@subscription_check');
 
+// ask expert page
+Route::get('/ask_expert', 'Frontend\IndexController@ask_expert');
+
+// ask question request
+Route::post('/realizarpregunta', 'Frontend\IndexController@realizarpregunta');
+
+// ask expert page
+Route::get('/question_access', 'Frontend\IndexController@question_access');
+
+// all questions page
+Route::get('/ask_expert/todo', 'Frontend\IndexController@all_questions');
+
+// single questions view page
+Route::get('/ask_expert/todo/{question_id}/{slug}', 'Frontend\IndexController@question_detail');
+
+// Question Reply by premium Doctor
+Route::post('/question_reply', 'Frontend\IndexController@question_reply_premium');
+
+
+
 
 
 
@@ -295,4 +315,12 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
 	/* ================== Articles ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/articles', 'LA\ArticlesController');
 	Route::get(config('laraadmin.adminRoute') . '/article_dt_ajax', 'LA\ArticlesController@dtajax');
+
+	/* ================== Patient_Questions ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/patient_questions', 'LA\Patient_QuestionsController');
+	Route::get(config('laraadmin.adminRoute') . '/patient_question_dt_ajax', 'LA\Patient_QuestionsController@dtajax');
+
+	/* ================== Expert_Answers ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/expert_answers', 'LA\Expert_AnswersController');
+	Route::get(config('laraadmin.adminRoute') . '/expert_answer_dt_ajax', 'LA\Expert_AnswersController@dtajax');
 });

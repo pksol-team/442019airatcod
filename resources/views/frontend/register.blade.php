@@ -42,7 +42,7 @@
                      <?php if (Auth::check() != true): ?>
                       <li class="d-inline-block float-left text-white">
                         <button class="btn bg-blue text-white"><a href="/userlogin" class="text-white">Iniciar sesión</a></button>
-                      </li>
+                      </li>p
                      <?php endif ?>
                      
                   </ul>
